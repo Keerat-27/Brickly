@@ -121,13 +121,17 @@ export function ModalsPage() {
         description="Modal containing a form for data collection."
         code={`<Modal title="Create Account">
   <div className="space-y-4">
-    <div className="space-y-1.5">
-      <label className="text-sm">Full Name</label>
-      <input className="w-full px-3 py-2 rounded-lg border border-border bg-background text-sm" />
+    <div className="space-y-1">
+      <label className="block text-sm text-foreground">Full Name</label>
+      <input placeholder="Alice Johnson" className="w-full px-3 py-2 rounded-lg border border-border bg-background text-foreground text-sm outline-none focus:ring-2 focus:ring-ring" />
     </div>
-    <div className="space-y-1.5">
-      <label className="text-sm">Email</label>
-      <input type="email" className="w-full px-3 py-2 rounded-lg border border-border bg-background text-sm" />
+    <div className="space-y-1">
+      <label className="block text-sm text-foreground">Email</label>
+      <input type="email" placeholder="alice@example.com" className="w-full px-3 py-2 rounded-lg border border-border bg-background text-foreground text-sm outline-none focus:ring-2 focus:ring-ring" />
+    </div>
+    <div className="space-y-1">
+      <label className="block text-sm text-foreground">Password</label>
+      <input type="password" placeholder="••••••••" className="w-full px-3 py-2 rounded-lg border border-border bg-background text-foreground text-sm outline-none focus:ring-2 focus:ring-ring" />
     </div>
   </div>
 </Modal>`}
@@ -150,16 +154,16 @@ export function ModalsPage() {
           }
         >
           <div className="space-y-4">
-            <div className="space-y-1.5">
-              <label className="text-sm text-foreground">Full Name</label>
+            <div className="space-y-1">
+              <label className="block text-sm text-foreground">Full Name</label>
               <input placeholder="Alice Johnson" className="w-full px-3 py-2 rounded-lg border border-border bg-background text-foreground text-sm outline-none focus:ring-2 focus:ring-ring" />
             </div>
-            <div className="space-y-1.5">
-              <label className="text-sm text-foreground">Email</label>
+            <div className="space-y-1">
+              <label className="block text-sm text-foreground">Email</label>
               <input type="email" placeholder="alice@example.com" className="w-full px-3 py-2 rounded-lg border border-border bg-background text-foreground text-sm outline-none focus:ring-2 focus:ring-ring" />
             </div>
-            <div className="space-y-1.5">
-              <label className="text-sm text-foreground">Password</label>
+            <div className="space-y-1">
+              <label className="block text-sm text-foreground">Password</label>
               <input type="password" placeholder="••••••••" className="w-full px-3 py-2 rounded-lg border border-border bg-background text-foreground text-sm outline-none focus:ring-2 focus:ring-ring" />
             </div>
           </div>
