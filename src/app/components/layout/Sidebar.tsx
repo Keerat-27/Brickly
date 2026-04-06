@@ -75,7 +75,7 @@ export function Sidebar({ open, onClose }: SidebarProps) {
       `}
     >
       {/* Logo */}
-      <div className="flex items-center justify-between px-5 py-4 border-b border-border">
+      <div className="flex items-center justify-between px-5 h-14 shrink-0 border-b border-border">
         <div className="flex items-center gap-2">
           <div className="w-7 h-7 rounded-lg bg-primary flex items-center justify-center">
             <Sparkles className="w-4 h-4 text-primary-foreground" />
