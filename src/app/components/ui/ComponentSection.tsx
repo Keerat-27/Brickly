@@ -60,8 +60,8 @@ export function ComponentSection({
             {children}
           </div>
         ) : (
-          <div className="bg-background">
-            <CodeBlock code={code} />
+          <div className="bg-muted">
+            <CodeBlock code={code} seamless />
           </div>
         )}
       </div>

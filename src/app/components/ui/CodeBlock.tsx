@@ -4,9 +4,10 @@ import { Check, Copy } from "lucide-react";
 interface CodeBlockProps {
   code: string;
   language?: string;
+  seamless?: boolean;
 }
 
-export function CodeBlock({ code, language = "tsx" }: CodeBlockProps) {
+export function CodeBlock({ code, language = "tsx", seamless = false }: CodeBlockProps) {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = () => {
@@ -16,7 +17,7 @@ export function CodeBlock({ code, language = "tsx" }: CodeBlockProps) {
   };
 
   return (
-    <div className="relative rounded-lg border border-border bg-muted overflow-hidden">
+    <div className={seamless ? "" : "relative rounded-lg border border-border bg-muted overflow-hidden"}>
       <div className="flex items-center justify-between px-4 py-2 border-b border-border">
         <span className="text-xs text-muted-foreground font-mono">{language}</span>
         <button
@@ -36,7 +37,7 @@ export function CodeBlock({ code, language = "tsx" }: CodeBlockProps) {
           )}
         </button>
       </div>
-      <pre className="overflow-x-auto p-4 text-sm font-mono text-foreground/90 leading-relaxed">
+      <pre className="overflow-x-auto p-4 text-sm font-mono text-foreground/90 leading-relaxed whitespace-pre-wrap break-all">
         <code>{code}</code>
       </pre>
     </div>
