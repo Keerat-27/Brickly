@@ -75,7 +75,7 @@ function Dropdown({
               : { left: coords.left }),
             zIndex: 9999,
           }}
-          className="min-w-[180px] rounded-xl border border-border bg-popover shadow-lg py-1"
+          className="min-w-[180px] rounded-xl border border-border bg-popover shadow-lg py-1 px-1"
         >
           {children}
         </div>
@@ -103,7 +103,7 @@ function MenuItem({
   return (
     <button
       onClick={onClick}
-      className={`flex w-full items-center gap-2.5 px-3 py-2 text-sm transition-colors hover:bg-accent ${
+      className={`flex w-full items-center gap-2.5 px-3 py-2 rounded-md text-sm transition-colors hover:bg-accent ${
         destructive ? "text-destructive" : "text-foreground"
       }`}
     >
@@ -154,7 +154,7 @@ function ContextMenu() {
       Right-click anywhere in this area
       {pos && (
         <div
-          className="fixed z-50 min-w-[160px] rounded-xl border border-border bg-popover shadow-lg py-1"
+          className="fixed z-50 min-w-[160px] rounded-xl border border-border bg-popover shadow-lg py-1 px-1"
           style={{ top: pos.y, left: pos.x }}
           onClick={(e) => e.stopPropagation()}
         >
