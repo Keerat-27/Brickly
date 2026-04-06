@@ -1,7 +1,7 @@
+import { useState, useRef } from "react";
 import { PageHeader } from "../components/ui/PageHeader";
 import { ComponentSection } from "../components/ui/ComponentSection";
-import { useState } from "react";
-import { Eye, EyeOff, Search, ChevronDown } from "lucide-react";
+import { Eye, EyeOff, Search, ChevronDown, UploadCloud, X, File } from "lucide-react";
 
 function Input({
   label,
@@ -114,6 +114,99 @@ function Toggle({ label, defaultChecked }: { label?: string; defaultChecked?: bo
   );
 }
 
+function FileUpload() {
+  const [dragging, setDragging] = useState(false);
+  const [files, setFiles] = useState<File[]>([]);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const addFiles = (incoming: FileList | null) => {
+    if (!incoming) return;
+    setFiles((prev) => [...prev, ...Array.from(incoming)]);
+  };
+
+  const removeFile = (index: number) =>
+    setFiles((prev) => prev.filter((_, i) => i !== index));
+
+  return (
+    <div className="w-full max-w-sm space-y-2">
+      <div
+        onClick={() => inputRef.current?.click()}
+        onDragOver={(e) => { e.preventDefault(); setDragging(true); }}
+        onDragLeave={() => setDragging(false)}
+        onDrop={(e) => { e.preventDefault(); setDragging(false); addFiles(e.dataTransfer.files); }}
+        className={`flex flex-col items-center justify-center gap-2 w-full rounded-xl border-2 border-dashed px-6 py-8 cursor-pointer transition-colors text-center
+          ${dragging ? "border-primary bg-primary/5" : "border-border hover:border-primary/50 hover:bg-accent/40"}`}
+      >
+        <UploadCloud className={`w-8 h-8 ${dragging ? "text-primary" : "text-muted-foreground"}`} />
+        <div>
+          <p className="text-sm text-foreground">
+            <span className="text-primary">Click to upload</span> or drag and drop
+          </p>
+          <p className="text-xs text-muted-foreground mt-0.5">PNG, JPG, PDF up to 10 MB</p>
+        </div>
+        <input
+          ref={inputRef}
+          type="file"
+          multiple
+          className="hidden"
+          onChange={(e) => addFiles(e.target.files)}
+        />
+      </div>
+
+      {files.length > 0 && (
+        <ul className="space-y-1.5">
+          {files.map((file, i) => (
+            <li
+              key={i}
+              className="flex items-center gap-2.5 px-3 py-2 rounded-lg border border-border bg-background"
+            >
+              <File className="w-4 h-4 shrink-0 text-muted-foreground" />
+              <span className="flex-1 text-sm text-foreground truncate">{file.name}</span>
+              <span className="text-xs text-muted-foreground shrink-0">
+                {(file.size / 1024).toFixed(0)} KB
+              </span>
+              <button
+                onClick={(e) => { e.stopPropagation(); removeFile(i); }}
+                className="shrink-0 text-muted-foreground hover:text-foreground transition-colors"
+              >
+                <X className="w-3.5 h-3.5" />
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
+
+function TextareaWithCount() {
+  const [value, setValue] = useState("");
+  const MAX = 500;
+  const count = value.length;
+  const over = count > MAX;
+
+  return (
+    <div className="space-y-1.5">
+      <label className="text-sm text-foreground">Message</label>
+      <textarea
+        rows={4}
+        placeholder="Write your message..."
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+        className={`w-full px-3 py-2 rounded-lg border bg-background text-sm resize-none
+          focus:outline-none focus:ring-2 placeholder:text-muted-foreground transition-colors
+          ${over
+            ? "border-destructive focus:ring-destructive/50"
+            : "border-border focus:ring-ring"
+          }`}
+      />
+      <p className={`text-xs text-right transition-colors ${over ? "text-destructive" : "text-muted-foreground"}`}>
+        {count} / {MAX}
+      </p>
+    </div>
+  );
+}
+
 export function FormsPage() {
   return (
     <div className="space-y-10">
@@ -181,14 +274,8 @@ export function FormsPage() {
   <p className="text-xs text-muted-foreground text-right">0 / 500</p>
 </div>`}
       >
-        <div className="w-full max-w-sm space-y-1">
-          <label className="block text-sm text-foreground">Message</label>
-          <textarea
-            rows={4}
-            placeholder="Write your message here…"
-            className="w-full px-3 py-2 rounded-lg border border-border bg-background text-foreground text-sm resize-none focus:outline-none focus:ring-2 focus:ring-ring placeholder:text-muted-foreground"
-          />
-          <p className="text-xs text-muted-foreground text-right">0 / 500</p>
+        <div className="w-full max-w-sm">
+          <TextareaWithCount />
         </div>
       </ComponentSection>
 
@@ -280,6 +367,36 @@ export function FormsPage() {
           <Toggle label="Two-factor authentication" defaultChecked />
           <Toggle label="Public profile" />
         </div>
+      </ComponentSection>
+
+      <ComponentSection
+        title="File Upload"
+        description="Drag-and-drop or click-to-browse file input with file list preview."
+        code={`function FileUpload() {
+  const [dragging, setDragging] = useState(false);
+  const [files, setFiles] = useState([]);
+  const inputRef = useRef(null);
+
+  return (
+    <div className="space-y-2">
+      <div
+        onClick={() => inputRef.current?.click()}
+        onDragOver={(e) => { e.preventDefault(); setDragging(true); }}
+        onDragLeave={() => setDragging(false)}
+        onDrop={(e) => { e.preventDefault(); setDragging(false); /* add files */ }}
+        className="flex flex-col items-center gap-2 rounded-xl border-2 border-dashed
+          border-border px-6 py-8 cursor-pointer hover:border-primary/50 hover:bg-accent/40"
+      >
+        <UploadCloud className="w-8 h-8 text-muted-foreground" />
+        <p className="text-sm"><span className="text-primary">Click to upload</span> or drag and drop</p>
+        <p className="text-xs text-muted-foreground">PNG, JPG, PDF up to 10 MB</p>
+        <input ref={inputRef} type="file" multiple className="hidden" />
+      </div>
+    </div>
+  );
+}`}
+      >
+        <FileUpload />
       </ComponentSection>
     </div>
   );
