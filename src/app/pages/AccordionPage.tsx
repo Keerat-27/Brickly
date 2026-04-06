@@ -72,7 +72,7 @@ function AccordionItem({
         />
       </button>
       {open && (
-        <div className="px-5 pb-4 pt-0 text-sm text-muted-foreground border-t border-border">
+        <div className="px-5 py-4 text-sm text-muted-foreground border-t border-border">
           {children}
         </div>
       )}

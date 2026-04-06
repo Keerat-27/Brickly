@@ -27,29 +27,31 @@ export function ComponentSection({
       </div>
       <div className="rounded-xl border border-border overflow-hidden">
         {/* Tab bar */}
-        <div className="flex items-center border-b border-border bg-muted/50 px-1 pt-1 gap-1">
-          <button
-            onClick={() => setTab("preview")}
-            className={`flex items-center gap-1.5 px-3 py-1.5 text-xs rounded-t-md transition-colors ${
-              tab === "preview"
-                ? "bg-background text-foreground border border-b-0 border-border"
-                : "text-muted-foreground hover:text-foreground"
-            }`}
-          >
-            <Eye className="w-3.5 h-3.5" />
-            Preview
-          </button>
-          <button
-            onClick={() => setTab("code")}
-            className={`flex items-center gap-1.5 px-3 py-1.5 text-xs rounded-t-md transition-colors ${
-              tab === "code"
-                ? "bg-background text-foreground border border-b-0 border-border"
-                : "text-muted-foreground hover:text-foreground"
-            }`}
-          >
-            <Code2 className="w-3.5 h-3.5" />
-            Code
-          </button>
+        <div className="flex items-center border-b border-border bg-muted/50 px-4 py-2.5 gap-1">
+          <div className="flex items-center bg-muted rounded-lg p-0.5 gap-0.5">
+            <button
+              onClick={() => setTab("preview")}
+              className={`flex items-center gap-1.5 px-3 py-1.5 text-xs rounded-md transition-all ${
+                tab === "preview"
+                  ? "bg-background text-foreground shadow-sm"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              <Eye className="w-3.5 h-3.5" />
+              Preview
+            </button>
+            <button
+              onClick={() => setTab("code")}
+              className={`flex items-center gap-1.5 px-3 py-1.5 text-xs rounded-md transition-all ${
+                tab === "code"
+                  ? "bg-background text-foreground shadow-sm"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              <Code2 className="w-3.5 h-3.5" />
+              Code
+            </button>
+          </div>
         </div>
 
         {/* Content */}
