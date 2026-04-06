@@ -13,33 +13,57 @@ function Tooltip({
   position?: "top" | "bottom" | "left" | "right";
 }) {
   const [visible, setVisible] = useState(false);
+  const [style, setStyle] = useState<React.CSSProperties>({});
+  const triggerRef = useRef<HTMLDivElement>(null);
 
-  const positions = {
-    top: "bottom-full left-1/2 -translate-x-1/2 mb-2",
-    bottom: "top-full left-1/2 -translate-x-1/2 mt-2",
-    left: "right-full top-1/2 -translate-y-1/2 mr-2",
-    right: "left-full top-1/2 -translate-y-1/2 ml-2",
+  const handleMouseEnter = () => {
+    if (triggerRef.current) {
+      const rect = triggerRef.current.getBoundingClientRect();
+      const GAP = 8;
+      let s: React.CSSProperties = { position: "fixed", zIndex: 9999 };
+      if (position === "top") {
+        s.top = rect.top - GAP;
+        s.left = rect.left + rect.width / 2;
+        s.transform = "translate(-50%, -100%)";
+      } else if (position === "bottom") {
+        s.top = rect.bottom + GAP;
+        s.left = rect.left + rect.width / 2;
+        s.transform = "translateX(-50%)";
+      } else if (position === "left") {
+        s.top = rect.top + rect.height / 2;
+        s.left = rect.left - GAP;
+        s.transform = "translate(-100%, -50%)";
+      } else {
+        s.top = rect.top + rect.height / 2;
+        s.left = rect.right + GAP;
+        s.transform = "translateY(-50%)";
+      }
+      setStyle(s);
+    }
+    setVisible(true);
   };
 
-  const arrows = {
-    top: "top-full left-1/2 -translate-x-1/2 border-l-transparent border-r-transparent border-b-transparent border-t-foreground",
-    bottom: "bottom-full left-1/2 -translate-x-1/2 border-l-transparent border-r-transparent border-t-transparent border-b-foreground",
-    left: "left-full top-1/2 -translate-y-1/2 border-t-transparent border-b-transparent border-r-transparent border-l-foreground",
-    right: "right-full top-1/2 -translate-y-1/2 border-t-transparent border-b-transparent border-l-transparent border-r-foreground",
+  // Arrow classes per direction
+  const arrowClass: Record<string, string> = {
+    top: "absolute top-full left-1/2 -translate-x-1/2 border-4 border-l-transparent border-r-transparent border-b-transparent border-t-foreground",
+    bottom: "absolute bottom-full left-1/2 -translate-x-1/2 border-4 border-l-transparent border-r-transparent border-t-transparent border-b-foreground",
+    left: "absolute left-full top-1/2 -translate-y-1/2 border-4 border-t-transparent border-b-transparent border-r-transparent border-l-foreground",
+    right: "absolute right-full top-1/2 -translate-y-1/2 border-4 border-t-transparent border-b-transparent border-l-transparent border-r-foreground",
   };
 
   return (
     <div
-      className="relative inline-flex"
-      onMouseEnter={() => setVisible(true)}
+      ref={triggerRef}
+      className="inline-flex"
+      onMouseEnter={handleMouseEnter}
       onMouseLeave={() => setVisible(false)}
     >
       {children}
       {visible && (
-        <div className={`absolute z-50 ${positions[position]} pointer-events-none`}>
+        <div style={style} className="pointer-events-none">
           <div className="relative px-2.5 py-1.5 rounded-lg bg-foreground text-background text-xs whitespace-nowrap shadow-lg">
             {content}
-            <div className={`absolute w-0 h-0 border-4 ${arrows[position]}`} />
+            <div className={arrowClass[position]} />
           </div>
         </div>
       )}
@@ -57,16 +81,33 @@ function RichTooltip({
   description: string;
 }) {
   const [visible, setVisible] = useState(false);
+  const [style, setStyle] = useState<React.CSSProperties>({});
+  const triggerRef = useRef<HTMLDivElement>(null);
+
+  const handleMouseEnter = () => {
+    if (triggerRef.current) {
+      const rect = triggerRef.current.getBoundingClientRect();
+      setStyle({
+        position: "fixed",
+        zIndex: 9999,
+        top: rect.top - 8,
+        left: rect.left + rect.width / 2,
+        transform: "translate(-50%, -100%)",
+      });
+    }
+    setVisible(true);
+  };
 
   return (
     <div
-      className="relative inline-flex"
-      onMouseEnter={() => setVisible(true)}
+      ref={triggerRef}
+      className="inline-flex"
+      onMouseEnter={handleMouseEnter}
       onMouseLeave={() => setVisible(false)}
     >
       {children}
       {visible && (
-        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 z-50 pointer-events-none">
+        <div style={style} className="pointer-events-none">
           <div className="w-56 p-3 rounded-xl bg-foreground text-background shadow-xl">
             <p className="text-sm mb-1">{title}</p>
             <p className="text-xs opacity-70">{description}</p>
@@ -77,8 +118,16 @@ function RichTooltip({
   );
 }
 
-function ClickPopover({ children, content }: { children: React.ReactNode; content: React.ReactNode }) {
+function ClickPopover({
+  children,
+  content,
+}: {
+  children: React.ReactNode;
+  content: React.ReactNode;
+}) {
   const [open, setOpen] = useState(false);
+  const [style, setStyle] = useState<React.CSSProperties>({});
+  const triggerRef = useRef<HTMLDivElement>(null);
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -91,11 +140,27 @@ function ClickPopover({ children, content }: { children: React.ReactNode; conten
     return () => document.removeEventListener("mousedown", handleClick);
   }, []);
 
+  const handleToggle = () => {
+    if (!open && triggerRef.current) {
+      const rect = triggerRef.current.getBoundingClientRect();
+      setStyle({
+        position: "fixed",
+        zIndex: 9999,
+        top: rect.top - 8,
+        left: rect.left + rect.width / 2,
+        transform: "translate(-50%, -100%)",
+      });
+    }
+    setOpen((v) => !v);
+  };
+
   return (
-    <div ref={ref} className="relative inline-flex">
-      <div onClick={() => setOpen(!open)}>{children}</div>
+    <div ref={ref} className="inline-flex">
+      <div ref={triggerRef} onClick={handleToggle}>
+        {children}
+      </div>
       {open && (
-        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 z-50">
+        <div style={style}>
           <div className="bg-background border border-border rounded-xl shadow-xl p-3 w-52">
             {content}
           </div>
@@ -119,14 +184,22 @@ export function TooltipsPage() {
         description="Simple text tooltip on hover with directional placement."
         code={`function Tooltip({ content, children, position = "top" }) {
   const [visible, setVisible] = useState(false);
+  const [style, setStyle] = useState({});
+  const ref = useRef(null);
+
+  const handleMouseEnter = () => {
+    const rect = ref.current.getBoundingClientRect();
+    setStyle({ position: "fixed", zIndex: 9999,
+      top: rect.top - 8, left: rect.left + rect.width / 2,
+      transform: "translate(-50%, -100%)" });
+    setVisible(true);
+  };
+
   return (
-    <div className="relative inline-flex"
-      onMouseEnter={() => setVisible(true)}
-      onMouseLeave={() => setVisible(false)}
-    >
+    <div ref={ref} onMouseEnter={handleMouseEnter} onMouseLeave={() => setVisible(false)}>
       {children}
       {visible && (
-        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 z-50 pointer-events-none">
+        <div style={style} className="pointer-events-none w-0 h-0">
           <div className="px-2.5 py-1.5 rounded-lg bg-foreground text-background text-xs whitespace-nowrap shadow-lg">
             {content}
           </div>
@@ -198,11 +271,22 @@ export function TooltipsPage() {
         description="Tooltips with a title and description for more context."
         code={`function RichTooltip({ children, title, description }) {
   const [visible, setVisible] = useState(false);
+  const [style, setStyle] = useState({});
+  const ref = useRef(null);
+
+  const handleMouseEnter = () => {
+    const rect = ref.current.getBoundingClientRect();
+    setStyle({ position: "fixed", zIndex: 9999,
+      top: rect.top - 8, left: rect.left + rect.width / 2,
+      transform: "translate(-50%, -100%)" });
+    setVisible(true);
+  };
+
   return (
-    <div className="relative inline-flex" onMouseEnter={() => setVisible(true)} onMouseLeave={() => setVisible(false)}>
+    <div ref={ref} onMouseEnter={handleMouseEnter} onMouseLeave={() => setVisible(false)}>
       {children}
       {visible && (
-        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 z-50 pointer-events-none">
+        <div style={style} className="pointer-events-none w-0 h-0">
           <div className="w-56 p-3 rounded-xl bg-foreground text-background shadow-xl">
             <p className="text-sm mb-1">{title}</p>
             <p className="text-xs opacity-70">{description}</p>
@@ -234,12 +318,25 @@ export function TooltipsPage() {
         description="Click-triggered popovers for actions and menus."
         code={`function ClickPopover({ children, content }) {
   const [open, setOpen] = useState(false);
+  const [style, setStyle] = useState({});
+  const triggerRef = useRef(null);
+
+  const handleToggle = () => {
+    if (!open) {
+      const rect = triggerRef.current.getBoundingClientRect();
+      setStyle({ position: "fixed", zIndex: 9999,
+        top: rect.top - 8, left: rect.left + rect.width / 2,
+        transform: "translate(-50%, -100%)" });
+    }
+    setOpen(v => !v);
+  };
+
   return (
-    <div className="relative inline-flex">
-      <div onClick={() => setOpen(!open)}>{children}</div>
+    <div>
+      <div ref={triggerRef} onClick={handleToggle}>{children}</div>
       {open && (
-        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 z-50">
-          <div className="bg-background border border-border rounded-xl shadow-xl p-3">
+        <div style={style} className="w-0 h-0">
+          <div className="bg-background border border-border rounded-xl shadow-xl p-3 w-52">
             {content}
           </div>
         </div>
