@@ -1,0 +1,218 @@
+import { PageHeader } from "../components/ui/PageHeader";
+import { ComponentSection } from "../components/ui/ComponentSection";
+import { Loader2 } from "lucide-react";
+
+function Spinner({ size = "md", color = "primary" }: { size?: "sm" | "md" | "lg" | "xl"; color?: "primary" | "white" | "muted" }) {
+  const sizes = { sm: "w-4 h-4", md: "w-6 h-6", lg: "w-8 h-8", xl: "w-12 h-12" };
+  const colors = { primary: "text-primary", white: "text-white", muted: "text-muted-foreground" };
+  return <Loader2 className={`${sizes[size]} ${colors[color]} animate-spin`} />;
+}
+
+function SkeletonBox({ className = "", style }: { className?: string; style?: React.CSSProperties }) {
+  return <div className={`bg-muted rounded-md animate-pulse ${className}`} style={style} />;
+}
+
+function SkeletonCard() {
+  return (
+    <div className="rounded-xl border border-border p-5 space-y-4 w-64">
+      <div className="flex items-center gap-3">
+        <SkeletonBox className="w-10 h-10 rounded-full" />
+        <div className="flex-1 space-y-1.5">
+          <SkeletonBox className="h-3 w-3/4" />
+          <SkeletonBox className="h-3 w-1/2" />
+        </div>
+      </div>
+      <SkeletonBox className="h-3 w-full" />
+      <SkeletonBox className="h-3 w-5/6" />
+      <SkeletonBox className="h-3 w-4/6" />
+      <SkeletonBox className="h-8 w-full rounded-lg" />
+    </div>
+  );
+}
+
+function SkeletonTable() {
+  return (
+    <div className="w-full rounded-xl border border-border overflow-hidden">
+      <div className="flex gap-4 px-4 py-3 bg-muted/50 border-b border-border">
+        {[120, 80, 60, 80].map((w, i) => (
+          <SkeletonBox key={i} className="h-3" style={{ width: w }} />
+        ))}
+      </div>
+      {Array.from({ length: 4 }).map((_, i) => (
+        <div key={i} className="flex gap-4 px-4 py-3 border-b border-border last:border-0">
+          <SkeletonBox className="h-3 w-32" />
+          <SkeletonBox className="h-3 w-20" />
+          <SkeletonBox className="h-5 w-16 rounded-full" />
+          <SkeletonBox className="h-3 w-20" />
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function Dots() {
+  return (
+    <div className="flex gap-1.5 items-center">
+      {[0, 1, 2].map((i) => (
+        <div
+          key={i}
+          className="w-2 h-2 rounded-full bg-primary animate-bounce"
+          style={{ animationDelay: `${i * 0.15}s` }}
+        />
+      ))}
+    </div>
+  );
+}
+
+function PulseLoader() {
+  return (
+    <div className="flex gap-2 items-center">
+      {[0, 1, 2, 3].map((i) => (
+        <div
+          key={i}
+          className="w-2 h-8 rounded-full bg-primary animate-pulse"
+          style={{ animationDelay: `${i * 0.1}s`, animationDuration: "0.8s" }}
+        />
+      ))}
+    </div>
+  );
+}
+
+function RingSpinner() {
+  return (
+    <div className="w-8 h-8 rounded-full border-4 border-muted border-t-primary animate-spin" />
+  );
+}
+
+export function LoadingPage() {
+  return (
+    <div className="space-y-10">
+      <PageHeader
+        title="Loading"
+        description="Spinners, skeletons, and animated placeholders for loading and async states."
+        badge="Component"
+      />
+
+      <ComponentSection
+        title="Spinners"
+        description="Simple rotating spinners in different sizes and a ring variant."
+        code={`{/* Icon spinner */}
+import { Loader2 } from "lucide-react";
+<Loader2 className="w-6 h-6 text-primary animate-spin" />
+
+{/* Ring spinner */}
+<div className="w-8 h-8 rounded-full border-4 border-muted border-t-primary animate-spin" />`}
+      >
+        <div className="flex flex-wrap items-center gap-6">
+          <Spinner size="sm" />
+          <Spinner size="md" />
+          <Spinner size="lg" />
+          <Spinner size="xl" />
+          <RingSpinner />
+          <div className="w-8 h-8 rounded-full border-4 border-muted border-t-blue-500 animate-spin" />
+          <div className="w-8 h-8 rounded-full border-4 border-muted border-t-green-500 animate-spin" />
+        </div>
+      </ComponentSection>
+
+      <ComponentSection
+        title="Dot Loaders"
+        description="Bouncing dot animations for inline loading states."
+        code={`<div className="flex gap-1.5 items-center">
+  {[0, 1, 2].map((i) => (
+    <div
+      key={i}
+      className="w-2 h-2 rounded-full bg-primary animate-bounce"
+      style={{ animationDelay: \`\${i * 0.15}s\` }}
+    />
+  ))}
+</div>`}
+      >
+        <Dots />
+        <PulseLoader />
+        <div className="flex gap-1.5 items-center">
+          {[0, 1, 2, 3, 4].map((i) => (
+            <div
+              key={i}
+              className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-bounce"
+              style={{ animationDelay: `${i * 0.12}s` }}
+            />
+          ))}
+        </div>
+      </ComponentSection>
+
+      <ComponentSection
+        title="Skeleton Cards"
+        description="Placeholder content while data is loading."
+        code={`function SkeletonCard() {
+  return (
+    <div className="rounded-xl border border-border p-5 space-y-4">
+      <div className="flex items-center gap-3">
+        <div className="w-10 h-10 rounded-full bg-muted animate-pulse" />
+        <div className="flex-1 space-y-1.5">
+          <div className="h-3 bg-muted rounded animate-pulse w-3/4" />
+          <div className="h-3 bg-muted rounded animate-pulse w-1/2" />
+        </div>
+      </div>
+      <div className="h-3 bg-muted rounded animate-pulse" />
+      <div className="h-3 bg-muted rounded animate-pulse w-5/6" />
+    </div>
+  );
+}`}
+      >
+        <div className="flex flex-wrap gap-4">
+          <SkeletonCard />
+          <SkeletonCard />
+        </div>
+      </ComponentSection>
+
+      <ComponentSection
+        title="Skeleton Table"
+        description="Table placeholder while data is being fetched."
+        code={`<div className="w-full rounded-xl border border-border overflow-hidden">
+  <div className="flex gap-4 px-4 py-3 bg-muted/50 border-b border-border">
+    {[120, 80, 60, 80].map((w, i) => (
+      <div key={i} className="h-3 bg-muted rounded animate-pulse" style={{ width: w }} />
+    ))}
+  </div>
+  {Array.from({ length: 4 }).map((_, i) => (
+    <div key={i} className="flex gap-4 px-4 py-3 border-b border-border">
+      <div className="h-3 w-32 bg-muted rounded animate-pulse" />
+      <div className="h-3 w-20 bg-muted rounded animate-pulse" />
+      ...
+    </div>
+  ))}
+</div>`}
+      >
+        <SkeletonTable />
+      </ComponentSection>
+
+      <ComponentSection
+        title="Overlay Loading"
+        description="Full-area loading state that blocks interaction."
+        code={`<div className="relative rounded-xl border border-border p-6 h-40">
+  <div className="absolute inset-0 bg-background/80 backdrop-blur-sm flex items-center justify-center rounded-xl z-10">
+    <div className="flex flex-col items-center gap-2">
+      <Loader2 className="w-6 h-6 text-primary animate-spin" />
+      <p className="text-sm text-muted-foreground">Loading data...</p>
+    </div>
+  </div>
+  Content behind the overlay...
+</div>`}
+      >
+        <div className="relative rounded-xl border border-border p-8 h-40 w-full max-w-sm">
+          <div className="space-y-2 opacity-30">
+            <div className="h-3 bg-muted rounded w-3/4" />
+            <div className="h-3 bg-muted rounded w-1/2" />
+            <div className="h-3 bg-muted rounded w-5/6" />
+          </div>
+          <div className="absolute inset-0 bg-background/80 backdrop-blur-sm flex items-center justify-center rounded-xl z-10">
+            <div className="flex flex-col items-center gap-2">
+              <Spinner size="md" />
+              <p className="text-sm text-muted-foreground">Loading data…</p>
+            </div>
+          </div>
+        </div>
+      </ComponentSection>
+    </div>
+  );
+}
