@@ -28,24 +28,54 @@ function Dropdown({
   align?: "left" | "right";
 }) {
   const [open, setOpen] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
+  const [coords, setCoords] = useState({ top: 0, left: 0 });
+  const triggerRef = useRef<HTMLDivElement>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  const updateCoords = () => {
+    if (!triggerRef.current) return;
+    const rect = triggerRef.current.getBoundingClientRect();
+    setCoords({
+      top: rect.bottom + window.scrollY + 4,
+      left: align === "right"
+        ? rect.right + window.scrollX
+        : rect.left + window.scrollX,
+    });
+  };
+
+  const handleToggle = () => {
+    if (!open) updateCoords();
+    setOpen((p) => !p);
+  };
 
   useEffect(() => {
     const handler = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+      if (
+        triggerRef.current && !triggerRef.current.contains(e.target as Node) &&
+        menuRef.current  && !menuRef.current.contains(e.target as Node)
+      ) {
+        setOpen(false);
+      }
     };
     document.addEventListener("mousedown", handler);
     return () => document.removeEventListener("mousedown", handler);
   }, []);
 
   return (
-    <div className="relative inline-block" ref={ref}>
-      <div onClick={() => setOpen((p) => !p)}>{trigger}</div>
+    <div className="relative inline-block" ref={triggerRef}>
+      <div onClick={handleToggle}>{trigger}</div>
       {open && (
         <div
-          className={`absolute z-50 mt-1 min-w-[180px] rounded-xl border border-border bg-popover shadow-lg py-1 ${
-            align === "right" ? "right-0" : "left-0"
-          }`}
+          ref={menuRef}
+          style={{
+            position: "fixed",
+            top: coords.top,
+            ...(align === "right"
+              ? { right: `calc(100vw - ${coords.left}px)` }
+              : { left: coords.left }),
+            zIndex: 9999,
+          }}
+          className="min-w-[180px] rounded-xl border border-border bg-popover shadow-lg py-1"
         >
           {children}
         </div>
