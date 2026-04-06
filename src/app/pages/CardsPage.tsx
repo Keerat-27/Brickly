@@ -14,31 +14,31 @@ export function CardsPage() {
       <ComponentSection
         title="Basic Card"
         description="A simple card with header, body, and footer sections."
-        code={`<div className="rounded-xl border border-border bg-card text-card-foreground p-6 space-y-4">
+        code={`<div className="rounded-2xl border border-border bg-card p-6 space-y-4 w-72">
   <div>
-    <h3 className="text-card-foreground">Card Title</h3>
+    <h3 className="text-foreground font-bold text-xl">Card Title</h3>
     <p className="text-sm text-muted-foreground mt-1">Card subtitle or description</p>
   </div>
   <p className="text-sm text-muted-foreground">
-    Card content goes here. This is a flexible container.
+    Card content goes here. This is a flexible container for related content.
   </p>
-  <div className="flex gap-2 pt-2 border-t border-border">
-    <button className="px-3 py-1.5 rounded-md bg-primary text-primary-foreground text-sm">Action</button>
-    <button className="px-3 py-1.5 rounded-md border border-border text-sm">Cancel</button>
+  <div className="flex gap-2 pt-4 border-t border-border">
+    <button className="px-5 py-2 rounded-xl bg-foreground text-background text-sm font-medium">Action</button>
+    <button className="px-5 py-2 rounded-xl border border-border text-foreground text-sm font-medium">Cancel</button>
   </div>
 </div>`}
       >
-        <div className="rounded-xl border border-border bg-card p-6 space-y-4 w-72">
+        <div className="rounded-2xl border border-border bg-card p-6 space-y-4 w-72">
           <div>
-            <h3>Card Title</h3>
+            <h3 className="text-foreground" style={{ fontWeight: 700, fontSize: "1.25rem" }}>Card Title</h3>
             <p className="text-sm text-muted-foreground mt-1">Card subtitle or description</p>
           </div>
           <p className="text-sm text-muted-foreground">
             Card content goes here. This is a flexible container for related content.
           </p>
-          <div className="flex gap-2 pt-2 border-t border-border">
-            <button className="px-3 py-1.5 rounded-md bg-primary text-primary-foreground text-sm">Action</button>
-            <button className="px-3 py-1.5 rounded-md border border-border text-sm text-foreground">Cancel</button>
+          <div className="flex gap-2 pt-4 border-t border-border">
+            <button className="px-5 py-2 rounded-xl bg-foreground text-background text-sm" style={{ fontWeight: 600 }}>Action</button>
+            <button className="px-5 py-2 rounded-xl border border-border text-foreground text-sm" style={{ fontWeight: 600 }}>Cancel</button>
           </div>
         </div>
       </ComponentSection>
@@ -87,43 +87,43 @@ export function CardsPage() {
       <ComponentSection
         title="Profile / User Card"
         description="Display user information in a structured card layout."
-        code={`<div className="rounded-xl border border-border bg-card p-6 flex flex-col items-center text-center space-y-3">
-  <div className="w-16 h-16 rounded-full bg-blue-500 text-white text-xl flex items-center justify-center">AJ</div>
+        code={`<div className="rounded-2xl border border-border bg-card p-6 flex flex-col items-center text-center gap-4 w-64">
+  <div className="w-20 h-20 rounded-full bg-blue-400 text-white text-2xl flex items-center justify-center font-medium">AJ</div>
   <div>
-    <p className="text-foreground">Alice Johnson</p>
-    <p className="text-sm text-muted-foreground">Product Designer</p>
+    <p className="text-foreground font-semibold">Alice Johnson</p>
+    <p className="text-sm text-muted-foreground mt-0.5">Product Designer</p>
   </div>
-  <div className="flex gap-4 text-center text-sm">
-    <div><p className="text-foreground">128</p><p className="text-muted-foreground">Posts</p></div>
-    <div><p className="text-foreground">4.2k</p><p className="text-muted-foreground">Followers</p></div>
-    <div><p className="text-foreground">362</p><p className="text-muted-foreground">Following</p></div>
+  <div className="flex w-full text-center text-sm">
+    <div className="flex-1"><p className="text-foreground font-medium">128</p><p className="text-muted-foreground text-xs mt-0.5">Posts</p></div>
+    <div className="flex-1 border-x border-border"><p className="text-foreground font-medium">4.2k</p><p className="text-muted-foreground text-xs mt-0.5">Followers</p></div>
+    <div className="flex-1"><p className="text-foreground font-medium">362</p><p className="text-muted-foreground text-xs mt-0.5">Following</p></div>
   </div>
-  <button className="w-full px-4 py-2 rounded-lg bg-primary text-primary-foreground text-sm">Follow</button>
+  <button className="w-full py-2.5 rounded-xl bg-foreground text-background text-sm font-semibold">Follow</button>
 </div>`}
       >
-        <div className="rounded-xl border border-border bg-card p-6 flex flex-col items-center text-center space-y-3 w-60">
-          <div className="w-16 h-16 rounded-full bg-blue-500 text-white text-xl flex items-center justify-center">
+        <div className="rounded-2xl border border-border bg-card p-6 flex flex-col items-center text-center gap-4 w-64">
+          <div className="w-20 h-20 rounded-full bg-blue-400 text-white text-2xl flex items-center justify-center" style={{ fontWeight: 500 }}>
             AJ
           </div>
           <div>
-            <p className="text-foreground">Alice Johnson</p>
-            <p className="text-sm text-muted-foreground">Product Designer</p>
+            <p className="text-foreground" style={{ fontWeight: 600 }}>Alice Johnson</p>
+            <p className="text-sm text-muted-foreground mt-0.5">Product Designer</p>
           </div>
-          <div className="flex gap-4 text-center text-sm w-full">
+          <div className="flex w-full text-center text-sm">
             <div className="flex-1">
-              <p className="text-foreground">128</p>
-              <p className="text-muted-foreground text-xs">Posts</p>
+              <p className="text-foreground" style={{ fontWeight: 500 }}>128</p>
+              <p className="text-muted-foreground text-xs mt-0.5">Posts</p>
             </div>
             <div className="flex-1 border-x border-border">
-              <p className="text-foreground">4.2k</p>
-              <p className="text-muted-foreground text-xs">Followers</p>
+              <p className="text-foreground" style={{ fontWeight: 500 }}>4.2k</p>
+              <p className="text-muted-foreground text-xs mt-0.5">Followers</p>
             </div>
             <div className="flex-1">
-              <p className="text-foreground">362</p>
-              <p className="text-muted-foreground text-xs">Following</p>
+              <p className="text-foreground" style={{ fontWeight: 500 }}>362</p>
+              <p className="text-muted-foreground text-xs mt-0.5">Following</p>
             </div>
           </div>
-          <button className="w-full px-4 py-2 rounded-lg bg-primary text-primary-foreground text-sm">
+          <button className="w-full py-2.5 rounded-xl bg-foreground text-background text-sm" style={{ fontWeight: 600 }}>
             Follow
           </button>
         </div>
