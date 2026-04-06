@@ -23,8 +23,8 @@ function Input({
   const [showPw, setShowPw] = useState(false);
 
   return (
-    <div className="space-y-1.5 w-full">
-      {label && <label className="text-sm text-foreground">{label}</label>}
+    <div className="space-y-1 w-full">
+      {label && <label className="block text-sm text-foreground">{label}</label>}
       <div className="relative">
         {icon && (
           <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">
@@ -181,8 +181,8 @@ export function FormsPage() {
   <p className="text-xs text-muted-foreground text-right">0 / 500</p>
 </div>`}
       >
-        <div className="w-full max-w-sm space-y-1.5">
-          <label className="text-sm text-foreground">Message</label>
+        <div className="w-full max-w-sm space-y-1">
+          <label className="block text-sm text-foreground">Message</label>
           <textarea
             rows={4}
             placeholder="Write your message here…"
@@ -207,8 +207,8 @@ export function FormsPage() {
 </div>`}
       >
         <div className="flex flex-col gap-4 w-full max-w-sm">
-          <div className="space-y-1.5">
-            <label className="text-sm text-foreground">Framework</label>
+          <div className="space-y-1">
+            <label className="block text-sm text-foreground">Framework</label>
             <div className="relative">
               <select className="w-full appearance-none px-3 py-2 pr-9 rounded-lg border border-border bg-background text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-ring">
                 <option>Choose a framework</option>
