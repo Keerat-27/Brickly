@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Outlet } from "react-router";
 import { Sidebar } from "./Sidebar";
 import { Header } from "./Header";
@@ -7,9 +7,12 @@ export function Layout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
 
+  useEffect(() => {
+    document.documentElement.classList.toggle("dark", darkMode);
+  }, [darkMode]);
+
   return (
-    <div className={darkMode ? "dark" : ""}>
-      <div className="flex h-screen bg-background text-foreground overflow-hidden">
+    <div className="flex h-screen bg-background text-foreground overflow-hidden">
         {/* Mobile overlay */}
         {sidebarOpen && (
           <div
@@ -38,6 +41,5 @@ export function Layout() {
           </main>
         </div>
       </div>
-    </div>
   );
 }
