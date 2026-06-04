@@ -78,7 +78,7 @@ export function OverviewPage() {
             <ArrowRight className="w-4 h-4" />
           </Link>
           <a
-            href="https://github.com"
+            href="https://github.com/Keerat-27/Brickly"
             className="flex items-center gap-2 px-4 py-2 rounded-lg border border-border text-sm hover:bg-accent transition-colors"
           >
             View on GitHub

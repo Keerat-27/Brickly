@@ -103,7 +103,7 @@ export function Header({ onMenuClick, darkMode, onDarkModeToggle }: HeaderProps)
         </button>
         <div className="h-6 w-px bg-border" />
         <a
-          href="https://github.com"
+          href="https://github.com/Keerat-27/Brickly"
           target="_blank"
           rel="noopener noreferrer"
           className="px-3 py-1.5 rounded-md bg-primary text-primary-foreground text-xs hover:opacity-90 transition-opacity"
