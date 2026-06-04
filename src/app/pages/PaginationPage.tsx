@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { PageHeader } from "../components/ui/PageHeader";
 import { ComponentSection } from "../components/ui/ComponentSection";
+import { Button } from "../components/ui/button";
 import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, MoreHorizontal } from "lucide-react";
 
-/* ─── Helpers ────────────────────────────────────── */
 function getPages(current: number, total: number, delta = 2): (number | "…")[] {
   const pages: (number | "…")[] = [];
-  const left  = current - delta;
+  const left = current - delta;
   const right = current + delta;
 
   for (let i = 1; i <= total; i++) {
@@ -22,7 +22,6 @@ function getPages(current: number, total: number, delta = 2): (number | "…")[]
   return pages;
 }
 
-/* ─── Default pagination ─────────────────────────── */
 function Pagination({
   total,
   value,
@@ -36,32 +35,17 @@ function Pagination({
 }) {
   const pages = getPages(value, total);
 
-  const btnBase =
-    "inline-flex items-center justify-center h-8 min-w-[2rem] px-2 rounded-lg text-sm transition-colors disabled:opacity-40 disabled:cursor-not-allowed";
-
-  const active =
-    variant === "outline"
-      ? `${btnBase} border border-primary text-primary bg-primary/5`
-      : variant === "minimal"
-      ? `${btnBase} text-primary underline underline-offset-2`
-      : `${btnBase} bg-primary text-primary-foreground`;
-
-  const inactive =
-    variant === "outline"
-      ? `${btnBase} border border-border text-foreground hover:bg-accent`
-      : variant === "minimal"
-      ? `${btnBase} text-muted-foreground hover:text-foreground`
-      : `${btnBase} text-foreground hover:bg-accent`;
-
   return (
     <nav className="flex items-center gap-1" aria-label="Pagination">
-      <button
-        className={`${btnBase} text-muted-foreground hover:bg-accent`}
+      <Button
+        variant="ghost"
+        size="icon"
+        className="h-8 w-8"
         disabled={value === 1}
         onClick={() => onChange(value - 1)}
       >
         <ChevronLeft className="w-4 h-4" />
-      </button>
+      </Button>
 
       {pages.map((page, i) =>
         page === "…" ? (
@@ -69,72 +53,72 @@ function Pagination({
             <MoreHorizontal className="w-4 h-4" />
           </span>
         ) : (
-          <button
+          <Button
             key={page}
-            onClick={() => onChange(page)}
-            className={page === value ? active : inactive}
+            size="sm"
+            onClick={() => onChange(page as number)}
+            variant={
+              page === value
+                ? variant === "outline"
+                  ? "outline"
+                  : variant === "minimal"
+                  ? "link"
+                  : "default"
+                : "ghost"
+            }
+            className={`h-8 min-w-[2rem] px-2 ${
+              page === value && variant === "outline"
+                ? "border-primary text-primary bg-primary/5"
+                : page === value && variant === "minimal"
+                ? "underline underline-offset-2 h-8 text-primary"
+                : page !== value
+                ? "text-foreground"
+                : ""
+            }`}
           >
             {page}
-          </button>
+          </Button>
         )
       )}
 
-      <button
-        className={`${btnBase} text-muted-foreground hover:bg-accent`}
+      <Button
+        variant="ghost"
+        size="icon"
+        className="h-8 w-8"
         disabled={value === total}
         onClick={() => onChange(value + 1)}
       >
         <ChevronRight className="w-4 h-4" />
-      </button>
+      </Button>
     </nav>
   );
 }
 
-/* ─── Full controls ───────────────────────────────── */
 function FullPagination({ total }: { total: number }) {
   const [page, setPage] = useState(1);
   return (
     <nav className="flex items-center gap-1" aria-label="Full Pagination">
-      <button
-        className="inline-flex items-center justify-center h-8 w-8 rounded-lg text-muted-foreground hover:bg-accent transition-colors disabled:opacity-40"
-        disabled={page === 1}
-        onClick={() => setPage(1)}
-      >
+      <Button variant="ghost" size="icon" className="h-8 w-8" disabled={page === 1} onClick={() => setPage(1)}>
         <ChevronsLeft className="w-4 h-4" />
-      </button>
-      <button
-        className="inline-flex items-center justify-center h-8 w-8 rounded-lg text-muted-foreground hover:bg-accent transition-colors disabled:opacity-40"
-        disabled={page === 1}
-        onClick={() => setPage((p) => p - 1)}
-      >
+      </Button>
+      <Button variant="ghost" size="icon" className="h-8 w-8" disabled={page === 1} onClick={() => setPage((p) => p - 1)}>
         <ChevronLeft className="w-4 h-4" />
-      </button>
+      </Button>
 
       <span className="px-3 text-sm text-muted-foreground">
-        Page{" "}
-        <span className="text-foreground">{page}</span>
-        {" "}of {total}
+        Page <span className="text-foreground">{page}</span> of {total}
       </span>
 
-      <button
-        className="inline-flex items-center justify-center h-8 w-8 rounded-lg text-muted-foreground hover:bg-accent transition-colors disabled:opacity-40"
-        disabled={page === total}
-        onClick={() => setPage((p) => p + 1)}
-      >
+      <Button variant="ghost" size="icon" className="h-8 w-8" disabled={page === total} onClick={() => setPage((p) => p + 1)}>
         <ChevronRight className="w-4 h-4" />
-      </button>
-      <button
-        className="inline-flex items-center justify-center h-8 w-8 rounded-lg text-muted-foreground hover:bg-accent transition-colors disabled:opacity-40"
-        disabled={page === total}
-        onClick={() => setPage(total)}
-      >
+      </Button>
+      <Button variant="ghost" size="icon" className="h-8 w-8" disabled={page === total} onClick={() => setPage(total)}>
         <ChevronsRight className="w-4 h-4" />
-      </button>
+      </Button>
     </nav>
   );
 }
 
-/* ─── Per-page selector ──────────────────────────── */
 function PaginationWithSize() {
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(10);
@@ -161,7 +145,6 @@ function PaginationWithSize() {
   );
 }
 
-/* ─── Pill variant ────────────────────────────────── */
 function PillPagination() {
   const [page, setPage] = useState(3);
   const total = 8;
@@ -169,13 +152,14 @@ function PillPagination() {
 
   return (
     <nav className="flex items-center gap-1">
-      <button
+      <Button
+        variant="ghost"
         onClick={() => setPage((p) => Math.max(1, p - 1))}
         disabled={page === 1}
-        className="h-8 px-3 rounded-full text-sm text-muted-foreground hover:bg-accent transition-colors disabled:opacity-40 flex items-center gap-1"
+        className="h-8 px-3 rounded-full text-sm flex items-center gap-1"
       >
         <ChevronLeft className="w-3.5 h-3.5" /> Prev
-      </button>
+      </Button>
 
       {pages.map((p, i) =>
         p === "…" ? (
@@ -183,25 +167,25 @@ function PillPagination() {
             <MoreHorizontal className="w-4 h-4" />
           </span>
         ) : (
-          <button
+          <Button
             key={p}
-            onClick={() => setPage(p)}
-            className={`h-8 min-w-[2rem] px-2.5 rounded-full text-sm transition-colors ${
-              p === page ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:bg-accent hover:text-foreground"
-            }`}
+            onClick={() => setPage(p as number)}
+            variant={p === page ? "default" : "ghost"}
+            className="h-8 min-w-[2rem] px-2.5 rounded-full text-sm"
           >
             {p}
-          </button>
+          </Button>
         )
       )}
 
-      <button
+      <Button
+        variant="ghost"
         onClick={() => setPage((p) => Math.min(total, p + 1))}
         disabled={page === total}
-        className="h-8 px-3 rounded-full text-sm text-muted-foreground hover:bg-accent transition-colors disabled:opacity-40 flex items-center gap-1"
+        className="h-8 px-3 rounded-full text-sm flex items-center gap-1"
       >
         Next <ChevronRight className="w-3.5 h-3.5" />
-      </button>
+      </Button>
     </nav>
   );
 }
@@ -222,23 +206,13 @@ export function PaginationPage() {
       <ComponentSection
         title="Default"
         description="Filled active page indicator with ellipsis for large page counts."
-        code={`function getPages(current, total, delta = 2) {
-  const pages = [];
-  for (let i = 1; i <= total; i++) {
-    if (i === 1 || i === total || (i >= current - delta && i <= current + delta))
-      pages.push(i);
-    else if (i === current - delta - 1 || i === current + delta + 1)
-      pages.push("…");
-  }
-  return pages;
-}
+        code={`import { Button } from "@/components/ui/button";
 
-<button onClick={() => setPage(p => p - 1)}><ChevronLeft /></button>
-{pages.map(p => p === "…"
-  ? <MoreHorizontal />
-  : <button className={p === page ? "bg-primary text-primary-foreground" : ""}>{p}</button>
-)}
-<button onClick={() => setPage(p => p + 1)}><ChevronRight /></button>`}
+<Button variant="default" size="sm">5</Button>  {/* active */}
+<Button variant="ghost" size="sm">6</Button>     {/* inactive */}
+<Button variant="ghost" size="icon" className="h-8 w-8">
+  <ChevronLeft className="w-4 h-4" />
+</Button>`}
       >
         <Pagination total={12} value={page1} onChange={setPage1} />
       </ComponentSection>
@@ -246,8 +220,8 @@ export function PaginationPage() {
       <ComponentSection
         title="Outline Style"
         description="Bordered page buttons — a softer alternative to the filled style."
-        code={`<button className="border border-primary text-primary bg-primary/5 ...">5</button>
-<button className="border border-border text-foreground hover:bg-accent ...">6</button>`}
+        code={`<Button variant="outline" size="sm" className="border-primary text-primary bg-primary/5">5</Button>
+<Button variant="ghost" size="sm">6</Button>`}
       >
         <Pagination total={10} value={page2} onChange={setPage2} variant="outline" />
       </ComponentSection>
@@ -255,14 +229,13 @@ export function PaginationPage() {
       <ComponentSection
         title="Pill Buttons"
         description="Fully rounded buttons with labeled Prev / Next arrows."
-        code={`<button className="h-8 px-3 rounded-full ... flex items-center gap-1">
+        code={`<Button variant="ghost" className="rounded-full h-8 px-3 flex items-center gap-1">
   <ChevronLeft /> Prev
-</button>
-{pages.map(p => (
-  <button className={p === page ? "rounded-full bg-primary ..." : "rounded-full ..."}>
-    {p}
-  </button>
-))}`}
+</Button>
+<Button variant="default" className="rounded-full h-8 min-w-[2rem] px-2.5">5</Button>
+<Button variant="ghost" className="rounded-full h-8 px-3 flex items-center gap-1">
+  Next <ChevronRight />
+</Button>`}
       >
         <PillPagination />
       </ComponentSection>
@@ -270,8 +243,8 @@ export function PaginationPage() {
       <ComponentSection
         title="Minimal"
         description="Lightweight text-only style for clean interfaces."
-        code={`<button className="text-primary underline underline-offset-2 ...">5</button>
-<button className="text-muted-foreground hover:text-foreground ...">6</button>`}
+        code={`<Button variant="link" size="sm" className="underline underline-offset-2 text-primary">5</Button>
+<Button variant="ghost" size="sm" className="text-foreground">6</Button>`}
       >
         <Pagination total={8} value={page3} onChange={setPage3} variant="minimal" />
       </ComponentSection>
@@ -279,11 +252,13 @@ export function PaginationPage() {
       <ComponentSection
         title="Full Controls"
         description="First, previous, next, and last buttons with a page indicator."
-        code={`<button onClick={() => setPage(1)}><ChevronsLeft /></button>
-<button onClick={() => setPage(p => p - 1)}><ChevronLeft /></button>
+        code={`<Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => setPage(1)}>
+  <ChevronsLeft />
+</Button>
 <span>Page {page} of {total}</span>
-<button onClick={() => setPage(p => p + 1)}><ChevronRight /></button>
-<button onClick={() => setPage(total)}><ChevronsRight /></button>`}
+<Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => setPage(total)}>
+  <ChevronsRight />
+</Button>`}
       >
         <FullPagination total={15} />
       </ComponentSection>
@@ -291,10 +266,13 @@ export function PaginationPage() {
       <ComponentSection
         title="With Page Size Selector"
         description="Combines pagination with a rows-per-page select and a result count."
-        code={`<select value={size} onChange={e => setSize(+e.target.value)}>
+        code={`<select value={size} onChange={e => setSize(+e.target.value)}
+  className="rounded-lg border border-border bg-background text-foreground px-2 py-1 text-sm">
   {[5, 10, 20, 50].map(n => <option key={n}>{n}</option>)}
 </select>
-<span>Showing {(page - 1) * size + 1}–{Math.min(page * size, total)} of {total}</span>`}
+<span className="text-sm text-muted-foreground">
+  Showing {(page - 1) * size + 1}–{Math.min(page * size, total)} of {total}
+</span>`}
       >
         <PaginationWithSize />
       </ComponentSection>

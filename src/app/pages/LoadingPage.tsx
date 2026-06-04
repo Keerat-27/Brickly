@@ -1,5 +1,6 @@
 import { PageHeader } from "../components/ui/PageHeader";
 import { ComponentSection } from "../components/ui/ComponentSection";
+import { Skeleton } from "../components/ui/skeleton";
 import { Loader2 } from "lucide-react";
 
 function Spinner({ size = "md", color = "primary" }: { size?: "sm" | "md" | "lg" | "xl"; color?: "primary" | "white" | "muted" }) {
@@ -8,24 +9,20 @@ function Spinner({ size = "md", color = "primary" }: { size?: "sm" | "md" | "lg"
   return <Loader2 className={`${sizes[size]} ${colors[color]} animate-spin`} />;
 }
 
-function SkeletonBox({ className = "", style }: { className?: string; style?: React.CSSProperties }) {
-  return <div className={`bg-muted rounded-md animate-pulse ${className}`} style={style} />;
-}
-
 function SkeletonCard() {
   return (
     <div className="rounded-xl border border-border p-5 space-y-4 w-64">
       <div className="flex items-center gap-3">
-        <SkeletonBox className="w-10 h-10 rounded-full" />
+        <Skeleton className="w-10 h-10 rounded-full" />
         <div className="flex-1 space-y-1.5">
-          <SkeletonBox className="h-3 w-3/4" />
-          <SkeletonBox className="h-3 w-1/2" />
+          <Skeleton className="h-3 w-3/4" />
+          <Skeleton className="h-3 w-1/2" />
         </div>
       </div>
-      <SkeletonBox className="h-3 w-full" />
-      <SkeletonBox className="h-3 w-5/6" />
-      <SkeletonBox className="h-3 w-4/6" />
-      <SkeletonBox className="h-8 w-full rounded-lg" />
+      <Skeleton className="h-3 w-full" />
+      <Skeleton className="h-3 w-5/6" />
+      <Skeleton className="h-3 w-4/6" />
+      <Skeleton className="h-8 w-full rounded-lg" />
     </div>
   );
 }
@@ -35,15 +32,15 @@ function SkeletonTable() {
     <div className="w-full rounded-xl border border-border overflow-hidden">
       <div className="flex gap-4 px-4 py-3 bg-muted/50 border-b border-border">
         {[120, 80, 60, 80].map((w, i) => (
-          <SkeletonBox key={i} className="h-3" style={{ width: w }} />
+          <Skeleton key={i} className="h-3" style={{ width: w }} />
         ))}
       </div>
       {Array.from({ length: 4 }).map((_, i) => (
         <div key={i} className="flex gap-4 px-4 py-3 border-b border-border last:border-0">
-          <SkeletonBox className="h-3 w-32" />
-          <SkeletonBox className="h-3 w-20" />
-          <SkeletonBox className="h-5 w-16 rounded-full" />
-          <SkeletonBox className="h-3 w-20" />
+          <Skeleton className="h-3 w-32" />
+          <Skeleton className="h-3 w-20" />
+          <Skeleton className="h-5 w-16 rounded-full" />
+          <Skeleton className="h-3 w-20" />
         </div>
       ))}
     </div>
@@ -78,12 +75,6 @@ function PulseLoader() {
   );
 }
 
-function RingSpinner() {
-  return (
-    <div className="w-8 h-8 rounded-full border-4 border-muted border-t-primary animate-spin" />
-  );
-}
-
 export function LoadingPage() {
   return (
     <div className="space-y-10">
@@ -108,7 +99,7 @@ import { Loader2 } from "lucide-react";
           <Spinner size="md" />
           <Spinner size="lg" />
           <Spinner size="xl" />
-          <RingSpinner />
+          <div className="w-8 h-8 rounded-full border-4 border-muted border-t-primary animate-spin" />
           <div className="w-8 h-8 rounded-full border-4 border-muted border-t-blue-500 animate-spin" />
           <div className="w-8 h-8 rounded-full border-4 border-muted border-t-green-500 animate-spin" />
         </div>
@@ -127,37 +118,38 @@ import { Loader2 } from "lucide-react";
   ))}
 </div>`}
       >
-        <Dots />
-        <PulseLoader />
-        <div className="flex gap-1.5 items-center">
-          {[0, 1, 2, 3, 4].map((i) => (
-            <div
-              key={i}
-              className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-bounce"
-              style={{ animationDelay: `${i * 0.12}s` }}
-            />
-          ))}
+        <div className="flex flex-col gap-4">
+          <Dots />
+          <PulseLoader />
+          <div className="flex gap-1.5 items-center">
+            {[0, 1, 2, 3, 4].map((i) => (
+              <div
+                key={i}
+                className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-bounce"
+                style={{ animationDelay: `${i * 0.12}s` }}
+              />
+            ))}
+          </div>
         </div>
       </ComponentSection>
 
       <ComponentSection
         title="Skeleton Cards"
         description="Placeholder content while data is loading."
-        code={`function SkeletonCard() {
-  return (
-    <div className="rounded-xl border border-border p-5 space-y-4">
-      <div className="flex items-center gap-3">
-        <div className="w-10 h-10 rounded-full bg-muted animate-pulse" />
-        <div className="flex-1 space-y-1.5">
-          <div className="h-3 bg-muted rounded animate-pulse w-3/4" />
-          <div className="h-3 bg-muted rounded animate-pulse w-1/2" />
-        </div>
-      </div>
-      <div className="h-3 bg-muted rounded animate-pulse" />
-      <div className="h-3 bg-muted rounded animate-pulse w-5/6" />
+        code={`import { Skeleton } from "@/components/ui/skeleton";
+
+<div className="rounded-xl border border-border p-5 space-y-4">
+  <div className="flex items-center gap-3">
+    <Skeleton className="w-10 h-10 rounded-full" />
+    <div className="flex-1 space-y-1.5">
+      <Skeleton className="h-3 w-3/4" />
+      <Skeleton className="h-3 w-1/2" />
     </div>
-  );
-}`}
+  </div>
+  <Skeleton className="h-3 w-full" />
+  <Skeleton className="h-3 w-5/6" />
+  <Skeleton className="h-8 w-full rounded-lg" />
+</div>`}
       >
         <div className="flex flex-wrap gap-4">
           <SkeletonCard />
@@ -171,14 +163,14 @@ import { Loader2 } from "lucide-react";
         code={`<div className="w-full rounded-xl border border-border overflow-hidden">
   <div className="flex gap-4 px-4 py-3 bg-muted/50 border-b border-border">
     {[120, 80, 60, 80].map((w, i) => (
-      <div key={i} className="h-3 bg-muted rounded animate-pulse" style={{ width: w }} />
+      <Skeleton key={i} className="h-3" style={{ width: w }} />
     ))}
   </div>
   {Array.from({ length: 4 }).map((_, i) => (
     <div key={i} className="flex gap-4 px-4 py-3 border-b border-border">
-      <div className="h-3 w-32 bg-muted rounded animate-pulse" />
-      <div className="h-3 w-20 bg-muted rounded animate-pulse" />
-      ...
+      <Skeleton className="h-3 w-32" />
+      <Skeleton className="h-3 w-20" />
+      <Skeleton className="h-5 w-16 rounded-full" />
     </div>
   ))}
 </div>`}
@@ -196,14 +188,13 @@ import { Loader2 } from "lucide-react";
       <p className="text-sm text-muted-foreground">Loading data...</p>
     </div>
   </div>
-  Content behind the overlay...
 </div>`}
       >
         <div className="relative rounded-xl border border-border p-8 h-40 w-full max-w-sm">
           <div className="space-y-2 opacity-30">
-            <div className="h-3 bg-muted rounded w-3/4" />
-            <div className="h-3 bg-muted rounded w-1/2" />
-            <div className="h-3 bg-muted rounded w-5/6" />
+            <Skeleton className="h-3 w-3/4" />
+            <Skeleton className="h-3 w-1/2" />
+            <Skeleton className="h-3 w-5/6" />
           </div>
           <div className="absolute inset-0 bg-background/80 backdrop-blur-sm flex items-center justify-center rounded-xl z-10">
             <div className="flex flex-col items-center gap-2">

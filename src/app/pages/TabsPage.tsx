@@ -1,110 +1,8 @@
 import { PageHeader } from "../components/ui/PageHeader";
 import { ComponentSection } from "../components/ui/ComponentSection";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "../components/ui/tabs";
 import { useState } from "react";
 import { User, Bell, Lock, CreditCard } from "lucide-react";
-
-function Tabs({
-  tabs,
-  variant = "default",
-}: {
-  tabs: { label: string; icon?: React.ReactNode; content: React.ReactNode }[];
-  variant?: "default" | "pills" | "underline";
-}) {
-  const [active, setActive] = useState(0);
-
-  const containerStyles = {
-    default: "border-b border-border",
-    pills: "flex gap-1 bg-muted p-1 rounded-lg",
-    underline: "border-b border-border",
-  };
-
-  const tabStyles = {
-    default: (i: number) =>
-      `px-4 py-2.5 text-sm transition-colors border-b-2 -mb-px ${
-        i === active
-          ? "border-primary text-foreground"
-          : "border-transparent text-muted-foreground hover:text-foreground"
-      }`,
-    pills: (i: number) =>
-      `px-3 py-1.5 text-sm rounded-md transition-colors ${
-        i === active
-          ? "bg-background text-foreground shadow-sm"
-          : "text-muted-foreground hover:text-foreground"
-      }`,
-    underline: (i: number) =>
-      `px-4 py-2.5 text-sm transition-colors border-b-2 -mb-px ${
-        i === active
-          ? "border-primary text-primary"
-          : "border-transparent text-muted-foreground hover:text-foreground hover:border-border"
-      }`,
-  };
-
-  return (
-    <div className="w-full">
-      <div className={`flex ${containerStyles[variant]}`}>
-        {tabs.map((tab, i) => (
-          <button
-            key={i}
-            onClick={() => setActive(i)}
-            className={`flex items-center gap-2 ${tabStyles[variant](i)}`}
-          >
-            {tab.icon}
-            {tab.label}
-          </button>
-        ))}
-      </div>
-      <div className="pt-4">{tabs[active].content}</div>
-    </div>
-  );
-}
-
-const profileTabs = [
-  {
-    label: "Profile",
-    icon: <User className="w-4 h-4" />,
-    content: (
-      <div className="space-y-3">
-        <p className="text-sm text-muted-foreground">Manage your personal information and profile settings.</p>
-        <div className="space-y-2">
-          {["Full Name", "Email", "Bio"].map((field) => (
-            <div key={field} className="flex items-center justify-between py-2 border-b border-border">
-              <span className="text-sm text-muted-foreground">{field}</span>
-              <span className="text-sm text-foreground">—</span>
-            </div>
-          ))}
-        </div>
-      </div>
-    ),
-  },
-  {
-    label: "Notifications",
-    icon: <Bell className="w-4 h-4" />,
-    content: (
-      <p className="text-sm text-muted-foreground">Configure how you receive notifications and alerts.</p>
-    ),
-  },
-  {
-    label: "Security",
-    icon: <Lock className="w-4 h-4" />,
-    content: (
-      <p className="text-sm text-muted-foreground">Update your password and manage two-factor authentication.</p>
-    ),
-  },
-  {
-    label: "Billing",
-    icon: <CreditCard className="w-4 h-4" />,
-    content: (
-      <p className="text-sm text-muted-foreground">Manage your subscription plan and payment methods.</p>
-    ),
-  },
-];
-
-const simpleTabs = [
-  { label: "Overview", content: <p className="text-sm text-muted-foreground">Overview content goes here.</p> },
-  { label: "Analytics", content: <p className="text-sm text-muted-foreground">Analytics content goes here.</p> },
-  { label: "Reports", content: <p className="text-sm text-muted-foreground">Reports content goes here.</p> },
-  { label: "Settings", content: <p className="text-sm text-muted-foreground">Settings content goes here.</p> },
-];
 
 function VerticalTabs() {
   const [active, setActive] = useState(0);
@@ -145,70 +43,124 @@ export function TabsPage() {
       />
 
       <ComponentSection
-        title="Default Tabs"
-        description="Classic underline tabs with icon support."
-        code={`const [active, setActive] = useState(0);
-const tabs = ["Profile", "Notifications", "Security", "Billing"];
+        title="Pill Tabs (Default)"
+        description="Rounded pill-style tabs in a contained background — the default shadcn style."
+        code={`import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 
-<div className="flex border-b border-border">
-  {tabs.map((tab, i) => (
-    <button
-      key={tab}
-      onClick={() => setActive(i)}
-      className={\`px-4 py-2.5 text-sm border-b-2 -mb-px transition-colors \${
-        i === active ? "border-primary text-foreground" : "border-transparent text-muted-foreground"
-      }\`}
-    >
-      {tab}
-    </button>
-  ))}
-</div>`}
+<Tabs defaultValue="overview">
+  <TabsList>
+    <TabsTrigger value="overview">Overview</TabsTrigger>
+    <TabsTrigger value="analytics">Analytics</TabsTrigger>
+    <TabsTrigger value="reports">Reports</TabsTrigger>
+    <TabsTrigger value="settings">Settings</TabsTrigger>
+  </TabsList>
+  <TabsContent value="overview">Overview content here.</TabsContent>
+  <TabsContent value="analytics">Analytics content here.</TabsContent>
+</Tabs>`}
       >
         <div className="w-full">
-          <Tabs tabs={profileTabs} variant="default" />
+          <Tabs defaultValue="overview">
+            <TabsList>
+              <TabsTrigger value="overview">Overview</TabsTrigger>
+              <TabsTrigger value="analytics">Analytics</TabsTrigger>
+              <TabsTrigger value="reports">Reports</TabsTrigger>
+              <TabsTrigger value="settings">Settings</TabsTrigger>
+            </TabsList>
+            <TabsContent value="overview">
+              <p className="text-sm text-muted-foreground pt-2">Overview content goes here.</p>
+            </TabsContent>
+            <TabsContent value="analytics">
+              <p className="text-sm text-muted-foreground pt-2">Analytics content goes here.</p>
+            </TabsContent>
+            <TabsContent value="reports">
+              <p className="text-sm text-muted-foreground pt-2">Reports content goes here.</p>
+            </TabsContent>
+            <TabsContent value="settings">
+              <p className="text-sm text-muted-foreground pt-2">Settings content goes here.</p>
+            </TabsContent>
+          </Tabs>
         </div>
       </ComponentSection>
 
       <ComponentSection
-        title="Pill Tabs"
-        description="Rounded pill-style tabs in a contained background."
-        code={`<div className="flex gap-1 bg-muted p-1 rounded-lg">
-  {tabs.map((tab, i) => (
-    <button
-      key={tab}
-      onClick={() => setActive(i)}
-      className={\`px-3 py-1.5 text-sm rounded-md transition-colors \${
-        i === active ? "bg-background text-foreground shadow-sm" : "text-muted-foreground"
-      }\`}
-    >
-      {tab}
-    </button>
-  ))}
-</div>`}
+        title="With Icons"
+        description="Tabs with leading icons for richer navigation."
+        code={`<Tabs defaultValue="profile">
+  <TabsList>
+    <TabsTrigger value="profile"><User className="w-4 h-4" />Profile</TabsTrigger>
+    <TabsTrigger value="notifications"><Bell className="w-4 h-4" />Notifications</TabsTrigger>
+    <TabsTrigger value="security"><Lock className="w-4 h-4" />Security</TabsTrigger>
+    <TabsTrigger value="billing"><CreditCard className="w-4 h-4" />Billing</TabsTrigger>
+  </TabsList>
+</Tabs>`}
       >
         <div className="w-full">
-          <Tabs tabs={simpleTabs} variant="pills" />
+          <Tabs defaultValue="profile">
+            <TabsList>
+              <TabsTrigger value="profile"><User className="w-4 h-4" />Profile</TabsTrigger>
+              <TabsTrigger value="notifications"><Bell className="w-4 h-4" />Notifications</TabsTrigger>
+              <TabsTrigger value="security"><Lock className="w-4 h-4" />Security</TabsTrigger>
+              <TabsTrigger value="billing"><CreditCard className="w-4 h-4" />Billing</TabsTrigger>
+            </TabsList>
+            <TabsContent value="profile">
+              <div className="space-y-3 pt-2">
+                <p className="text-sm text-muted-foreground">Manage your personal information and profile settings.</p>
+                <div className="space-y-2">
+                  {["Full Name", "Email", "Bio"].map((field) => (
+                    <div key={field} className="flex items-center justify-between py-2 border-b border-border">
+                      <span className="text-sm text-muted-foreground">{field}</span>
+                      <span className="text-sm text-foreground">—</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </TabsContent>
+            <TabsContent value="notifications">
+              <p className="text-sm text-muted-foreground pt-2">Configure how you receive notifications and alerts.</p>
+            </TabsContent>
+            <TabsContent value="security">
+              <p className="text-sm text-muted-foreground pt-2">Update your password and manage two-factor authentication.</p>
+            </TabsContent>
+            <TabsContent value="billing">
+              <p className="text-sm text-muted-foreground pt-2">Manage your subscription plan and payment methods.</p>
+            </TabsContent>
+          </Tabs>
         </div>
       </ComponentSection>
 
       <ComponentSection
-        title="Underline Tabs"
-        description="Minimal tabs with a colored underline on the active item."
-        code={`<div className="flex border-b border-border">
-  {tabs.map((tab, i) => (
-    <button
-      key={tab}
-      className={\`px-4 py-2.5 text-sm border-b-2 -mb-px \${
-        i === active ? "border-primary text-primary" : "border-transparent text-muted-foreground"
-      }\`}
+        title="Underline Style"
+        description="Classic underline tabs — extended from the shadcn base using className overrides."
+        code={`<Tabs defaultValue="tab1">
+  <TabsList className="bg-transparent border-b rounded-none h-auto p-0 w-full justify-start gap-0">
+    <TabsTrigger
+      value="tab1"
+      className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary
+        data-[state=active]:bg-transparent data-[state=active]:shadow-none px-4 py-2.5"
     >
-      {tab}
-    </button>
-  ))}
-</div>`}
+      Tab 1
+    </TabsTrigger>
+  </TabsList>
+</Tabs>`}
       >
         <div className="w-full">
-          <Tabs tabs={simpleTabs} variant="underline" />
+          <Tabs defaultValue="overview">
+            <TabsList className="bg-transparent border-b border-border rounded-none h-auto p-0 w-full justify-start gap-0">
+              {["Overview", "Analytics", "Reports", "Settings"].map((tab) => (
+                <TabsTrigger
+                  key={tab}
+                  value={tab.toLowerCase()}
+                  className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:shadow-none data-[state=active]:text-foreground text-muted-foreground px-4 py-2.5 -mb-px"
+                >
+                  {tab}
+                </TabsTrigger>
+              ))}
+            </TabsList>
+            <TabsContent value="overview"><p className="text-sm text-muted-foreground pt-3">Overview content goes here.</p></TabsContent>
+            <TabsContent value="analytics"><p className="text-sm text-muted-foreground pt-3">Analytics content goes here.</p></TabsContent>
+            <TabsContent value="reports"><p className="text-sm text-muted-foreground pt-3">Reports content goes here.</p></TabsContent>
+            <TabsContent value="settings"><p className="text-sm text-muted-foreground pt-3">Settings content goes here.</p></TabsContent>
+          </Tabs>
         </div>
       </ComponentSection>
 
@@ -218,12 +170,7 @@ const tabs = ["Profile", "Notifications", "Security", "Billing"];
         code={`<div className="flex gap-4">
   <div className="flex flex-col w-36 border-r border-border pr-2 space-y-0.5">
     {tabs.map((tab, i) => (
-      <button
-        key={tab}
-        className={\`text-left px-3 py-2 rounded-md text-sm \${
-          i === active ? "bg-accent text-foreground" : "text-muted-foreground hover:bg-accent"
-        }\`}
-      >
+      <button key={tab} className={i === active ? "bg-accent text-foreground" : "text-muted-foreground"}>
         {tab}
       </button>
     ))}

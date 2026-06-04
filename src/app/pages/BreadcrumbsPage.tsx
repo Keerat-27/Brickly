@@ -1,91 +1,18 @@
+import React from "react";
 import { PageHeader } from "../components/ui/PageHeader";
 import { ComponentSection } from "../components/ui/ComponentSection";
-import { ChevronRight, Home, Slash, MoreHorizontal } from "lucide-react";
+import {
+  Breadcrumb,
+  BreadcrumbList,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+  BreadcrumbEllipsis,
+} from "../components/ui/breadcrumb";
+import { Home, Slash } from "lucide-react";
 
-/* ─── Types ──────────────────────────────────────── */
 type Crumb = { label: string; href?: string };
-
-/* ─── Variants ───────────────────────────────────── */
-function Breadcrumb({ crumbs, separator = "chevron" }: { crumbs: Crumb[]; separator?: "chevron" | "slash" | "dot" }) {
-  const Sep = () => {
-    if (separator === "slash") return <Slash className="w-3.5 h-3.5 text-muted-foreground/60 shrink-0" />;
-    if (separator === "dot")   return <span className="w-1 h-1 rounded-full bg-muted-foreground/40 shrink-0" />;
-    return <ChevronRight className="w-3.5 h-3.5 text-muted-foreground/60 shrink-0" />;
-  };
-
-  return (
-    <nav className="flex items-center gap-1.5 text-sm flex-wrap">
-      {crumbs.map((crumb, i) => (
-        <span key={i} className="flex items-center gap-1.5">
-          {i > 0 && <Sep />}
-          {crumb.href && i < crumbs.length - 1 ? (
-            <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">{crumb.label}</a>
-          ) : (
-            <span className={i === crumbs.length - 1 ? "text-foreground" : "text-muted-foreground"}>{crumb.label}</span>
-          )}
-        </span>
-      ))}
-    </nav>
-  );
-}
-
-function HomeBreadcrumb({ crumbs }: { crumbs: Crumb[] }) {
-  return (
-    <nav className="flex items-center gap-1.5 text-sm flex-wrap">
-      <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
-        <Home className="w-3.5 h-3.5" />
-      </a>
-      {crumbs.map((crumb, i) => (
-        <span key={i} className="flex items-center gap-1.5">
-          <ChevronRight className="w-3.5 h-3.5 text-muted-foreground/60 shrink-0" />
-          {crumb.href && i < crumbs.length - 1 ? (
-            <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">{crumb.label}</a>
-          ) : (
-            <span className={i === crumbs.length - 1 ? "text-foreground" : "text-muted-foreground"}>{crumb.label}</span>
-          )}
-        </span>
-      ))}
-    </nav>
-  );
-}
-
-function CollapsedBreadcrumb({ crumbs }: { crumbs: Crumb[] }) {
-  const first = crumbs[0];
-  const last  = crumbs[crumbs.length - 1];
-  return (
-    <nav className="flex items-center gap-1.5 text-sm flex-wrap">
-      <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">{first.label}</a>
-      <ChevronRight className="w-3.5 h-3.5 text-muted-foreground/60 shrink-0" />
-      <button className="flex items-center justify-center w-6 h-6 rounded border border-border hover:bg-accent transition-colors">
-        <MoreHorizontal className="w-3.5 h-3.5 text-muted-foreground" />
-      </button>
-      <ChevronRight className="w-3.5 h-3.5 text-muted-foreground/60 shrink-0" />
-      <span className="text-foreground">{last.label}</span>
-    </nav>
-  );
-}
-
-function BadgeBreadcrumb({ crumbs }: { crumbs: Crumb[] }) {
-  return (
-    <nav className="flex items-center gap-1 text-sm flex-wrap">
-      {crumbs.map((crumb, i) => (
-        <span key={i} className="flex items-center gap-1">
-          {i > 0 && <ChevronRight className="w-3.5 h-3.5 text-muted-foreground/60 shrink-0" />}
-          {i < crumbs.length - 1 ? (
-            <a
-              href="#"
-              className="px-2 py-0.5 rounded-md bg-muted text-muted-foreground hover:bg-accent hover:text-foreground transition-colors text-xs"
-            >
-              {crumb.label}
-            </a>
-          ) : (
-            <span className="px-2 py-0.5 rounded-md bg-primary/10 text-primary text-xs">{crumb.label}</span>
-          )}
-        </span>
-      ))}
-    </nav>
-  );
-}
 
 const crumbs: Crumb[] = [
   { label: "Home", href: "/" },
@@ -101,6 +28,109 @@ const longCrumbs: Crumb[] = [
   { label: "Breadcrumbs" },
 ];
 
+function DefaultBreadcrumb({ crumbs, separator }: { crumbs: Crumb[]; separator?: "slash" | "dot" }) {
+  return (
+    <Breadcrumb>
+      <BreadcrumbList>
+        {crumbs.map((crumb, i) => (
+          <React.Fragment key={i}>
+            <BreadcrumbItem>
+              {i < crumbs.length - 1 ? (
+                <BreadcrumbLink href="#">{crumb.label}</BreadcrumbLink>
+              ) : (
+                <BreadcrumbPage>{crumb.label}</BreadcrumbPage>
+              )}
+            </BreadcrumbItem>
+            {i < crumbs.length - 1 && (
+              <BreadcrumbSeparator>
+                {separator === "slash" && <Slash className="w-3.5 h-3.5" />}
+                {separator === "dot" && <span className="w-1 h-1 rounded-full bg-muted-foreground/40" />}
+              </BreadcrumbSeparator>
+            )}
+          </React.Fragment>
+        ))}
+      </BreadcrumbList>
+    </Breadcrumb>
+  );
+}
+
+function HomeBreadcrumb({ crumbs }: { crumbs: Crumb[] }) {
+  return (
+    <Breadcrumb>
+      <BreadcrumbList>
+        <BreadcrumbItem>
+          <BreadcrumbLink href="#">
+            <Home className="w-3.5 h-3.5" />
+          </BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbSeparator />
+        {crumbs.map((crumb, i) => (
+          <React.Fragment key={i}>
+            <BreadcrumbItem>
+              {i < crumbs.length - 1 ? (
+                <BreadcrumbLink href="#">{crumb.label}</BreadcrumbLink>
+              ) : (
+                <BreadcrumbPage>{crumb.label}</BreadcrumbPage>
+              )}
+            </BreadcrumbItem>
+            {i < crumbs.length - 1 && <BreadcrumbSeparator />}
+          </React.Fragment>
+        ))}
+      </BreadcrumbList>
+    </Breadcrumb>
+  );
+}
+
+function CollapsedBreadcrumb({ crumbs }: { crumbs: Crumb[] }) {
+  const first = crumbs[0];
+  const last = crumbs[crumbs.length - 1];
+  return (
+    <Breadcrumb>
+      <BreadcrumbList>
+        <BreadcrumbItem>
+          <BreadcrumbLink href="#">{first.label}</BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbSeparator />
+        <BreadcrumbItem>
+          <BreadcrumbEllipsis />
+        </BreadcrumbItem>
+        <BreadcrumbSeparator />
+        <BreadcrumbItem>
+          <BreadcrumbPage>{last.label}</BreadcrumbPage>
+        </BreadcrumbItem>
+      </BreadcrumbList>
+    </Breadcrumb>
+  );
+}
+
+function BadgeBreadcrumb({ crumbs }: { crumbs: Crumb[] }) {
+  return (
+    <Breadcrumb>
+      <BreadcrumbList>
+        {crumbs.map((crumb, i) => (
+          <React.Fragment key={i}>
+            <BreadcrumbItem>
+              {i < crumbs.length - 1 ? (
+                <BreadcrumbLink
+                  href="#"
+                  className="px-2 py-0.5 rounded-md bg-muted text-muted-foreground hover:bg-accent hover:text-foreground text-xs no-underline"
+                >
+                  {crumb.label}
+                </BreadcrumbLink>
+              ) : (
+                <span className="px-2 py-0.5 rounded-md bg-primary/10 text-primary text-xs">
+                  {crumb.label}
+                </span>
+              )}
+            </BreadcrumbItem>
+            {i < crumbs.length - 1 && <BreadcrumbSeparator />}
+          </React.Fragment>
+        ))}
+      </BreadcrumbList>
+    </Breadcrumb>
+  );
+}
+
 export function BreadcrumbsPage() {
   return (
     <div className="space-y-10">
@@ -113,41 +143,55 @@ export function BreadcrumbsPage() {
       <ComponentSection
         title="Default"
         description="Simple chevron-separated breadcrumb trail."
-        code={`<nav className="flex items-center gap-1.5 text-sm">
-  <a href="/" className="text-muted-foreground hover:text-foreground">Home</a>
-  <ChevronRight className="w-3.5 h-3.5 text-muted-foreground/60" />
-  <a href="/components" className="text-muted-foreground hover:text-foreground">Components</a>
-  <ChevronRight className="w-3.5 h-3.5 text-muted-foreground/60" />
-  <span className="text-foreground">Breadcrumbs</span>
-</nav>`}
+        code={`import { Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
+
+<Breadcrumb>
+  <BreadcrumbList>
+    <BreadcrumbItem>
+      <BreadcrumbLink href="/">Home</BreadcrumbLink>
+      <BreadcrumbSeparator />
+    </BreadcrumbItem>
+    <BreadcrumbItem>
+      <BreadcrumbLink href="/components">Components</BreadcrumbLink>
+      <BreadcrumbSeparator />
+    </BreadcrumbItem>
+    <BreadcrumbItem>
+      <BreadcrumbPage>Breadcrumbs</BreadcrumbPage>
+    </BreadcrumbItem>
+  </BreadcrumbList>
+</Breadcrumb>`}
       >
-        <Breadcrumb crumbs={crumbs} />
+        <DefaultBreadcrumb crumbs={crumbs} />
       </ComponentSection>
 
       <ComponentSection
         title="Separators"
         description="Swap the separator for slash or dot styles."
-        code={`{/* Chevron */}
-<ChevronRight className="w-3.5 h-3.5 text-muted-foreground/60" />
+        code={`{/* Chevron (default) */}
+<BreadcrumbSeparator />
 
 {/* Slash */}
-<Slash className="w-3.5 h-3.5 text-muted-foreground/60" />
+<BreadcrumbSeparator>
+  <Slash className="w-3.5 h-3.5" />
+</BreadcrumbSeparator>
 
 {/* Dot */}
-<span className="w-1 h-1 rounded-full bg-muted-foreground/40" />`}
+<BreadcrumbSeparator>
+  <span className="w-1 h-1 rounded-full bg-muted-foreground/40" />
+</BreadcrumbSeparator>`}
       >
         <div className="space-y-4 w-full">
           <div>
             <p className="text-xs text-muted-foreground mb-2">Chevron</p>
-            <Breadcrumb crumbs={crumbs} separator="chevron" />
+            <DefaultBreadcrumb crumbs={crumbs} />
           </div>
           <div>
             <p className="text-xs text-muted-foreground mb-2">Slash</p>
-            <Breadcrumb crumbs={crumbs} separator="slash" />
+            <DefaultBreadcrumb crumbs={crumbs} separator="slash" />
           </div>
           <div>
             <p className="text-xs text-muted-foreground mb-2">Dot</p>
-            <Breadcrumb crumbs={crumbs} separator="dot" />
+            <DefaultBreadcrumb crumbs={crumbs} separator="dot" />
           </div>
         </div>
       </ComponentSection>
@@ -155,15 +199,12 @@ export function BreadcrumbsPage() {
       <ComponentSection
         title="With Home Icon"
         description="Replace the first text label with a home icon."
-        code={`<nav className="flex items-center gap-1.5 text-sm">
-  <a href="/" className="text-muted-foreground hover:text-foreground">
+        code={`<BreadcrumbItem>
+  <BreadcrumbLink href="/">
     <Home className="w-3.5 h-3.5" />
-  </a>
-  <ChevronRight className="w-3.5 h-3.5 text-muted-foreground/60" />
-  <a href="/components" className="text-muted-foreground hover:text-foreground">Components</a>
-  <ChevronRight className="w-3.5 h-3.5 text-muted-foreground/60" />
-  <span className="text-foreground">Breadcrumbs</span>
-</nav>`}
+  </BreadcrumbLink>
+  <BreadcrumbSeparator />
+</BreadcrumbItem>`}
       >
         <HomeBreadcrumb crumbs={crumbs.slice(1)} />
       </ComponentSection>
@@ -171,15 +212,12 @@ export function BreadcrumbsPage() {
       <ComponentSection
         title="Collapsed (Ellipsis)"
         description="For deep paths, collapse middle items behind a … button."
-        code={`<nav className="flex items-center gap-1.5 text-sm">
-  <a href="/">Home</a>
-  <ChevronRight className="w-3.5 h-3.5" />
-  <button className="w-6 h-6 rounded border border-border hover:bg-accent">
-    <MoreHorizontal className="w-3.5 h-3.5" />
-  </button>
-  <ChevronRight className="w-3.5 h-3.5" />
-  <span>Breadcrumbs</span>
-</nav>`}
+        code={`import { BreadcrumbEllipsis } from "@/components/ui/breadcrumb";
+
+<BreadcrumbItem>
+  <BreadcrumbEllipsis />
+  <BreadcrumbSeparator />
+</BreadcrumbItem>`}
       >
         <CollapsedBreadcrumb crumbs={longCrumbs} />
       </ComponentSection>
@@ -188,9 +226,12 @@ export function BreadcrumbsPage() {
         title="Badge Style"
         description="Pill-shaped crumbs for a more visual appearance."
         code={`{/* Inactive crumb */}
-<a className="px-2 py-0.5 rounded-md bg-muted text-muted-foreground hover:bg-accent text-xs">
+<BreadcrumbLink
+  href="#"
+  className="px-2 py-0.5 rounded-md bg-muted text-muted-foreground hover:bg-accent text-xs"
+>
   Components
-</a>
+</BreadcrumbLink>
 
 {/* Active crumb */}
 <span className="px-2 py-0.5 rounded-md bg-primary/10 text-primary text-xs">

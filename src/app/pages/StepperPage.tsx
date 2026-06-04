@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { PageHeader } from "../components/ui/PageHeader";
 import { ComponentSection } from "../components/ui/ComponentSection";
+import { Button } from "../components/ui/button";
+import { Input } from "../components/ui/input";
+import { Label } from "../components/ui/label";
 import { Check, User, CreditCard, Package, Truck, ChevronRight } from "lucide-react";
 
-/* ─── Types ──────────────────────────────────────── */
 type StepStatus = "complete" | "current" | "upcoming";
 
 interface Step {
@@ -12,14 +14,7 @@ interface Step {
   icon?: React.ReactNode;
 }
 
-/* ─── Numbered horizontal stepper ───────────────── */
-function HorizontalStepper({
-  steps,
-  current,
-}: {
-  steps: Step[];
-  current: number;
-}) {
+function HorizontalStepper({ steps, current }: { steps: Step[]; current: number }) {
   function status(i: number): StepStatus {
     if (i < current) return "complete";
     if (i === current) return "current";
@@ -32,7 +27,6 @@ function HorizontalStepper({
         const s = status(i);
         return (
           <div key={i} className="flex flex-1 items-start">
-            {/* step */}
             <div className="flex flex-col items-center">
               <div
                 className={`w-8 h-8 rounded-full flex items-center justify-center text-sm shrink-0 transition-colors ${
@@ -54,7 +48,6 @@ function HorizontalStepper({
                 )}
               </div>
             </div>
-            {/* connector */}
             {i < steps.length - 1 && (
               <div className="flex-1 h-px mt-4 mx-2 relative">
                 <div className="absolute inset-0 bg-border" />
@@ -68,7 +61,6 @@ function HorizontalStepper({
   );
 }
 
-/* ─── Vertical stepper ────────────────────────────── */
 function VerticalStepper({
   steps,
   current,
@@ -89,7 +81,6 @@ function VerticalStepper({
         const isLast = i === steps.length - 1;
         return (
           <div key={i} className="flex gap-4">
-            {/* timeline column */}
             <div className="flex flex-col items-center">
               <div
                 className={`w-8 h-8 rounded-full flex items-center justify-center text-sm shrink-0 transition-colors ${
@@ -100,15 +91,12 @@ function VerticalStepper({
                     : "bg-muted text-muted-foreground border border-border"
                 }`}
               >
-                {s === "complete"
-                  ? <Check className="w-3.5 h-3.5" />
-                  : step.icon ?? <span>{i + 1}</span>}
+                {s === "complete" ? <Check className="w-3.5 h-3.5" /> : step.icon ?? <span>{i + 1}</span>}
               </div>
               {!isLast && (
                 <div className={`w-0.5 flex-1 my-1 ${i < current ? "bg-primary" : "bg-border"}`} />
               )}
             </div>
-            {/* content column */}
             <div className={`pb-6 flex-1 ${isLast ? "pb-0" : ""}`}>
               <p className={`text-sm mt-1 ${s === "upcoming" ? "text-muted-foreground" : "text-foreground"}`}>
                 {step.label}
@@ -127,7 +115,6 @@ function VerticalStepper({
   );
 }
 
-/* ─── Icon stepper ────────────────────────────────── */
 function IconStepper({ steps, current }: { steps: Step[]; current: number }) {
   return (
     <nav className="flex items-center gap-0 w-full">
@@ -164,29 +151,28 @@ function IconStepper({ steps, current }: { steps: Step[]; current: number }) {
   );
 }
 
-/* ─── Interactive wizard ──────────────────────────── */
 function Wizard() {
   const [step, setStep] = useState(0);
   const steps = ["Account", "Details", "Review", "Done"];
   const panels = [
     <div className="space-y-3">
-      <div>
-        <label className="block text-xs text-muted-foreground mb-1">Email</label>
-        <input className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm" placeholder="you@example.com" />
+      <div className="space-y-1">
+        <Label>Email</Label>
+        <Input placeholder="you@example.com" type="email" />
       </div>
-      <div>
-        <label className="block text-xs text-muted-foreground mb-1">Password</label>
-        <input type="password" className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm" placeholder="••••••••" />
+      <div className="space-y-1">
+        <Label>Password</Label>
+        <Input type="password" placeholder="••••••••" />
       </div>
     </div>,
     <div className="space-y-3">
-      <div>
-        <label className="block text-xs text-muted-foreground mb-1">Full name</label>
-        <input className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm" placeholder="Jane Smith" />
+      <div className="space-y-1">
+        <Label>Full name</Label>
+        <Input placeholder="Jane Smith" />
       </div>
-      <div>
-        <label className="block text-xs text-muted-foreground mb-1">Company</label>
-        <input className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm" placeholder="Acme Inc." />
+      <div className="space-y-1">
+        <Label>Company</Label>
+        <Input placeholder="Acme Inc." />
       </div>
     </div>,
     <div className="rounded-xl border border-border p-4 space-y-2 text-sm">
@@ -205,42 +191,31 @@ function Wizard() {
 
   return (
     <div className="w-full max-w-md space-y-6">
-      <HorizontalStepper
-        steps={steps.map((s) => ({ label: s }))}
-        current={step}
-      />
+      <HorizontalStepper steps={steps.map((s) => ({ label: s }))} current={step} />
       <div className="rounded-xl border border-border p-5 bg-background">
         {panels[step]}
       </div>
       <div className="flex justify-between">
-        <button
-          className="px-4 py-2 rounded-lg border border-border text-sm hover:bg-accent disabled:opacity-40"
-          disabled={step === 0}
-          onClick={() => setStep((p) => p - 1)}
-        >
+        <Button variant="outline" disabled={step === 0} onClick={() => setStep((p) => p - 1)}>
           Back
-        </button>
+        </Button>
         {step < steps.length - 1 ? (
-          <button
-            className="px-4 py-2 rounded-lg bg-primary text-primary-foreground text-sm hover:opacity-90 inline-flex items-center gap-1"
-            onClick={() => setStep((p) => p + 1)}
-          >
+          <Button onClick={() => setStep((p) => p + 1)} className="inline-flex items-center gap-1">
             Continue <ChevronRight className="w-3.5 h-3.5" />
-          </button>
+          </Button>
         ) : (
-          <button
-            className="px-4 py-2 rounded-lg bg-green-600 text-white text-sm hover:bg-green-700"
+          <Button
+            className="bg-green-600 text-white hover:bg-green-700"
             onClick={() => setStep(0)}
           >
             Restart demo
-          </button>
+          </Button>
         )}
       </div>
     </div>
   );
 }
 
-/* ─── Order tracking ──────────────────────────────── */
 const orderSteps: (Step & { content?: React.ReactNode })[] = [
   { label: "Order placed", description: "Apr 1 at 2:34 PM", icon: <Package className="w-3.5 h-3.5" /> },
   { label: "Processing", description: "Estimated Apr 2", icon: <CreditCard className="w-3.5 h-3.5" /> },
@@ -277,7 +252,7 @@ export function StepperPage() {
       {steps.map((step, i) => (
         <div key={i} className="flex flex-1 items-start">
           <div className="flex flex-col items-center">
-            <div className={\`w-8 h-8 rounded-full flex items-center justify-center \${
+            <div className={\`w-8 h-8 rounded-full ... \${
               i < current ? "bg-primary text-primary-foreground" :
               i === current ? "border-2 border-primary text-primary" :
               "bg-muted text-muted-foreground"\`}>
@@ -303,20 +278,12 @@ export function StepperPage() {
             current={hStep}
           />
           <div className="flex gap-2 justify-center">
-            <button
-              className="px-3 py-1.5 text-xs rounded-lg border border-border hover:bg-accent disabled:opacity-40"
-              disabled={hStep === 0}
-              onClick={() => setHStep((p) => p - 1)}
-            >
+            <Button variant="outline" size="sm" disabled={hStep === 0} onClick={() => setHStep((p) => p - 1)}>
               Back
-            </button>
-            <button
-              className="px-3 py-1.5 text-xs rounded-lg bg-primary text-primary-foreground hover:opacity-90 disabled:opacity-40"
-              disabled={hStep === 3}
-              onClick={() => setHStep((p) => p + 1)}
-            >
+            </Button>
+            <Button size="sm" disabled={hStep === 3} onClick={() => setHStep((p) => p + 1)}>
               Next
-            </button>
+            </Button>
           </div>
         </div>
       </ComponentSection>
@@ -353,10 +320,10 @@ export function StepperPage() {
       >
         <IconStepper
           steps={[
-            { label: "Account",  icon: <User      className="w-4 h-4" /> },
+            { label: "Account",  icon: <User       className="w-4 h-4" /> },
             { label: "Payment",  icon: <CreditCard className="w-4 h-4" /> },
-            { label: "Shipping", icon: <Truck     className="w-4 h-4" /> },
-            { label: "Confirm",  icon: <Check     className="w-4 h-4" /> },
+            { label: "Shipping", icon: <Truck      className="w-4 h-4" /> },
+            { label: "Confirm",  icon: <Check      className="w-4 h-4" /> },
           ]}
           current={2}
         />
@@ -365,9 +332,14 @@ export function StepperPage() {
       <ComponentSection
         title="Interactive Wizard"
         description="A fully interactive multi-step form with back and continue buttons."
-        code={`const [step, setStep] = useState(0);
-// Render step panel based on current step
-// Back/Continue buttons advance or retreat`}
+        code={`import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+
+<Button variant="outline" disabled={step === 0} onClick={() => setStep(p => p - 1)}>Back</Button>
+<Button onClick={() => setStep(p => p + 1)}>
+  Continue <ChevronRight className="w-3.5 h-3.5" />
+</Button>`}
       >
         <Wizard />
       </ComponentSection>

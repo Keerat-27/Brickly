@@ -1,6 +1,7 @@
 import { useState, useCallback, useEffect } from "react";
 import { PageHeader } from "../components/ui/PageHeader";
 import { ComponentSection } from "../components/ui/ComponentSection";
+import { Button } from "../components/ui/button";
 import {
   CheckCircle2,
   AlertTriangle,
@@ -11,7 +12,6 @@ import {
   Loader2,
 } from "lucide-react";
 
-/* ─── Toast types ────────────────────────────────── */
 type ToastType = "success" | "error" | "warning" | "info" | "loading" | "default";
 
 interface ToastItem {
@@ -23,7 +23,6 @@ interface ToastItem {
   duration?: number;
 }
 
-/* ─── Single toast component ─────────────────────── */
 function Toast({ toast, onDismiss }: { toast: ToastItem; onDismiss: (id: string) => void }) {
   useEffect(() => {
     if (toast.type === "loading") return;
@@ -44,7 +43,6 @@ function Toast({ toast, onDismiss }: { toast: ToastItem; onDismiss: (id: string)
 
   return (
     <div className="relative flex gap-3 items-start bg-background border border-border rounded-xl shadow-lg p-4 w-full max-w-sm overflow-hidden">
-      {/* colour accent bar */}
       <div className={`absolute left-0 inset-y-0 w-1 rounded-l-xl ${bar}`} />
       <div className="pl-1">{icon}</div>
       <div className="flex-1 min-w-0">
@@ -53,25 +51,28 @@ function Toast({ toast, onDismiss }: { toast: ToastItem; onDismiss: (id: string)
           <p className="text-xs text-muted-foreground mt-0.5">{toast.description}</p>
         )}
         {toast.action && (
-          <button
+          <Button
+            variant="link"
+            size="sm"
             onClick={toast.action.onClick}
-            className="mt-2 text-xs text-primary hover:underline"
+            className="mt-1 h-auto p-0 text-xs text-primary"
           >
             {toast.action.label}
-          </button>
+          </Button>
         )}
       </div>
-      <button
+      <Button
+        variant="ghost"
+        size="icon"
         onClick={() => onDismiss(toast.id)}
-        className="text-muted-foreground hover:text-foreground transition-colors shrink-0"
+        className="h-5 w-5 text-muted-foreground hover:text-foreground shrink-0"
       >
         <X className="w-3.5 h-3.5" />
-      </button>
+      </Button>
     </div>
   );
 }
 
-/* ─── Toast container / hook ─────────────────────── */
 let _uid = 0;
 function uid() { return String(++_uid); }
 
@@ -91,7 +92,6 @@ function useToasts() {
   return { toasts, add, dismiss };
 }
 
-/* ─── Demo container (inline, positioned relative to section) ── */
 function ToastDemo({
   toasts,
   dismiss,
@@ -119,27 +119,6 @@ function ToastDemo({
   );
 }
 
-/* ─── Page ───────────────────────────────────────── */
-function Btn({ children, onClick, color = "default" }: { children: React.ReactNode; onClick: () => void; color?: string }) {
-  const colors: Record<string, string> = {
-    default:  "bg-foreground text-background",
-    success:  "bg-green-600 text-white",
-    error:    "bg-red-600 text-white",
-    warning:  "bg-amber-500 text-white",
-    info:     "bg-blue-600 text-white",
-    loading:  "bg-primary text-primary-foreground",
-    outline:  "border border-border text-foreground hover:bg-accent",
-  };
-  return (
-    <button
-      onClick={onClick}
-      className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm transition-all active:scale-95 ${colors[color] ?? colors.default}`}
-    >
-      {children}
-    </button>
-  );
-}
-
 export function ToastsPage() {
   const { toasts, add, dismiss } = useToasts();
 
@@ -156,28 +135,46 @@ export function ToastsPage() {
       <ComponentSection
         title="Types"
         description="Four semantic types — success, error, warning, and info — plus a neutral default."
-        code={`<Toast type="success" title="Saved successfully!" />
-<Toast type="error"   title="Something went wrong." />
-<Toast type="warning" title="Low disk space." />
-<Toast type="info"    title="New update available." />
-<Toast type="default" title="You have a new message." />`}
+        code={`import { Button } from "@/components/ui/button";
+
+<Button className="bg-green-600 text-white hover:bg-green-700" onClick={() => add({ type: "success", title: "Saved!" })}>
+  Success
+</Button>
+<Button variant="destructive" onClick={() => add({ type: "error", title: "Error!" })}>
+  Error
+</Button>`}
       >
         <div className="flex flex-wrap gap-2">
-          <Btn color="success" onClick={() => add({ type: "success", title: "Saved successfully!", description: "Your changes have been saved." })}>
+          <Button
+            className="bg-green-600 text-white hover:bg-green-700"
+            onClick={() => add({ type: "success", title: "Saved successfully!", description: "Your changes have been saved." })}
+          >
             <CheckCircle2 className="w-3.5 h-3.5" /> Success
-          </Btn>
-          <Btn color="error" onClick={() => add({ type: "error", title: "Something went wrong.", description: "Please try again later." })}>
+          </Button>
+          <Button
+            variant="destructive"
+            onClick={() => add({ type: "error", title: "Something went wrong.", description: "Please try again later." })}
+          >
             <XCircle className="w-3.5 h-3.5" /> Error
-          </Btn>
-          <Btn color="warning" onClick={() => add({ type: "warning", title: "Low disk space.", description: "Only 2 GB remaining." })}>
+          </Button>
+          <Button
+            className="bg-amber-500 text-white hover:bg-amber-600"
+            onClick={() => add({ type: "warning", title: "Low disk space.", description: "Only 2 GB remaining." })}
+          >
             <AlertTriangle className="w-3.5 h-3.5" /> Warning
-          </Btn>
-          <Btn color="info" onClick={() => add({ type: "info", title: "New update available.", description: "v2.1.0 is ready to install." })}>
+          </Button>
+          <Button
+            className="bg-blue-600 text-white hover:bg-blue-700"
+            onClick={() => add({ type: "info", title: "New update available.", description: "v2.1.0 is ready to install." })}
+          >
             <Info className="w-3.5 h-3.5" /> Info
-          </Btn>
-          <Btn color="outline" onClick={() => add({ type: "default", title: "You have a new message." })}>
+          </Button>
+          <Button
+            variant="outline"
+            onClick={() => add({ type: "default", title: "You have a new message." })}
+          >
             <Bell className="w-3.5 h-3.5" /> Default
-          </Btn>
+          </Button>
         </div>
       </ComponentSection>
 
@@ -190,9 +187,12 @@ export function ToastsPage() {
   description: "report-q4.pdf · 2.4 MB",
 })`}
       >
-        <Btn color="success" onClick={() => add({ type: "success", title: "File uploaded", description: "report-q4.pdf · 2.4 MB" })}>
+        <Button
+          className="bg-green-600 text-white hover:bg-green-700"
+          onClick={() => add({ type: "success", title: "File uploaded", description: "report-q4.pdf · 2.4 MB" })}
+        >
           Show toast with description
-        </Btn>
+        </Button>
       </ComponentSection>
 
       <ComponentSection
@@ -208,16 +208,19 @@ export function ToastsPage() {
   },
 })`}
       >
-        <Btn color="info" onClick={() =>
-          add({
-            type: "info",
-            title: "Update available",
-            description: "Version 2.1.0 is ready.",
-            action: { label: "Install now →", onClick: () => {} },
-          })
-        }>
+        <Button
+          className="bg-blue-600 text-white hover:bg-blue-700"
+          onClick={() =>
+            add({
+              type: "info",
+              title: "Update available",
+              description: "Version 2.1.0 is ready.",
+              action: { label: "Install now →", onClick: () => {} },
+            })
+          }
+        >
           Show toast with action
-        </Btn>
+        </Button>
       </ComponentSection>
 
       <ComponentSection
@@ -228,12 +231,14 @@ export function ToastsPage() {
 dismiss(id);`}
       >
         <div className="flex gap-2">
-          <Btn color="loading" onClick={() => add({ type: "loading", title: "Uploading file…", description: "This won't auto-dismiss.", duration: 999999 })}>
+          <Button
+            onClick={() => add({ type: "loading", title: "Uploading file…", description: "This won't auto-dismiss.", duration: 999999 })}
+          >
             <Loader2 className="w-3.5 h-3.5 animate-spin" /> Show loading
-          </Btn>
-          <Btn color="outline" onClick={() => toasts.forEach((t) => dismiss(t.id))}>
+          </Button>
+          <Button variant="outline" onClick={() => toasts.forEach((t) => dismiss(t.id))}>
             Dismiss all
-          </Btn>
+          </Button>
         </div>
       </ComponentSection>
 
@@ -249,10 +254,10 @@ dismiss(id);`}
   <div>
     <p className="text-sm text-foreground">Title</p>
     <p className="text-xs text-muted-foreground">Description text</p>
-    <button className="text-xs text-primary">Action label</button>
+    <Button variant="link" size="sm" className="h-auto p-0 text-xs">Action label</Button>
   </div>
   {/* dismiss */}
-  <button><X className="w-3.5 h-3.5" /></button>
+  <Button variant="ghost" size="icon" className="h-5 w-5"><X /></Button>
 </div>`}
       >
         <div className="w-full max-w-sm">
@@ -262,9 +267,13 @@ dismiss(id);`}
             <div className="flex-1">
               <p className="text-sm text-foreground">Payment received</p>
               <p className="text-xs text-muted-foreground mt-0.5">$129.00 was added to your balance.</p>
-              <button className="mt-1.5 text-xs text-primary hover:underline">View transaction →</button>
+              <Button variant="link" size="sm" className="mt-1 h-auto p-0 text-xs text-primary">
+                View transaction →
+              </Button>
             </div>
-            <button className="text-muted-foreground hover:text-foreground"><X className="w-3.5 h-3.5" /></button>
+            <Button variant="ghost" size="icon" className="h-5 w-5 text-muted-foreground hover:text-foreground">
+              <X className="w-3.5 h-3.5" />
+            </Button>
           </div>
         </div>
       </ComponentSection>

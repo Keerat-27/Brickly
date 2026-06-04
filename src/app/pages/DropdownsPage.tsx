@@ -1,13 +1,22 @@
-import { useState, useRef, useEffect } from "react";
 import { PageHeader } from "../components/ui/PageHeader";
 import { ComponentSection } from "../components/ui/ComponentSection";
+import { Button } from "../components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuLabel,
+  DropdownMenuCheckboxItem,
+  DropdownMenuShortcut,
+} from "../components/ui/dropdown-menu";
 import {
   ChevronDown,
   User,
   Settings,
   LogOut,
   Bell,
-  Check,
   Trash2,
   Edit,
   Copy,
@@ -16,122 +25,8 @@ import {
   Moon,
   Sun,
 } from "lucide-react";
+import { useState, useRef, useEffect } from "react";
 
-/* ─── Generic dropdown wrapper ───────────────────── */
-function Dropdown({
-  trigger,
-  children,
-  align = "left",
-}: {
-  trigger: React.ReactNode;
-  children: React.ReactNode;
-  align?: "left" | "right";
-}) {
-  const [open, setOpen] = useState(false);
-  const [coords, setCoords] = useState({ top: 0, left: 0 });
-  const triggerRef = useRef<HTMLDivElement>(null);
-  const menuRef = useRef<HTMLDivElement>(null);
-
-  const updateCoords = () => {
-    if (!triggerRef.current) return;
-    const rect = triggerRef.current.getBoundingClientRect();
-    setCoords({
-      top: rect.bottom + window.scrollY + 4,
-      left: align === "right"
-        ? rect.right + window.scrollX
-        : rect.left + window.scrollX,
-    });
-  };
-
-  const handleToggle = () => {
-    if (!open) updateCoords();
-    setOpen((p) => !p);
-  };
-
-  useEffect(() => {
-    const handler = (e: MouseEvent) => {
-      if (
-        triggerRef.current && !triggerRef.current.contains(e.target as Node) &&
-        menuRef.current  && !menuRef.current.contains(e.target as Node)
-      ) {
-        setOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handler);
-    return () => document.removeEventListener("mousedown", handler);
-  }, []);
-
-  return (
-    <div className="relative inline-block" ref={triggerRef}>
-      <div onClick={handleToggle}>{trigger}</div>
-      {open && (
-        <div
-          ref={menuRef}
-          style={{
-            position: "fixed",
-            top: coords.top,
-            ...(align === "right"
-              ? { right: `calc(100vw - ${coords.left}px)` }
-              : { left: coords.left }),
-            zIndex: 9999,
-          }}
-          className="min-w-[180px] rounded-xl border border-border bg-popover shadow-lg py-1 px-1"
-        >
-          {children}
-        </div>
-      )}
-    </div>
-  );
-}
-
-/* ─── Reusable menu items ────────────────────────── */
-function MenuItem({
-  icon,
-  label,
-  shortcut,
-  destructive,
-  checked,
-  onClick,
-}: {
-  icon?: React.ReactNode;
-  label: string;
-  shortcut?: string;
-  destructive?: boolean;
-  checked?: boolean;
-  onClick?: () => void;
-}) {
-  return (
-    <button
-      onClick={onClick}
-      className={`flex w-full items-center gap-2.5 px-3 py-2 rounded-md text-sm transition-colors hover:bg-accent ${
-        destructive ? "text-destructive" : "text-foreground"
-      }`}
-    >
-      {checked !== undefined && (
-        <Check className={`w-3.5 h-3.5 shrink-0 ${checked ? "opacity-100" : "opacity-0"}`} />
-      )}
-      {icon && <span className="w-4 h-4 shrink-0 flex items-center justify-center">{icon}</span>}
-      <span className="flex-1 text-left">{label}</span>
-      {shortcut && (
-        <kbd className="text-xs text-muted-foreground bg-muted px-1.5 py-0.5 rounded font-mono">
-          {shortcut}
-        </kbd>
-      )}
-    </button>
-  );
-}
-
-function MenuSeparator() {
-  return <div className="my-1 h-px bg-border mx-2" />;
-}
-
-function MenuLabel({ label }: { label: string }) {
-  return (
-    <p className="px-3 py-1.5 text-xs text-muted-foreground uppercase tracking-wider">{label}</p>
-  );
-}
-
-/* ─── Context menu ───────────────────────────────── */
 function ContextMenu() {
   const [pos, setPos] = useState<{ x: number; y: number } | null>(null);
   const ref = useRef<HTMLDivElement>(null);
@@ -158,34 +53,40 @@ function ContextMenu() {
           style={{ top: pos.y, left: pos.x }}
           onClick={(e) => e.stopPropagation()}
         >
-          <MenuItem icon={<Copy className="w-3.5 h-3.5" />} label="Copy" shortcut="⌘C" />
-          <MenuItem icon={<Edit className="w-3.5 h-3.5" />} label="Edit" shortcut="⌘E" />
-          <MenuSeparator />
-          <MenuItem icon={<Trash2 className="w-3.5 h-3.5" />} label="Delete" destructive />
+          <DropdownMenuItem className="gap-2"><Copy className="w-3.5 h-3.5" /> Copy<DropdownMenuShortcut>⌘C</DropdownMenuShortcut></DropdownMenuItem>
+          <DropdownMenuItem className="gap-2"><Edit className="w-3.5 h-3.5" /> Edit<DropdownMenuShortcut>⌘E</DropdownMenuShortcut></DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem variant="destructive" className="gap-2"><Trash2 className="w-3.5 h-3.5" /> Delete</DropdownMenuItem>
         </div>
       )}
     </div>
   );
 }
 
-/* ─── Checkmark menu ──────────────────────────────── */
-function CheckableMenu() {
+function ThemeDropdown() {
   const [theme, setTheme] = useState<"light" | "dark" | "system">("system");
   return (
-    <Dropdown
-      trigger={
-        <button className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-border text-sm text-foreground hover:bg-accent transition-colors">
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="outline">
           {theme === "light" ? <Sun className="w-4 h-4" /> : theme === "dark" ? <Moon className="w-4 h-4" /> : <Globe className="w-4 h-4" />}
           Theme: {theme.charAt(0).toUpperCase() + theme.slice(1)}
           <ChevronDown className="w-3.5 h-3.5 text-muted-foreground" />
-        </button>
-      }
-    >
-      <MenuLabel label="Appearance" />
-      <MenuItem icon={<Sun className="w-3.5 h-3.5" />} label="Light" checked={theme === "light"} onClick={() => setTheme("light")} />
-      <MenuItem icon={<Moon className="w-3.5 h-3.5" />} label="Dark" checked={theme === "dark"} onClick={() => setTheme("dark")} />
-      <MenuItem icon={<Globe className="w-3.5 h-3.5" />} label="System" checked={theme === "system"} onClick={() => setTheme("system")} />
-    </Dropdown>
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent>
+        <DropdownMenuLabel>Appearance</DropdownMenuLabel>
+        <DropdownMenuCheckboxItem checked={theme === "light"} onCheckedChange={() => setTheme("light")}>
+          <Sun className="w-3.5 h-3.5" /> Light
+        </DropdownMenuCheckboxItem>
+        <DropdownMenuCheckboxItem checked={theme === "dark"} onCheckedChange={() => setTheme("dark")}>
+          <Moon className="w-3.5 h-3.5" /> Dark
+        </DropdownMenuCheckboxItem>
+        <DropdownMenuCheckboxItem checked={theme === "system"} onCheckedChange={() => setTheme("system")}>
+          <Globe className="w-3.5 h-3.5" /> System
+        </DropdownMenuCheckboxItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }
 
@@ -201,115 +102,119 @@ export function DropdownsPage() {
       <ComponentSection
         title="Basic Menu"
         description="Simple action menu with icons and keyboard shortcuts."
-        code={`function Dropdown({ trigger, children }) {
-  const [open, setOpen] = useState(false);
-  return (
-    <div className="relative inline-block">
-      <div onClick={() => setOpen(p => !p)}>{trigger}</div>
-      {open && (
-        <div className="absolute z-50 mt-1 min-w-[180px] rounded-xl border border-border bg-popover shadow-lg py-1">
-          {children}
-        </div>
-      )}
-    </div>
-  );
-}`}
+        code={`import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuShortcut } from "@/components/ui/dropdown-menu";
+
+<DropdownMenu>
+  <DropdownMenuTrigger asChild>
+    <Button>Actions <ChevronDown /></Button>
+  </DropdownMenuTrigger>
+  <DropdownMenuContent>
+    <DropdownMenuItem><Edit /> Edit <DropdownMenuShortcut>⌘E</DropdownMenuShortcut></DropdownMenuItem>
+    <DropdownMenuItem><Copy /> Duplicate <DropdownMenuShortcut>⌘D</DropdownMenuShortcut></DropdownMenuItem>
+    <DropdownMenuSeparator />
+    <DropdownMenuItem variant="destructive"><Trash2 /> Delete</DropdownMenuItem>
+  </DropdownMenuContent>
+</DropdownMenu>`}
       >
-        <Dropdown
-          trigger={
-            <button className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-primary text-primary-foreground text-sm hover:opacity-90 transition-opacity">
-              Actions
-              <ChevronDown className="w-3.5 h-3.5" />
-            </button>
-          }
-        >
-          <MenuItem icon={<Edit className="w-3.5 h-3.5" />} label="Edit" shortcut="⌘E" />
-          <MenuItem icon={<Copy className="w-3.5 h-3.5" />} label="Duplicate" shortcut="⌘D" />
-          <MenuSeparator />
-          <MenuItem icon={<Trash2 className="w-3.5 h-3.5" />} label="Delete" destructive />
-        </Dropdown>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button>
+              Actions <ChevronDown className="w-3.5 h-3.5" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <DropdownMenuItem><Edit className="w-3.5 h-3.5" /> Edit <DropdownMenuShortcut>⌘E</DropdownMenuShortcut></DropdownMenuItem>
+            <DropdownMenuItem><Copy className="w-3.5 h-3.5" /> Duplicate <DropdownMenuShortcut>⌘D</DropdownMenuShortcut></DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem variant="destructive"><Trash2 className="w-3.5 h-3.5" /> Delete</DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </ComponentSection>
 
       <ComponentSection
         title="Profile Menu"
         description="User account menu with avatar and grouped sections."
-        code={`<Dropdown trigger={<button>Account <ChevronDown /></button>}>
-  <div className="px-3 py-2">
-    <p className="text-sm font-medium">Jane Smith</p>
-    <p className="text-xs text-muted-foreground">jane@example.com</p>
-  </div>
-  <MenuSeparator />
-  <MenuItem icon={<User />} label="Profile" />
-  <MenuItem icon={<Settings />} label="Settings" />
-  <MenuItem icon={<Bell />} label="Notifications" />
-  <MenuSeparator />
-  <MenuItem icon={<LogOut />} label="Sign out" destructive />
-</Dropdown>`}
+        code={`<DropdownMenu>
+  <DropdownMenuTrigger asChild>
+    <Button variant="outline">
+      <div className="w-6 h-6 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-xs">JS</div>
+      Jane Smith <ChevronDown />
+    </Button>
+  </DropdownMenuTrigger>
+  <DropdownMenuContent>
+    <DropdownMenuLabel>Jane Smith</DropdownMenuLabel>
+    <DropdownMenuSeparator />
+    <DropdownMenuItem><User /> Profile</DropdownMenuItem>
+    <DropdownMenuItem><Settings /> Settings <DropdownMenuShortcut>⌘,</DropdownMenuShortcut></DropdownMenuItem>
+    <DropdownMenuSeparator />
+    <DropdownMenuItem variant="destructive"><LogOut /> Sign out</DropdownMenuItem>
+  </DropdownMenuContent>
+</DropdownMenu>`}
       >
-        <Dropdown
-          trigger={
-            <button className="inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-border text-sm text-foreground hover:bg-accent transition-colors">
-              <div className="w-6 h-6 rounded-full bg-primary flex items-center justify-center text-xs text-primary-foreground">
-                JS
-              </div>
-              Jane Smith
-              <ChevronDown className="w-3.5 h-3.5 text-muted-foreground" />
-            </button>
-          }
-        >
-          <div className="px-3 py-2.5">
-            <p className="text-sm text-foreground">Jane Smith</p>
-            <p className="text-xs text-muted-foreground">jane@example.com</p>
-          </div>
-          <MenuSeparator />
-          <MenuItem icon={<User className="w-3.5 h-3.5" />} label="Profile" />
-          <MenuItem icon={<Settings className="w-3.5 h-3.5" />} label="Settings" shortcut="⌘," />
-          <MenuItem icon={<Bell className="w-3.5 h-3.5" />} label="Notifications" />
-          <MenuSeparator />
-          <MenuItem icon={<LogOut className="w-3.5 h-3.5" />} label="Sign out" destructive />
-        </Dropdown>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline">
+              <div className="w-6 h-6 rounded-full bg-primary flex items-center justify-center text-xs text-primary-foreground">JS</div>
+              Jane Smith <ChevronDown className="w-3.5 h-3.5 text-muted-foreground" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <div className="px-2 py-2">
+              <p className="text-sm font-medium text-foreground">Jane Smith</p>
+              <p className="text-xs text-muted-foreground">jane@example.com</p>
+            </div>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem><User className="w-3.5 h-3.5" /> Profile</DropdownMenuItem>
+            <DropdownMenuItem><Settings className="w-3.5 h-3.5" /> Settings <DropdownMenuShortcut>⌘,</DropdownMenuShortcut></DropdownMenuItem>
+            <DropdownMenuItem><Bell className="w-3.5 h-3.5" /> Notifications</DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem variant="destructive"><LogOut className="w-3.5 h-3.5" /> Sign out</DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </ComponentSection>
 
       <ComponentSection
         title="Checkable Menu"
         description="Selectable items with a checkmark to indicate the current selection."
-        code={`const [theme, setTheme] = useState("system");
+        code={`import { DropdownMenuCheckboxItem } from "@/components/ui/dropdown-menu";
 
-<MenuItem
-  icon={<Sun />}
-  label="Light"
-  checked={theme === "light"}
-  onClick={() => setTheme("light")}
-/>`}
+<DropdownMenuCheckboxItem checked={theme === "light"} onCheckedChange={() => setTheme("light")}>
+  <Sun /> Light
+</DropdownMenuCheckboxItem>`}
       >
-        <CheckableMenu />
+        <ThemeDropdown />
       </ComponentSection>
 
       <ComponentSection
         title="Icon Button Trigger"
         description="Compact three-dot menu for table rows and list items."
-        code={`<Dropdown
-  align="right"
-  trigger={
-    <button className="p-1.5 rounded-md hover:bg-accent">
+        code={`<DropdownMenu>
+  <DropdownMenuTrigger asChild>
+    <Button variant="outline" size="icon">
       <MoreHorizontal className="w-4 h-4 text-muted-foreground" />
-    </button>
-  }
->`}
+    </Button>
+  </DropdownMenuTrigger>
+  <DropdownMenuContent align="end">
+    <DropdownMenuItem>Edit</DropdownMenuItem>
+    <DropdownMenuItem>Copy link</DropdownMenuItem>
+    <DropdownMenuSeparator />
+    <DropdownMenuItem variant="destructive">Delete</DropdownMenuItem>
+  </DropdownMenuContent>
+</DropdownMenu>`}
       >
-        <Dropdown
-          align="right"
-          trigger={
-            <button className="p-1.5 rounded-md border border-border hover:bg-accent transition-colors">
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" size="icon">
               <MoreHorizontal className="w-4 h-4 text-muted-foreground" />
-            </button>
-          }
-        >
-          <MenuItem icon={<Edit className="w-3.5 h-3.5" />} label="Edit" />
-          <MenuItem icon={<Copy className="w-3.5 h-3.5" />} label="Copy link" />
-          <MenuSeparator />
-          <MenuItem icon={<Trash2 className="w-3.5 h-3.5" />} label="Delete" destructive />
-        </Dropdown>
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuItem><Edit className="w-3.5 h-3.5" /> Edit</DropdownMenuItem>
+            <DropdownMenuItem><Copy className="w-3.5 h-3.5" /> Copy link</DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem variant="destructive"><Trash2 className="w-3.5 h-3.5" /> Delete</DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </ComponentSection>
 
       <ComponentSection
@@ -321,10 +226,9 @@ export function DropdownsPage() {
 }}>
   Right-click anywhere in this area
   {pos && (
-    <div className="fixed z-50 ..." style={{ top: pos.y, left: pos.x }}>
-      <MenuItem label="Copy" />
-      <MenuItem label="Edit" />
-      <MenuItem label="Delete" destructive />
+    <div className="fixed z-50" style={{ top: pos.y, left: pos.x }}>
+      <DropdownMenuItem>Copy</DropdownMenuItem>
+      <DropdownMenuItem variant="destructive">Delete</DropdownMenuItem>
     </div>
   )}
 </div>`}

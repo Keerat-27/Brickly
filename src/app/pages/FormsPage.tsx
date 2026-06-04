@@ -1,116 +1,73 @@
 import { useState, useRef } from "react";
 import { PageHeader } from "../components/ui/PageHeader";
 import { ComponentSection } from "../components/ui/ComponentSection";
-import { Eye, EyeOff, Search, ChevronDown, UploadCloud, X, File } from "lucide-react";
+import { Input } from "../components/ui/input";
+import { Label } from "../components/ui/label";
+import { Textarea } from "../components/ui/textarea";
+import { Checkbox } from "../components/ui/checkbox";
+import { Switch } from "../components/ui/switch";
+import { RadioGroup, RadioGroupItem } from "../components/ui/radio-group";
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from "../components/ui/select";
+import { Eye, EyeOff, Search, UploadCloud, X, File } from "lucide-react";
 
-function Input({
-  label,
-  placeholder,
-  type = "text",
-  error,
-  hint,
-  icon,
-  disabled,
-}: {
-  label?: string;
-  placeholder?: string;
-  type?: string;
-  error?: string;
-  hint?: string;
-  icon?: React.ReactNode;
-  disabled?: boolean;
-}) {
-  const [showPw, setShowPw] = useState(false);
-
+function PasswordInput({ label, placeholder }: { label?: string; placeholder?: string }) {
+  const [show, setShow] = useState(false);
   return (
     <div className="space-y-1 w-full">
-      {label && <label className="block text-sm text-foreground">{label}</label>}
+      {label && <Label>{label}</Label>}
       <div className="relative">
-        {icon && (
-          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">
-            {icon}
-          </span>
-        )}
-        <input
-          type={type === "password" && showPw ? "text" : type}
-          placeholder={placeholder}
-          disabled={disabled}
-          className={`w-full px-3 py-2 rounded-lg border text-sm bg-background text-foreground placeholder:text-muted-foreground outline-none transition-colors
-            focus:ring-2 focus:ring-ring focus:border-transparent
-            disabled:opacity-50 disabled:cursor-not-allowed
-            ${icon ? "pl-9" : ""}
-            ${type === "password" ? "pr-10" : ""}
-            ${error ? "border-destructive focus:ring-destructive/50" : "border-border"}`}
-        />
-        {type === "password" && (
-          <button
-            type="button"
-            onClick={() => setShowPw(!showPw)}
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
-          >
-            {showPw ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-          </button>
-        )}
+        <Input type={show ? "text" : "password"} placeholder={placeholder} />
+        <button
+          type="button"
+          onClick={() => setShow(!show)}
+          className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+        >
+          {show ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+        </button>
       </div>
-      {error && <p className="text-xs text-destructive">{error}</p>}
-      {hint && !error && <p className="text-xs text-muted-foreground">{hint}</p>}
     </div>
   );
 }
 
-function Checkbox({ label, defaultChecked }: { label: string; defaultChecked?: boolean }) {
-  const [checked, setChecked] = useState(defaultChecked ?? false);
+function SearchInput({ label }: { label?: string }) {
   return (
-    <label className="flex items-center gap-2 cursor-pointer">
-      <div
-        onClick={() => setChecked(!checked)}
-        className={`w-4 h-4 rounded border-2 flex items-center justify-center transition-colors ${
-          checked ? "bg-primary border-primary" : "border-border bg-background"
-        }`}
-      >
-        {checked && (
-          <svg className="w-2.5 h-2.5 text-primary-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-          </svg>
-        )}
+    <div className="space-y-1 w-full">
+      {label && <Label>{label}</Label>}
+      <div className="relative">
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+        <Input className="pl-9" placeholder="Search components…" />
       </div>
-      <span className="text-sm text-foreground">{label}</span>
-    </label>
+    </div>
   );
 }
 
-function Radio({ label, name, value, defaultChecked }: { label: string; name: string; value: string; defaultChecked?: boolean }) {
-  const [checked, setChecked] = useState(defaultChecked ?? false);
-  return (
-    <label className="flex items-center gap-2 cursor-pointer" onClick={() => setChecked(true)}>
-      <div
-        className={`w-4 h-4 rounded-full border-2 flex items-center justify-center transition-colors ${
-          checked ? "border-primary" : "border-border"
-        }`}
-      >
-        {checked && <div className="w-2 h-2 rounded-full bg-primary" />}
-      </div>
-      <span className="text-sm text-foreground">{label}</span>
-    </label>
-  );
-}
+function TextareaWithCount() {
+  const [value, setValue] = useState("");
+  const MAX = 500;
+  const count = value.length;
+  const over = count > MAX;
 
-function Toggle({ label, defaultChecked }: { label?: string; defaultChecked?: boolean }) {
-  const [on, setOn] = useState(defaultChecked ?? false);
   return (
-    <label className="flex items-center gap-3 cursor-pointer">
-      <div
-        onClick={() => setOn(!on)}
-        className={`relative w-10 h-5 rounded-full transition-colors ${on ? "bg-primary" : "bg-muted"}`}
-      >
-        <div
-          className={`absolute top-0.5 left-0.5 w-4 h-4 rounded-full bg-white shadow transition-transform ${
-            on ? "translate-x-5" : "translate-x-0"
-          }`}
-        />
-      </div>
-      {label && <span className="text-sm text-foreground">{label}</span>}
-    </label>
+    <div className="space-y-1 w-full">
+      <Label htmlFor="message">Message</Label>
+      <Textarea
+        id="message"
+        rows={4}
+        placeholder="Write your message..."
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+        className={over ? "border-destructive focus-visible:ring-destructive/20" : ""}
+      />
+      <p className={`text-xs text-right transition-colors ${over ? "text-destructive" : "text-muted-foreground"}`}>
+        {count} / {MAX}
+      </p>
+    </div>
   );
 }
 
@@ -152,7 +109,6 @@ function FileUpload() {
           onChange={(e) => addFiles(e.target.files)}
         />
       </div>
-
       {files.length > 0 && (
         <ul className="space-y-1.5">
           {files.map((file, i) => (
@@ -179,34 +135,6 @@ function FileUpload() {
   );
 }
 
-function TextareaWithCount() {
-  const [value, setValue] = useState("");
-  const MAX = 500;
-  const count = value.length;
-  const over = count > MAX;
-
-  return (
-    <div className="space-y-1.5">
-      <label className="text-sm text-foreground">Message</label>
-      <textarea
-        rows={4}
-        placeholder="Write your message..."
-        value={value}
-        onChange={(e) => setValue(e.target.value)}
-        className={`w-full px-3 py-2 rounded-lg border bg-background text-sm resize-none
-          focus:outline-none focus:ring-2 placeholder:text-muted-foreground transition-colors
-          ${over
-            ? "border-destructive focus:ring-destructive/50"
-            : "border-border focus:ring-ring"
-          }`}
-      />
-      <p className={`text-xs text-right transition-colors ${over ? "text-destructive" : "text-muted-foreground"}`}>
-        {count} / {MAX}
-      </p>
-    </div>
-  );
-}
-
 export function FormsPage() {
   return (
     <div className="space-y-10">
@@ -219,25 +147,37 @@ export function FormsPage() {
       <ComponentSection
         title="Text Inputs"
         description="Standard text input in default, with hint, and error states."
-        code={`<input
-  type="text"
-  placeholder="Enter your name"
-  className="w-full px-3 py-2 rounded-lg border border-border bg-background text-sm
-    focus:outline-none focus:ring-2 focus:ring-ring placeholder:text-muted-foreground"
-/>
-{/* With error state */}
-<input
-  type="email"
-  className="w-full px-3 py-2 rounded-lg border border-destructive bg-background text-sm
-    focus:ring-2 focus:ring-destructive/50"
-/>
-<p className="text-xs text-destructive">Please enter a valid email address.</p>`}
+        code={`import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+
+<div className="space-y-1">
+  <Label htmlFor="name">Full Name</Label>
+  <Input id="name" placeholder="Enter your name" />
+</div>
+
+{/* Error state */}
+<div className="space-y-1">
+  <Label htmlFor="email">Email</Label>
+  <Input id="email" type="email" aria-invalid="true" placeholder="invalid-email" />
+  <p className="text-xs text-destructive">Please enter a valid email address.</p>
+</div>`}
       >
         <div className="flex flex-col gap-4 w-full max-w-sm">
-          <Input label="Full Name" placeholder="Enter your name" />
-          <Input label="Email" placeholder="you@example.com" type="email" hint="We'll never share your email." />
-          <Input label="Email" placeholder="invalid-email" type="email" error="Please enter a valid email address." />
-          <Input label="Password" placeholder="••••••••" type="password" />
+          <div className="space-y-1">
+            <Label htmlFor="fullname">Full Name</Label>
+            <Input id="fullname" placeholder="Enter your name" />
+          </div>
+          <div className="space-y-1">
+            <Label htmlFor="email">Email</Label>
+            <Input id="email" type="email" placeholder="you@example.com" />
+            <p className="text-xs text-muted-foreground">We'll never share your email.</p>
+          </div>
+          <div className="space-y-1">
+            <Label htmlFor="email-err">Email</Label>
+            <Input id="email-err" type="email" placeholder="invalid-email" aria-invalid="true" />
+            <p className="text-xs text-destructive">Please enter a valid email address.</p>
+          </div>
+          <PasswordInput label="Password" placeholder="••••••••" />
         </div>
       </ComponentSection>
 
@@ -246,31 +186,26 @@ export function FormsPage() {
         description="Inputs with leading icons for context."
         code={`<div className="relative">
   <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-  <input
-    type="text"
-    placeholder="Search..."
-    className="w-full pl-9 pr-3 py-2 rounded-lg border border-border bg-background text-sm
-      focus:outline-none focus:ring-2 focus:ring-ring"
-  />
+  <Input className="pl-9" placeholder="Search..." />
 </div>`}
       >
         <div className="flex flex-col gap-4 w-full max-w-sm">
-          <Input label="Search" placeholder="Search components…" icon={<Search className="w-4 h-4" />} />
-          <Input label="Disabled" placeholder="This field is disabled" disabled />
+          <SearchInput label="Search" />
+          <div className="space-y-1">
+            <Label>Disabled</Label>
+            <Input placeholder="This field is disabled" disabled />
+          </div>
         </div>
       </ComponentSection>
 
       <ComponentSection
         title="Textarea"
-        description="Multi-line text input for longer content."
-        code={`<div className="space-y-1.5">
-  <label className="text-sm text-foreground">Message</label>
-  <textarea
-    rows={4}
-    placeholder="Write your message..."
-    className="w-full px-3 py-2 rounded-lg border border-border bg-background text-sm resize-none
-      focus:outline-none focus:ring-2 focus:ring-ring placeholder:text-muted-foreground"
-  />
+        description="Multi-line text input with character counter."
+        code={`import { Textarea } from "@/components/ui/textarea";
+
+<div className="space-y-1">
+  <Label htmlFor="message">Message</Label>
+  <Textarea id="message" rows={4} placeholder="Write your message..." />
   <p className="text-xs text-muted-foreground text-right">0 / 500</p>
 </div>`}
       >
@@ -282,30 +217,36 @@ export function FormsPage() {
       <ComponentSection
         title="Select"
         description="Dropdown select for choosing from a list of options."
-        code={`<div className="relative">
-  <select className="w-full appearance-none px-3 py-2 pr-9 rounded-lg border border-border bg-background text-sm
-    focus:outline-none focus:ring-2 focus:ring-ring text-foreground">
-    <option>Choose a framework</option>
-    <option>React</option>
-    <option>Vue</option>
-    <option>Svelte</option>
-  </select>
-  <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
+        code={`import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
+
+<div className="space-y-1">
+  <Label>Framework</Label>
+  <Select>
+    <SelectTrigger>
+      <SelectValue placeholder="Choose a framework" />
+    </SelectTrigger>
+    <SelectContent>
+      <SelectItem value="react">React</SelectItem>
+      <SelectItem value="vue">Vue</SelectItem>
+      <SelectItem value="svelte">Svelte</SelectItem>
+    </SelectContent>
+  </Select>
 </div>`}
       >
         <div className="flex flex-col gap-4 w-full max-w-sm">
           <div className="space-y-1">
-            <label className="block text-sm text-foreground">Framework</label>
-            <div className="relative">
-              <select className="w-full appearance-none px-3 py-2 pr-9 rounded-lg border border-border bg-background text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-ring">
-                <option>Choose a framework</option>
-                <option>React</option>
-                <option>Vue</option>
-                <option>Svelte</option>
-                <option>Angular</option>
-              </select>
-              <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
-            </div>
+            <Label>Framework</Label>
+            <Select>
+              <SelectTrigger>
+                <SelectValue placeholder="Choose a framework" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="react">React</SelectItem>
+                <SelectItem value="vue">Vue</SelectItem>
+                <SelectItem value="svelte">Svelte</SelectItem>
+                <SelectItem value="angular">Angular</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
         </div>
       </ComponentSection>
@@ -313,88 +254,96 @@ export function FormsPage() {
       <ComponentSection
         title="Checkboxes"
         description="Allow users to select multiple options from a list."
-        code={`<label className="flex items-center gap-2 cursor-pointer">
-  <div className="w-4 h-4 rounded border-2 border-primary bg-primary flex items-center justify-center">
-    <svg className="w-2.5 h-2.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-    </svg>
-  </div>
-  <span className="text-sm">Accept terms and conditions</span>
-</label>`}
+        code={`import { Checkbox } from "@/components/ui/checkbox";
+
+<div className="flex items-center gap-2">
+  <Checkbox id="terms" defaultChecked />
+  <Label htmlFor="terms">Accept terms and conditions</Label>
+</div>`}
       >
         <div className="flex flex-col gap-3">
-          <Checkbox label="Accept terms and conditions" defaultChecked />
-          <Checkbox label="Subscribe to newsletter" />
-          <Checkbox label="Enable notifications" defaultChecked />
-          <Checkbox label="Share usage data" />
+          {[
+            { id: "terms", label: "Accept terms and conditions", defaultChecked: true },
+            { id: "newsletter", label: "Subscribe to newsletter", defaultChecked: false },
+            { id: "notifications", label: "Enable notifications", defaultChecked: true },
+            { id: "share", label: "Share usage data", defaultChecked: false },
+          ].map((item) => (
+            <div key={item.id} className="flex items-center gap-2">
+              <Checkbox id={item.id} defaultChecked={item.defaultChecked} />
+              <Label htmlFor={item.id}>{item.label}</Label>
+            </div>
+          ))}
         </div>
       </ComponentSection>
 
       <ComponentSection
         title="Radio Buttons"
         description="Allow users to select a single option from a group."
-        code={`<div className="space-y-2">
-  {["Starter", "Pro", "Enterprise"].map(plan => (
-    <label key={plan} className="flex items-center gap-2 cursor-pointer">
-      <div className="w-4 h-4 rounded-full border-2 border-primary flex items-center justify-center">
-        <div className="w-2 h-2 rounded-full bg-primary" />
-      </div>
-      <span className="text-sm">{plan}</span>
-    </label>
-  ))}
-</div>`}
+        code={`import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+
+<RadioGroup defaultValue="starter">
+  <div className="flex items-center gap-2">
+    <RadioGroupItem value="starter" id="starter" />
+    <Label htmlFor="starter">Starter — Free</Label>
+  </div>
+  <div className="flex items-center gap-2">
+    <RadioGroupItem value="pro" id="pro" />
+    <Label htmlFor="pro">Pro — $12/mo</Label>
+  </div>
+</RadioGroup>`}
       >
-        <div className="flex flex-col gap-2">
-          <Radio name="plan" value="starter" label="Starter — Free" defaultChecked />
-          <Radio name="plan" value="pro" label="Pro — $12/mo" />
-          <Radio name="plan" value="enterprise" label="Enterprise — Custom" />
-        </div>
+        <RadioGroup defaultValue="starter">
+          {[
+            { value: "starter", label: "Starter — Free" },
+            { value: "pro", label: "Pro — $12/mo" },
+            { value: "enterprise", label: "Enterprise — Custom" },
+          ].map((opt) => (
+            <div key={opt.value} className="flex items-center gap-2">
+              <RadioGroupItem value={opt.value} id={opt.value} />
+              <Label htmlFor={opt.value}>{opt.label}</Label>
+            </div>
+          ))}
+        </RadioGroup>
       </ComponentSection>
 
       <ComponentSection
         title="Toggle Switch"
         description="Binary on/off controls for settings and preferences."
-        code={`<label className="flex items-center gap-3 cursor-pointer">
-  <div className="relative w-10 h-5 rounded-full bg-primary">
-    <div className="absolute top-0.5 left-0.5 w-4 h-4 rounded-full bg-white shadow translate-x-5 transition-transform" />
-  </div>
-  <span className="text-sm">Dark mode</span>
-</label>`}
+        code={`import { Switch } from "@/components/ui/switch";
+
+<div className="flex items-center gap-3">
+  <Switch id="dark-mode" defaultChecked />
+  <Label htmlFor="dark-mode">Dark mode</Label>
+</div>`}
       >
         <div className="flex flex-col gap-4">
-          <Toggle label="Dark mode" defaultChecked />
-          <Toggle label="Email notifications" />
-          <Toggle label="Two-factor authentication" defaultChecked />
-          <Toggle label="Public profile" />
+          {[
+            { id: "dark-mode", label: "Dark mode", defaultChecked: true },
+            { id: "email-notif", label: "Email notifications", defaultChecked: false },
+            { id: "2fa", label: "Two-factor authentication", defaultChecked: true },
+            { id: "public", label: "Public profile", defaultChecked: false },
+          ].map((item) => (
+            <div key={item.id} className="flex items-center gap-3">
+              <Switch id={item.id} defaultChecked={item.defaultChecked} />
+              <Label htmlFor={item.id}>{item.label}</Label>
+            </div>
+          ))}
         </div>
       </ComponentSection>
 
       <ComponentSection
         title="File Upload"
         description="Drag-and-drop or click-to-browse file input with file list preview."
-        code={`function FileUpload() {
-  const [dragging, setDragging] = useState(false);
-  const [files, setFiles] = useState([]);
-  const inputRef = useRef(null);
-
-  return (
-    <div className="space-y-2">
-      <div
-        onClick={() => inputRef.current?.click()}
-        onDragOver={(e) => { e.preventDefault(); setDragging(true); }}
-        onDragLeave={() => setDragging(false)}
-        onDrop={(e) => { e.preventDefault(); setDragging(false); /* add files */ }}
-        className="flex flex-col items-center gap-2 rounded-xl border-2 border-dashed
-          border-border px-6 py-8 cursor-pointer hover:border-primary/50 hover:bg-accent/40"
-      >
-        <UploadCloud className="w-8 h-8 text-muted-foreground" />
-        <p className="text-sm"><span className="text-primary">Click to upload</span> or drag and drop</p>
-        <p className="text-xs text-muted-foreground">PNG, JPG, PDF up to 10 MB</p>
-        <input ref={inputRef} type="file" multiple className="hidden" />
-      </div>
-    </div>
-  );
-}`}
+        code={`<div
+  onClick={() => inputRef.current?.click()}
+  onDragOver={(e) => { e.preventDefault(); setDragging(true); }}
+  onDrop={(e) => { e.preventDefault(); addFiles(e.dataTransfer.files); }}
+  className="flex flex-col items-center gap-2 rounded-xl border-2 border-dashed border-border px-6 py-8 cursor-pointer hover:border-primary/50 hover:bg-accent/40"
+>
+  <UploadCloud className="w-8 h-8 text-muted-foreground" />
+  <p className="text-sm"><span className="text-primary">Click to upload</span> or drag and drop</p>
+  <input ref={inputRef} type="file" multiple className="hidden" />
+</div>`}
       >
         <FileUpload />
       </ComponentSection>

@@ -1,58 +1,44 @@
 import { PageHeader } from "../components/ui/PageHeader";
 import { ComponentSection } from "../components/ui/ComponentSection";
+import { Progress } from "../components/ui/progress";
+import { Button } from "../components/ui/button";
 import { useState } from "react";
 import { CheckCircle2 } from "lucide-react";
 
-function ProgressBar({
+function ColorProgress({
   value,
-  max = 100,
   label,
   color = "primary",
   size = "md",
-  showLabel = false,
-  animated = false,
 }: {
   value: number;
-  max?: number;
   label?: string;
   color?: "primary" | "green" | "blue" | "amber" | "red";
   size?: "sm" | "md" | "lg";
-  showLabel?: boolean;
-  animated?: boolean;
 }) {
-  const pct = Math.round((value / max) * 100);
-  const colors = {
-    primary: "bg-primary",
-    green: "bg-green-500",
-    blue: "bg-blue-500",
-    amber: "bg-amber-500",
-    red: "bg-red-500",
-  };
-  const sizes = {
-    sm: "h-1",
-    md: "h-2",
-    lg: "h-3",
-  };
+  const colorClass = {
+    primary: "",
+    green: "[&>div]:bg-green-500",
+    blue: "[&>div]:bg-blue-500",
+    amber: "[&>div]:bg-amber-500",
+    red: "[&>div]:bg-red-500",
+  }[color];
+  const heightClass = { sm: "h-1", md: "h-2", lg: "h-3" }[size];
 
   return (
     <div className="w-full space-y-1.5">
-      {(label || showLabel) && (
+      {label && (
         <div className="flex justify-between text-sm">
-          {label && <span className="text-foreground">{label}</span>}
-          {showLabel && <span className="text-muted-foreground">{pct}%</span>}
+          <span className="text-foreground">{label}</span>
+          <span className="text-muted-foreground">{value}%</span>
         </div>
       )}
-      <div className={`w-full rounded-full bg-muted ${sizes[size]}`}>
-        <div
-          className={`${sizes[size]} rounded-full ${colors[color]} transition-all duration-700 ${animated ? "animate-pulse" : ""}`}
-          style={{ width: `${pct}%` }}
-        />
-      </div>
+      <Progress value={value} className={`${heightClass} ${colorClass}`} />
     </div>
   );
 }
 
-function CircularProgress({ value, size = 64, strokeWidth = 6, color = "#030213" }: {
+function CircularProgress({ value, size = 64, strokeWidth = 6, color = "currentColor" }: {
   value: number;
   size?: number;
   strokeWidth?: number;
@@ -65,26 +51,12 @@ function CircularProgress({ value, size = 64, strokeWidth = 6, color = "#030213"
   return (
     <div className="relative inline-flex items-center justify-center">
       <svg width={size} height={size} className="-rotate-90">
+        <circle cx={size / 2} cy={size / 2} r={radius} fill="none" stroke="currentColor" strokeWidth={strokeWidth} className="text-muted" />
         <circle
-          cx={size / 2}
-          cy={size / 2}
-          r={radius}
-          fill="none"
-          stroke="currentColor"
-          strokeWidth={strokeWidth}
-          className="text-muted"
-        />
-        <circle
-          cx={size / 2}
-          cy={size / 2}
-          r={radius}
-          fill="none"
-          stroke={color}
-          strokeWidth={strokeWidth}
-          strokeDasharray={circumference}
-          strokeDashoffset={offset}
-          strokeLinecap="round"
-          className="transition-all duration-700"
+          cx={size / 2} cy={size / 2} r={radius} fill="none"
+          stroke={color} strokeWidth={strokeWidth}
+          strokeDasharray={circumference} strokeDashoffset={offset}
+          strokeLinecap="round" className="transition-all duration-700"
         />
       </svg>
       <span className="absolute text-sm text-foreground">{value}%</span>
@@ -108,36 +80,45 @@ export function ProgressPage() {
       <ComponentSection
         title="Progress Bars"
         description="Horizontal bars showing completion percentage with color variants."
-        code={`<div className="w-full space-y-1.5">
-  <div className="flex justify-between text-sm">
-    <span>Storage used</span>
-    <span className="text-muted-foreground">72%</span>
-  </div>
-  <div className="h-2 w-full rounded-full bg-muted">
-    <div className="h-2 w-[72%] rounded-full bg-primary transition-all duration-700" />
-  </div>
-</div>`}
+        code={`import { Progress } from "@/components/ui/progress";
+
+<Progress value={72} />
+
+{/* Color variants via className */}
+<Progress value={88} className="[&>div]:bg-green-500" />
+<Progress value={45} className="[&>div]:bg-blue-500" />
+<Progress value={60} className="[&>div]:bg-amber-500" />
+<Progress value={30} className="[&>div]:bg-red-500" />`}
       >
         <div className="flex flex-col gap-5 w-full max-w-sm">
-          <ProgressBar value={72} label="Storage used" showLabel color="primary" />
-          <ProgressBar value={45} label="Downloads" showLabel color="blue" />
-          <ProgressBar value={88} label="Performance" showLabel color="green" />
-          <ProgressBar value={30} label="Errors" showLabel color="red" />
-          <ProgressBar value={60} label="Warnings" showLabel color="amber" />
+          <ColorProgress value={72} label="Storage used" color="primary" />
+          <ColorProgress value={45} label="Downloads" color="blue" />
+          <ColorProgress value={88} label="Performance" color="green" />
+          <ColorProgress value={30} label="Errors" color="red" />
+          <ColorProgress value={60} label="Warnings" color="amber" />
         </div>
       </ComponentSection>
 
       <ComponentSection
         title="Sizes"
         description="Three heights for different visual weights."
-        code={`<div className="h-1 w-full rounded-full bg-muted"><div className="h-1 w-[60%] rounded-full bg-primary" /></div>
-<div className="h-2 w-full rounded-full bg-muted"><div className="h-2 w-[60%] rounded-full bg-primary" /></div>
-<div className="h-3 w-full rounded-full bg-muted"><div className="h-3 w-[60%] rounded-full bg-primary" /></div>`}
+        code={`<Progress value={60} className="h-1" />
+<Progress value={60} className="h-2" />
+<Progress value={60} className="h-3" />`}
       >
         <div className="flex flex-col gap-4 w-full max-w-sm">
-          <ProgressBar value={60} size="sm" label="Small" />
-          <ProgressBar value={60} size="md" label="Medium" />
-          <ProgressBar value={60} size="lg" label="Large" />
+          <div className="space-y-1.5">
+            <span className="text-sm text-foreground">Small</span>
+            <Progress value={60} className="h-1" />
+          </div>
+          <div className="space-y-1.5">
+            <span className="text-sm text-foreground">Medium</span>
+            <Progress value={60} className="h-2" />
+          </div>
+          <div className="space-y-1.5">
+            <span className="text-sm text-foreground">Large</span>
+            <Progress value={60} className="h-3" />
+          </div>
         </div>
       </ComponentSection>
 
@@ -145,10 +126,10 @@ export function ProgressPage() {
         title="Circular Progress"
         description="Radial progress indicators for compact layouts."
         code={`<svg width={64} height={64} className="-rotate-90">
-  <circle cx={32} cy={32} r={26} fill="none" stroke="currentColor" strokeWidth={6} className="text-muted" />
-  <circle cx={32} cy={32} r={26} fill="none" stroke="#030213" strokeWidth={6}
-    strokeDasharray={163.36} strokeDashoffset={163.36 * (1 - 0.75)}
-    strokeLinecap="round" className="transition-all" />
+  <circle cx={32} cy={32} r={26} fill="none" strokeWidth={6} className="text-muted" stroke="currentColor" />
+  <circle cx={32} cy={32} r={26} fill="none" strokeWidth={6}
+    strokeDasharray={163.36} strokeDashoffset={163.36 * (1 - value / 100)}
+    strokeLinecap="round" className="transition-all duration-700" />
 </svg>`}
       >
         <div className="flex flex-wrap gap-6 items-center">
@@ -165,30 +146,23 @@ export function ProgressPage() {
         code={`<div className="flex items-center">
   {steps.map((step, i) => (
     <div key={step} className="flex items-center">
-      <div className={
-        i < current ? "w-8 h-8 rounded-full bg-primary flex items-center justify-center" :
-        i === current ? "w-8 h-8 rounded-full border-2 border-primary flex items-center justify-center" :
-        "w-8 h-8 rounded-full border-2 border-border flex items-center justify-center"
-      }>
-        {i < current ? <CheckCircle2 className="w-4 h-4 text-primary-foreground" /> :
-          <span className={i === current ? "text-primary text-sm" : "text-muted-foreground text-sm"}>{i + 1}</span>
-        }
+      <div className={i < current ? "w-8 h-8 rounded-full bg-primary ..." : ...}>
+        {i < current ? <CheckCircle2 /> : <span>{i + 1}</span>}
       </div>
       {i < steps.length - 1 && (
         <div className={\`h-0.5 w-16 \${i < current ? "bg-primary" : "bg-border"}\`} />
       )}
     </div>
   ))}
-</div>`}
+</div>
+<Button variant="outline">Back</Button>
+<Button>Next</Button>`}
       >
         <div className="flex flex-col gap-6 w-full">
           <div className="flex items-center">
             {steps.map((step, i) => (
               <div key={step} className="flex items-center">
-                <button
-                  onClick={() => setCurrentStep(i)}
-                  className="flex flex-col items-center gap-1"
-                >
+                <button onClick={() => setCurrentStep(i)} className="flex flex-col items-center gap-1">
                   <div className={`w-8 h-8 rounded-full flex items-center justify-center transition-colors ${
                     i < currentStep
                       ? "bg-primary"
@@ -215,18 +189,12 @@ export function ProgressPage() {
             ))}
           </div>
           <div className="flex gap-2">
-            <button
-              onClick={() => setCurrentStep(Math.max(0, currentStep - 1))}
-              className="px-3 py-1.5 rounded-md border border-border text-sm text-foreground hover:bg-accent"
-            >
+            <Button variant="outline" size="sm" onClick={() => setCurrentStep(Math.max(0, currentStep - 1))}>
               Back
-            </button>
-            <button
-              onClick={() => setCurrentStep(Math.min(steps.length - 1, currentStep + 1))}
-              className="px-3 py-1.5 rounded-md bg-primary text-primary-foreground text-sm"
-            >
+            </Button>
+            <Button size="sm" onClick={() => setCurrentStep(Math.min(steps.length - 1, currentStep + 1))}>
               Next
-            </button>
+            </Button>
           </div>
         </div>
       </ComponentSection>
