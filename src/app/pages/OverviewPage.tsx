@@ -21,6 +21,7 @@ import {
   ChevronRight,
   BellRing,
   ListOrdered,
+  CalendarDays,
 } from "lucide-react";
 
 const components = [
@@ -31,6 +32,7 @@ const components = [
   { to: "/breadcrumbs", label: "Breadcrumbs",  icon: Navigation,       description: "Separators, home icon, collapsed",  count: 5 },
   { to: "/buttons",     label: "Buttons",      icon: Square,           description: "Variants, sizes, states",           count: 8 },
   { to: "/cards",       label: "Cards",        icon: CreditCard,       description: "Default, media, stats, list",       count: 4 },
+  { to: "/date-picker", label: "Date Picker", icon: CalendarDays,     description: "Inline, popover, range, disabled",  count: 6 },
   { to: "/dropdowns",   label: "Dropdowns",    icon: Menu,             description: "Menu, profile, context, checkable", count: 5 },
   { to: "/forms",       label: "Forms",        icon: FormInput,        description: "Inputs, checkboxes, selects, toggles", count: 7 },
   { to: "/loading",     label: "Loading",      icon: Loader,           description: "Spinner, skeleton, dots",           count: 4 },
@@ -47,7 +49,7 @@ const components = [
 ];
 
 const stats = [
-  { label: "Components", value: "20+" },
+  { label: "Components", value: "21+" },
   { label: "Variants",   value: "100+" },
   { label: "Dark Mode",  value: "✓" },
   { label: "TypeScript", value: "✓" },
@@ -71,7 +73,7 @@ export function OverviewPage() {
         </p>
         <div className="flex flex-wrap gap-3 mt-6">
           <Link
-            to="/buttons"
+            to={components[0].to}
             className="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary text-primary-foreground text-sm hover:opacity-90 transition-opacity"
           >
             Browse Components
