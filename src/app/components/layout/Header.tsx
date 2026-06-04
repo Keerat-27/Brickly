@@ -1,5 +1,15 @@
 import { Menu, Moon, Sun, Search } from "lucide-react";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { useNavigate } from "react-router";
+import {
+  CommandDialog,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "../ui/command";
+import { navItems } from "./nav-config";
 
 interface HeaderProps {
   onMenuClick: () => void;
@@ -7,12 +17,68 @@ interface HeaderProps {
   onDarkModeToggle: () => void;
 }
 
-export function Header({ onMenuClick, darkMode, onDarkModeToggle }: HeaderProps) {
-  const [searchValue, setSearchValue] = useState("");
+function ComponentSearch() {
+  const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
+
+  const selectItem = useCallback(
+    (to: string) => {
+      navigate(to);
+      setOpen(false);
+    },
+    [navigate],
+  );
+
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === "k") {
+        e.preventDefault();
+        setOpen(true);
+      }
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, []);
 
   return (
+    <>
+      <button
+        type="button"
+        onClick={() => setOpen(true)}
+        className="p-2 rounded-md hover:bg-accent text-muted-foreground transition-colors"
+        title="Search components (⌘K)"
+        aria-label="Search components"
+      >
+        <Search className="w-4 h-4" />
+      </button>
+
+      <CommandDialog open={open} onOpenChange={setOpen} title="Search components">
+        <CommandInput placeholder="Search components…" />
+        <CommandList>
+          <CommandEmpty>No components found.</CommandEmpty>
+          {navItems.map((group) => (
+            <CommandGroup key={group.label} heading={group.label}>
+              {group.items.map((item) => (
+                <CommandItem
+                  key={item.to}
+                  value={item.label}
+                  onSelect={() => selectItem(item.to)}
+                >
+                  <item.icon className="w-4 h-4 text-muted-foreground" />
+                  {item.label}
+                </CommandItem>
+              ))}
+            </CommandGroup>
+          ))}
+        </CommandList>
+      </CommandDialog>
+    </>
+  );
+}
+
+export function Header({ onMenuClick, darkMode, onDarkModeToggle }: HeaderProps) {
+  return (
     <header className="sticky top-0 z-10 flex items-center justify-between px-4 md:px-6 h-14 border-b border-border bg-background/95 backdrop-blur-sm">
-      {/* Left side */}
       <div className="flex items-center gap-3">
         <button
           onClick={onMenuClick}
@@ -20,20 +86,10 @@ export function Header({ onMenuClick, darkMode, onDarkModeToggle }: HeaderProps)
         >
           <Menu className="w-5 h-5" />
         </button>
-        <div className="hidden md:flex items-center gap-2 h-8 w-56 px-3 rounded-md border border-border bg-muted text-muted-foreground text-sm">
-          <Search className="w-3.5 h-3.5 shrink-0" />
-          <input
-            type="text"
-            placeholder="Search components…"
-            value={searchValue}
-            onChange={(e) => setSearchValue(e.target.value)}
-            className="bg-transparent outline-none w-full placeholder:text-muted-foreground text-foreground"
-          />
-        </div>
       </div>
 
-      {/* Right side */}
       <div className="flex items-center gap-2">
+        <ComponentSearch />
         <button
           onClick={onDarkModeToggle}
           className="p-2 rounded-md hover:bg-accent text-muted-foreground transition-colors"
