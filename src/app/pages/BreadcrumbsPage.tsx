@@ -1,4 +1,4 @@
-import React from "react";
+import { Fragment } from "react";
 import { PageHeader } from "../components/ui/PageHeader";
 import { ComponentSection } from "../components/ui/ComponentSection";
 import {
@@ -33,7 +33,7 @@ function DefaultBreadcrumb({ crumbs, separator }: { crumbs: Crumb[]; separator?:
     <Breadcrumb>
       <BreadcrumbList>
         {crumbs.map((crumb, i) => (
-          <React.Fragment key={i}>
+          <Fragment key={i}>
             <BreadcrumbItem>
               {i < crumbs.length - 1 ? (
                 <BreadcrumbLink href="#">{crumb.label}</BreadcrumbLink>
@@ -47,7 +47,7 @@ function DefaultBreadcrumb({ crumbs, separator }: { crumbs: Crumb[]; separator?:
                 {separator === "dot" && <span className="w-1 h-1 rounded-full bg-muted-foreground/40" />}
               </BreadcrumbSeparator>
             )}
-          </React.Fragment>
+          </Fragment>
         ))}
       </BreadcrumbList>
     </Breadcrumb>
@@ -65,7 +65,7 @@ function HomeBreadcrumb({ crumbs }: { crumbs: Crumb[] }) {
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         {crumbs.map((crumb, i) => (
-          <React.Fragment key={i}>
+          <Fragment key={i}>
             <BreadcrumbItem>
               {i < crumbs.length - 1 ? (
                 <BreadcrumbLink href="#">{crumb.label}</BreadcrumbLink>
@@ -74,7 +74,7 @@ function HomeBreadcrumb({ crumbs }: { crumbs: Crumb[] }) {
               )}
             </BreadcrumbItem>
             {i < crumbs.length - 1 && <BreadcrumbSeparator />}
-          </React.Fragment>
+          </Fragment>
         ))}
       </BreadcrumbList>
     </Breadcrumb>
@@ -108,7 +108,7 @@ function BadgeBreadcrumb({ crumbs }: { crumbs: Crumb[] }) {
     <Breadcrumb>
       <BreadcrumbList>
         {crumbs.map((crumb, i) => (
-          <React.Fragment key={i}>
+          <Fragment key={i}>
             <BreadcrumbItem>
               {i < crumbs.length - 1 ? (
                 <BreadcrumbLink
@@ -124,7 +124,7 @@ function BadgeBreadcrumb({ crumbs }: { crumbs: Crumb[] }) {
               )}
             </BreadcrumbItem>
             {i < crumbs.length - 1 && <BreadcrumbSeparator />}
-          </React.Fragment>
+          </Fragment>
         ))}
       </BreadcrumbList>
     </Breadcrumb>
