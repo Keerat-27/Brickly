@@ -12,6 +12,14 @@ import {
   DropdownMenuShortcut,
 } from "../components/ui/dropdown-menu";
 import {
+  ContextMenu,
+  ContextMenuTrigger,
+  ContextMenuContent,
+  ContextMenuItem,
+  ContextMenuSeparator,
+  ContextMenuShortcut,
+} from "../components/ui/context-menu";
+import {
   ChevronDown,
   User,
   Settings,
@@ -25,43 +33,7 @@ import {
   Moon,
   Sun,
 } from "lucide-react";
-import { useState, useRef, useEffect } from "react";
-
-const ContextMenu = () => {
-  const [pos, setPos] = useState<{ x: number; y: number } | null>(null);
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const close = () => setPos(null);
-    document.addEventListener("click", close);
-    return () => document.removeEventListener("click", close);
-  }, []);
-
-  return (
-    <div
-      ref={ref}
-      onContextMenu={(e) => {
-        e.preventDefault();
-        setPos({ x: e.clientX, y: e.clientY });
-      }}
-      className="relative flex items-center justify-center w-full min-h-[100px] rounded-xl border-2 border-dashed border-border text-sm text-muted-foreground select-none cursor-context-menu hover:bg-accent/30 transition-colors"
-    >
-      Right-click anywhere in this area
-      {pos && (
-        <div
-          className="fixed z-50 min-w-[160px] rounded-xl border border-border bg-popover shadow-lg py-1 px-1"
-          style={{ top: pos.y, left: pos.x }}
-          onClick={(e) => e.stopPropagation()}
-        >
-          <DropdownMenuItem className="gap-2"><Copy className="w-3.5 h-3.5" /> Copy<DropdownMenuShortcut>⌘C</DropdownMenuShortcut></DropdownMenuItem>
-          <DropdownMenuItem className="gap-2"><Edit className="w-3.5 h-3.5" /> Edit<DropdownMenuShortcut>⌘E</DropdownMenuShortcut></DropdownMenuItem>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem variant="destructive" className="gap-2"><Trash2 className="w-3.5 h-3.5" /> Delete</DropdownMenuItem>
-        </div>
-      )}
-    </div>
-  );
-}
+import { useState } from "react";
 
 const ThemeDropdown = () => {
   const [theme, setTheme] = useState<"light" | "dark" | "system">("system");
@@ -219,22 +191,41 @@ export const DropdownsPage = () => {
 
       <ComponentSection
         title="Context Menu"
-        description="Right-click to reveal a contextual menu tied to a region."
-        code={`<div onContextMenu={(e) => {
-  e.preventDefault();
-  setPos({ x: e.clientX, y: e.clientY });
-}}>
-  Right-click anywhere in this area
-  {pos && (
-    <div className="fixed z-50" style={{ top: pos.y, left: pos.x }}>
-      <DropdownMenuItem>Copy</DropdownMenuItem>
-      <DropdownMenuItem variant="destructive">Delete</DropdownMenuItem>
-    </div>
-  )}
-</div>`}
+        description="Right-click to reveal a contextual menu using the shadcn ContextMenu primitive."
+        code={`import { ContextMenu, ContextMenuTrigger, ContextMenuContent, ContextMenuItem, ContextMenuSeparator } from "@/components/ui/context-menu";
+
+<ContextMenu>
+  <ContextMenuTrigger className="flex min-h-[100px] w-full items-center justify-center rounded-xl border-2 border-dashed border-border text-sm text-muted-foreground">
+    Right-click anywhere in this area
+  </ContextMenuTrigger>
+  <ContextMenuContent>
+    <ContextMenuItem><Copy /> Copy<ContextMenuShortcut>⌘C</ContextMenuShortcut></ContextMenuItem>
+    <ContextMenuItem><Edit /> Edit<ContextMenuShortcut>⌘E</ContextMenuShortcut></ContextMenuItem>
+    <ContextMenuSeparator />
+    <ContextMenuItem variant="destructive"><Trash2 /> Delete</ContextMenuItem>
+  </ContextMenuContent>
+</ContextMenu>`}
       >
         <div className="w-full">
-          <ContextMenu />
+          <ContextMenu>
+            <ContextMenuTrigger className="flex min-h-[100px] w-full items-center justify-center rounded-xl border-2 border-dashed border-border text-sm text-muted-foreground select-none cursor-context-menu hover:bg-accent/30 transition-colors">
+              Right-click anywhere in this area
+            </ContextMenuTrigger>
+            <ContextMenuContent>
+              <ContextMenuItem className="gap-2">
+                <Copy className="w-3.5 h-3.5" /> Copy
+                <ContextMenuShortcut>⌘C</ContextMenuShortcut>
+              </ContextMenuItem>
+              <ContextMenuItem className="gap-2">
+                <Edit className="w-3.5 h-3.5" /> Edit
+                <ContextMenuShortcut>⌘E</ContextMenuShortcut>
+              </ContextMenuItem>
+              <ContextMenuSeparator />
+              <ContextMenuItem variant="destructive" className="gap-2">
+                <Trash2 className="w-3.5 h-3.5" /> Delete
+              </ContextMenuItem>
+            </ContextMenuContent>
+          </ContextMenu>
         </div>
       </ComponentSection>
     </div>

@@ -7,6 +7,11 @@ import {
   TooltipProvider,
 } from "../components/ui/tooltip";
 import {
+  HoverCard,
+  HoverCardTrigger,
+  HoverCardContent,
+} from "../components/ui/hover-card";
+import {
   Popover,
   PopoverTrigger,
   PopoverContent,
@@ -163,6 +168,46 @@ export const TooltipsPage = () => {
             </Tooltip>
           </div>
         </TooltipProvider>
+      </ComponentSection>
+
+      <ComponentSection
+        title="Hover Card"
+        description="Rich preview cards that open on hover — great for user profiles and link previews."
+        code={`import { HoverCard, HoverCardTrigger, HoverCardContent } from "@/components/ui/hover-card";
+
+<HoverCard>
+  <HoverCardTrigger asChild>
+    <Button variant="link" className="p-0 h-auto">@brickly</Button>
+  </HoverCardTrigger>
+  <HoverCardContent className="w-72">
+    <div className="space-y-2">
+      <p className="text-sm font-medium">Brickly</p>
+      <p className="text-xs text-muted-foreground">React component library · 21+ categories</p>
+    </div>
+  </HoverCardContent>
+</HoverCard>`}
+      >
+        <HoverCard>
+          <HoverCardTrigger asChild>
+            <Button variant="link" className="p-0 h-auto text-primary">
+              @brickly
+            </Button>
+          </HoverCardTrigger>
+          <HoverCardContent className="w-72">
+            <div className="flex gap-3">
+              <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-sm font-medium shrink-0">
+                B
+              </div>
+              <div className="space-y-1">
+                <p className="text-sm font-medium">Brickly</p>
+                <p className="text-xs text-muted-foreground">
+                  React component library with live previews and copyable code.
+                </p>
+                <p className="text-xs text-muted-foreground">21+ component categories</p>
+              </div>
+            </div>
+          </HoverCardContent>
+        </HoverCard>
       </ComponentSection>
 
       <ComponentSection

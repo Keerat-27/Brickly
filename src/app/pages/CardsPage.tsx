@@ -2,6 +2,15 @@ import { PageHeader } from "../components/ui/PageHeader";
 import { ComponentSection } from "../components/ui/ComponentSection";
 import { Button } from "../components/ui/button";
 import { Badge } from "../components/ui/badge";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+  CardFooter,
+} from "../components/ui/card";
+import { AspectRatio } from "../components/ui/aspect-ratio";
 import { ArrowUpRight, Star, TrendingUp, Users, ShoppingCart, DollarSign, MoreHorizontal } from "lucide-react";
 
 export const CardsPage = () => {
@@ -15,32 +24,38 @@ export const CardsPage = () => {
 
       <ComponentSection
         title="Basic Card"
-        description="A simple card with header, body, and footer sections."
-        code={`<div className="rounded-2xl border border-border bg-card p-6 space-y-4 w-72">
-  <div>
-    <h3>Card Title</h3>
-    <p className="text-sm text-muted-foreground mt-1">Card subtitle or description</p>
-  </div>
-  <p className="text-sm text-muted-foreground">Card content goes here.</p>
-  <div className="flex gap-2 pt-4 border-t border-border">
-    <Button>Action</Button>
-    <Button variant="outline">Cancel</Button>
-  </div>
-</div>`}
+        description="shadcn Card primitive with header, content, and footer slots."
+        code={`import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
+
+<Card className="w-72">
+  <CardHeader>
+    <CardTitle>Card Title</CardTitle>
+    <CardDescription>Card subtitle or description</CardDescription>
+  </CardHeader>
+  <CardContent>
+    <p className="text-sm text-muted-foreground">Card content goes here.</p>
+  </CardContent>
+  <CardFooter className="gap-2">
+    <Button size="sm">Action</Button>
+    <Button variant="outline" size="sm">Cancel</Button>
+  </CardFooter>
+</Card>`}
       >
-        <div className="rounded-2xl border border-border bg-card p-6 space-y-4 w-72">
-          <div>
-            <h3 className="text-foreground" style={{ fontWeight: 700, fontSize: "1.25rem" }}>Card Title</h3>
-            <p className="text-sm text-muted-foreground mt-1">Card subtitle or description</p>
-          </div>
-          <p className="text-sm text-muted-foreground">
-            Card content goes here. This is a flexible container for related content.
-          </p>
-          <div className="flex gap-2 pt-4 border-t border-border">
+        <Card className="w-72">
+          <CardHeader>
+            <CardTitle>Card Title</CardTitle>
+            <CardDescription>Card subtitle or description</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <p className="text-sm text-muted-foreground">
+              Card content goes here. This is a flexible container for related content.
+            </p>
+          </CardContent>
+          <CardFooter className="gap-2">
             <Button size="sm">Action</Button>
             <Button variant="outline" size="sm">Cancel</Button>
-          </div>
-        </div>
+          </CardFooter>
+        </Card>
       </ComponentSection>
 
       <ComponentSection
@@ -120,6 +135,32 @@ export const CardsPage = () => {
           </div>
           <Button className="w-full">Follow</Button>
         </div>
+      </ComponentSection>
+
+      <ComponentSection
+        title="Media Card (Aspect Ratio)"
+        description="Lock image proportions with the AspectRatio primitive."
+        code={`import { AspectRatio } from "@/components/ui/aspect-ratio";
+
+<Card className="w-72 gap-0 overflow-hidden pt-0">
+  <AspectRatio ratio={16 / 9}>
+    <div className="h-full w-full bg-gradient-to-br from-blue-400 to-purple-500" />
+  </AspectRatio>
+  <CardHeader className="px-6 pt-4 pb-6">
+    <CardTitle>Design Systems 101</CardTitle>
+    <CardDescription>16:9 cover image</CardDescription>
+  </CardHeader>
+</Card>`}
+      >
+        <Card className="w-72 gap-0 overflow-hidden pt-0">
+          <AspectRatio ratio={16 / 9}>
+            <div className="h-full w-full bg-gradient-to-br from-blue-400 to-purple-500" />
+          </AspectRatio>
+          <CardHeader className="px-6 pt-4 pb-6">
+            <CardTitle>Design Systems 101</CardTitle>
+            <CardDescription>16:9 cover image</CardDescription>
+          </CardHeader>
+        </Card>
       </ComponentSection>
 
       <ComponentSection

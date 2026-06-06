@@ -1,8 +1,19 @@
 import { useState, useRef } from "react";
+import { useForm } from "react-hook-form";
 import { PageHeader } from "../components/ui/PageHeader";
 import { ComponentSection } from "../components/ui/ComponentSection";
 import { Input } from "../components/ui/input";
 import { Label } from "../components/ui/label";
+import { Button } from "../components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "../components/ui/form";
 import { Textarea } from "../components/ui/textarea";
 import { Checkbox } from "../components/ui/checkbox";
 import { Switch } from "../components/ui/switch";
@@ -70,6 +81,52 @@ const TextareaWithCount = () => {
     </div>
   );
 }
+
+const HookFormDemo = () => {
+  const form = useForm({
+    defaultValues: { email: "", username: "" },
+  });
+
+  return (
+    <Form {...form}>
+      <form
+        onSubmit={form.handleSubmit(() => {})}
+        className="w-full max-w-sm space-y-4"
+      >
+        <FormField
+          control={form.control}
+          name="email"
+          rules={{ required: "Email is required" }}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Email</FormLabel>
+              <FormControl>
+                <Input placeholder="you@example.com" {...field} />
+              </FormControl>
+              <FormDescription>We&apos;ll never share your email.</FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="username"
+          rules={{ required: "Username is required", minLength: { value: 3, message: "Min 3 characters" } }}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Username</FormLabel>
+              <FormControl>
+                <Input placeholder="johndoe" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button type="submit">Submit</Button>
+      </form>
+    </Form>
+  );
+};
 
 const FileUpload = () => {
   const [dragging, setDragging] = useState(false);
@@ -329,6 +386,32 @@ import { Label } from "@/components/ui/label";
             </div>
           ))}
         </div>
+      </ComponentSection>
+
+      <ComponentSection
+        title="React Hook Form"
+        description="Form primitive with validation via react-hook-form."
+        code={`import { useForm } from "react-hook-form";
+import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
+
+const form = useForm({ defaultValues: { email: "" } });
+
+<Form {...form}>
+  <form onSubmit={form.handleSubmit(console.log)}>
+    <FormField name="email" control={form.control} rules={{ required: "Email is required" }}
+      render={({ field }) => (
+        <FormItem>
+          <FormLabel>Email</FormLabel>
+          <FormControl><Input placeholder="you@example.com" {...field} /></FormControl>
+          <FormMessage />
+        </FormItem>
+      )}
+    />
+    <Button type="submit">Submit</Button>
+  </form>
+</Form>`}
+      >
+        <HookFormDemo />
       </ComponentSection>
 
       <ComponentSection

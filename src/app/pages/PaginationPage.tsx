@@ -2,6 +2,15 @@ import { useState } from "react";
 import { PageHeader } from "../components/ui/PageHeader";
 import { ComponentSection } from "../components/ui/ComponentSection";
 import { Button } from "../components/ui/button";
+import {
+  Pagination as ShadcnPagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationPrevious,
+  PaginationNext,
+  PaginationEllipsis,
+} from "../components/ui/pagination";
 import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, MoreHorizontal } from "lucide-react";
 
 const getPages =(current: number, total: number, delta = 2): (number | "…")[]  => {
@@ -190,6 +199,53 @@ const PillPagination = () => {
   );
 }
 
+const ShadcnPaginationDemo = () => {
+  const [page, setPage] = useState(2);
+  const totalPages = 5;
+
+  return (
+    <ShadcnPagination>
+      <PaginationContent>
+        <PaginationItem>
+          <PaginationPrevious
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              setPage((p) => Math.max(1, p - 1));
+            }}
+          />
+        </PaginationItem>
+        {[1, 2, 3, 4, 5].map((p) => (
+          <PaginationItem key={p}>
+            <PaginationLink
+              href="#"
+              isActive={page === p}
+              onClick={(e) => {
+                e.preventDefault();
+                setPage(p);
+              }}
+            >
+              {p}
+            </PaginationLink>
+          </PaginationItem>
+        ))}
+        <PaginationItem>
+          <PaginationEllipsis />
+        </PaginationItem>
+        <PaginationItem>
+          <PaginationNext
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              setPage((p) => Math.min(totalPages, p + 1));
+            }}
+          />
+        </PaginationItem>
+      </PaginationContent>
+    </ShadcnPagination>
+  );
+};
+
 export const PaginationPage = () => {
   const [page1, setPage1] = useState(5);
   const [page2, setPage2] = useState(3);
@@ -202,6 +258,23 @@ export const PaginationPage = () => {
         description="Controls for navigating multi-page datasets with multiple visual styles."
         badge="Component"
       />
+
+      <ComponentSection
+        title="shadcn Pagination"
+        description="Composable pagination primitive with Previous, Next, and page links."
+        code={`import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationPrevious, PaginationNext } from "@/components/ui/pagination";
+
+<Pagination>
+  <PaginationContent>
+    <PaginationItem><PaginationPrevious href="#" /></PaginationItem>
+    <PaginationItem><PaginationLink href="#" isActive>1</PaginationLink></PaginationItem>
+    <PaginationItem><PaginationLink href="#">2</PaginationLink></PaginationItem>
+    <PaginationItem><PaginationNext href="#" /></PaginationItem>
+  </PaginationContent>
+</Pagination>`}
+      >
+        <ShadcnPaginationDemo />
+      </ComponentSection>
 
       <ComponentSection
         title="Default"

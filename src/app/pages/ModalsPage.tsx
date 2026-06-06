@@ -19,6 +19,27 @@ import {
   SheetHeader,
   SheetTitle,
 } from "../components/ui/sheet";
+import {
+  AlertDialog,
+  AlertDialogTrigger,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogCancel,
+  AlertDialogAction,
+} from "../components/ui/alert-dialog";
+import {
+  Drawer,
+  DrawerTrigger,
+  DrawerContent,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerClose,
+} from "../components/ui/drawer";
 import { AlertTriangle, CheckCircle2 } from "lucide-react";
 
 export const ModalsPage = () => {
@@ -225,6 +246,46 @@ export const ModalsPage = () => {
       </ComponentSection>
 
       <ComponentSection
+        title="Alert Dialog"
+        description="Destructive confirmation that requires explicit user action."
+        code={`import { AlertDialog, AlertDialogTrigger, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription, AlertDialogFooter, AlertDialogCancel, AlertDialogAction } from "@/components/ui/alert-dialog";
+
+<AlertDialog>
+  <AlertDialogTrigger asChild>
+    <Button variant="destructive">Delete Account</Button>
+  </AlertDialogTrigger>
+  <AlertDialogContent>
+    <AlertDialogHeader>
+      <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+      <AlertDialogDescription>This action cannot be undone.</AlertDialogDescription>
+    </AlertDialogHeader>
+    <AlertDialogFooter>
+      <AlertDialogCancel>Cancel</AlertDialogCancel>
+      <AlertDialogAction>Continue</AlertDialogAction>
+    </AlertDialogFooter>
+  </AlertDialogContent>
+</AlertDialog>`}
+      >
+        <AlertDialog>
+          <AlertDialogTrigger asChild>
+            <Button variant="destructive">Delete Account</Button>
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+              <AlertDialogDescription>
+                This will permanently delete your account and remove all associated data.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction>Continue</AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+      </ComponentSection>
+
+      <ComponentSection
         title="Drawer / Slide-over"
         description="Side panel that slides in from the right edge of the screen."
         code={`import { Sheet, SheetTrigger, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
@@ -259,6 +320,53 @@ export const ModalsPage = () => {
             </div>
           </SheetContent>
         </Sheet>
+      </ComponentSection>
+
+      <ComponentSection
+        title="Bottom Drawer"
+        description="Mobile-style drawer that slides up from the bottom using Vaul."
+        code={`import { Drawer, DrawerTrigger, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription, DrawerFooter, DrawerClose } from "@/components/ui/drawer";
+
+<Drawer>
+  <DrawerTrigger asChild>
+    <Button variant="outline">Open Bottom Drawer</Button>
+  </DrawerTrigger>
+  <DrawerContent>
+    <DrawerHeader>
+      <DrawerTitle>Share link</DrawerTitle>
+      <DrawerDescription>Anyone with this link can view the document.</DrawerDescription>
+    </DrawerHeader>
+    <DrawerFooter>
+      <Button>Share</Button>
+      <DrawerClose asChild>
+        <Button variant="outline">Cancel</Button>
+      </DrawerClose>
+    </DrawerFooter>
+  </DrawerContent>
+</Drawer>`}
+      >
+        <Drawer>
+          <DrawerTrigger asChild>
+            <Button variant="outline">Open Bottom Drawer</Button>
+          </DrawerTrigger>
+          <DrawerContent>
+            <DrawerHeader>
+              <DrawerTitle>Share link</DrawerTitle>
+              <DrawerDescription>
+                Anyone with this link can view the document.
+              </DrawerDescription>
+            </DrawerHeader>
+            <div className="px-4 pb-2">
+              <Input readOnly value="https://brickly.dev/docs/cards" className="text-sm" />
+            </div>
+            <DrawerFooter>
+              <Button>Copy link</Button>
+              <DrawerClose asChild>
+                <Button variant="outline">Cancel</Button>
+              </DrawerClose>
+            </DrawerFooter>
+          </DrawerContent>
+        </Drawer>
       </ComponentSection>
     </div>
   );

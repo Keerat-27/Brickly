@@ -1,7 +1,9 @@
 import { useState, useCallback, useEffect } from "react";
+import { toast } from "sonner";
 import { PageHeader } from "../components/ui/PageHeader";
 import { ComponentSection } from "../components/ui/ComponentSection";
 import { Button } from "../components/ui/button";
+import { Toaster } from "../components/ui/sonner";
 import {
   CheckCircle2,
   AlertTriangle,
@@ -131,6 +133,28 @@ export const ToastsPage = () => {
       />
 
       <ToastDemo toasts={toasts} dismiss={dismiss} />
+
+      <ComponentSection
+        title="Sonner Toaster"
+        description="Production-ready toasts via the Sonner library and shadcn Toaster wrapper."
+        code={`import { toast } from "sonner";
+import { Toaster } from "@/components/ui/sonner";
+
+<Toaster />
+<Button onClick={() => toast.success("Saved successfully!")}>Success</Button>
+<Button onClick={() => toast.error("Something went wrong")}>Error</Button>`}
+      >
+        <Toaster />
+        <div className="flex flex-wrap gap-2">
+          <Button onClick={() => toast.success("Saved successfully!")}>Sonner Success</Button>
+          <Button variant="destructive" onClick={() => toast.error("Something went wrong")}>
+            Sonner Error
+          </Button>
+          <Button variant="outline" onClick={() => toast("You have a new message")}>
+            Sonner Default
+          </Button>
+        </div>
+      </ComponentSection>
 
       <ComponentSection
         title="Types"

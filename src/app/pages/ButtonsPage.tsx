@@ -1,7 +1,9 @@
 import { PageHeader } from "../components/ui/PageHeader";
 import { ComponentSection } from "../components/ui/ComponentSection";
 import { Button } from "../components/ui/button";
-import { Loader2, Download, ArrowRight, Trash2, Plus, Heart } from "lucide-react";
+import { Toggle } from "../components/ui/toggle";
+import { ToggleGroup, ToggleGroupItem } from "../components/ui/toggle-group";
+import { Loader2, Download, ArrowRight, Trash2, Plus, Heart, Bold, Italic, Underline, AlignLeft, AlignCenter, AlignRight } from "lucide-react";
 import { useState } from "react";
 
 export const ButtonsPage = () => {
@@ -99,6 +101,45 @@ export const ButtonsPage = () => {
       >
         <Button variant="link">Visit documentation</Button>
         <Button variant="link">Learn more →</Button>
+      </ComponentSection>
+
+      <ComponentSection
+        title="Toggle"
+        description="Two-state buttons for formatting and on/off controls."
+        code={`import { Toggle } from "@/components/ui/toggle";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+
+<Toggle aria-label="Toggle bold"><Bold /></Toggle>
+
+<ToggleGroup type="multiple">
+  <ToggleGroupItem value="bold" aria-label="Bold"><Bold /></ToggleGroupItem>
+  <ToggleGroupItem value="italic" aria-label="Italic"><Italic /></ToggleGroupItem>
+</ToggleGroup>`}
+      >
+        <div className="flex flex-col gap-4">
+          <div className="flex gap-2">
+            <Toggle aria-label="Toggle bold">
+              <Bold className="w-4 h-4" />
+            </Toggle>
+            <Toggle aria-label="Toggle italic">
+              <Italic className="w-4 h-4" />
+            </Toggle>
+            <Toggle aria-label="Toggle underline" variant="outline">
+              <Underline className="w-4 h-4" />
+            </Toggle>
+          </div>
+          <ToggleGroup type="single" defaultValue="left">
+            <ToggleGroupItem value="left" aria-label="Align left">
+              <AlignLeft className="w-4 h-4" />
+            </ToggleGroupItem>
+            <ToggleGroupItem value="center" aria-label="Align center">
+              <AlignCenter className="w-4 h-4" />
+            </ToggleGroupItem>
+            <ToggleGroupItem value="right" aria-label="Align right">
+              <AlignRight className="w-4 h-4" />
+            </ToggleGroupItem>
+          </ToggleGroup>
+        </div>
       </ComponentSection>
     </div>
   );

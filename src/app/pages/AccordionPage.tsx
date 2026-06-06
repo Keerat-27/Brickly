@@ -6,7 +6,12 @@ import {
   AccordionTrigger,
   AccordionContent,
 } from "../components/ui/accordion";
-import { Plus, Minus } from "lucide-react";
+import {
+  Collapsible,
+  CollapsibleTrigger,
+  CollapsibleContent,
+} from "../components/ui/collapsible";
+import { Plus, Minus, ChevronsUpDown } from "lucide-react";
 import { useState } from "react";
 
 const faqItems = [
@@ -125,6 +130,32 @@ export const AccordionPage = () => {
             </AccordionItem>
           ))}
         </Accordion>
+      </ComponentSection>
+
+      <ComponentSection
+        title="Collapsible"
+        description="Lightweight single-section expand/collapse using the Collapsible primitive."
+        code={`import { Collapsible, CollapsibleTrigger, CollapsibleContent } from "@/components/ui/collapsible";
+
+<Collapsible>
+  <CollapsibleTrigger className="flex w-full items-center justify-between rounded-lg border px-4 py-3">
+    Can I use this in production?
+    <ChevronsUpDown className="w-4 h-4" />
+  </CollapsibleTrigger>
+  <CollapsibleContent className="px-4 py-3 text-sm text-muted-foreground">
+    Yes. All components are built on Radix UI primitives.
+  </CollapsibleContent>
+</Collapsible>`}
+      >
+        <Collapsible className="w-full">
+          <CollapsibleTrigger className="flex w-full items-center justify-between rounded-lg border border-border px-4 py-3 text-sm text-foreground hover:bg-muted/40 transition-colors">
+            Can I use this in production?
+            <ChevronsUpDown className="w-4 h-4 text-muted-foreground" />
+          </CollapsibleTrigger>
+          <CollapsibleContent className="px-4 py-3 text-sm text-muted-foreground border border-t-0 border-border rounded-b-lg -mt-px">
+            Yes. All components are built on Radix UI primitives with accessible keyboard support.
+          </CollapsibleContent>
+        </Collapsible>
       </ComponentSection>
 
       <ComponentSection
