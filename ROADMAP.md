@@ -177,7 +177,7 @@ Today, tokens live in `src/styles/theme.css` but are not documented anywhere in 
 
 - [ ] Build `TokensPage.tsx` with live swatches that respond to dark mode toggle
 - [ ] Add route and navigation entry
-- [ ] Update README project structure to reference `theme.css` instead of removed `default_shadcn_theme.css`
+- [x] Update README project structure to reference `theme.css` instead of removed `default_shadcn_theme.css`
 
 ---
 
@@ -203,11 +203,15 @@ Today, tokens live in `src/styles/theme.css` but are not documented anywhere in 
 | `motion` | Not used |
 | `next-themes` | Deleted `sonner.tsx` (only consumer) |
 
+### Kept (required by restored primitives)
+
+`recharts`, `vaul`, `embla-carousel-react`, `input-otp`, and `sonner` remain — they are imported by UI components under `src/app/components/ui/`.
+
 ### Approach
 
-- [ ] Audit with `npx depcheck` or manual grep before removing
-- [ ] Re-add packages only when restoring the components that need them (see §1)
-- [ ] Run `npm install`, `npm run typecheck`, and `npm run build` after each removal batch
+- [x] Audit with `npx depcheck` or manual grep before removing
+- [x] Re-add packages only when restoring the components that need them (see §1)
+- [x] Run `npm install`, `npm run typecheck`, and `npm run build` after each removal batch
 
 ---
 
@@ -328,28 +332,28 @@ Component libraries should model accessible patterns, not just visual ones.
 
 ## 11. Rename and polish branding
 
-Some leftover Figma Make boilerplate still exists in the project metadata and UI.
+Figma Make boilerplate removed from metadata, UI, and build config.
 
 ### Package and project identity
 
-| Current | Target |
-|---------|--------|
-| `@figma/my-make-file` in `package.json` | `@brickly/docs` or `brickly` |
+| Was | Now |
+|-----|-----|
+| `@figma/my-make-file` in `package.json` | `brickly` |
 | "UIKit v1.0" in sidebar | "Brickly" |
-| README references to `default_shadcn_theme.css`, `guidelines/` | Update to match current file layout |
+| README references to `default_shadcn_theme.css`, `guidelines/` | `src/styles/theme.css`, `ROADMAP.md` |
 
 ### UI polish
 
-- [ ] Consistent page titles and meta description (add `index.html` title/description if missing)
-- [ ] Favicon and OG image for social sharing when deployed
-- [ ] Overview page stats aligned with actual component count after new pages are added
-- [ ] GitHub link in header already points to the repo — verify URL stays correct
+- [x] Consistent page titles and meta description (add `index.html` title/description if missing)
+- [x] Favicon and OG image for social sharing when deployed
+- [x] Overview page stats aligned with actual component count after new pages are added
+- [x] GitHub link in header already points to the repo — verify URL stays correct
 
 ### Documentation polish
 
-- [ ] Sync `README.md` project structure with actual directories
-- [ ] Link `ROADMAP.md` from README
-- [ ] Keep `ATTRIBUTIONS.md` updated as new shadcn components are added
+- [x] Sync `README.md` project structure with actual directories
+- [x] Link `ROADMAP.md` from README
+- [x] Keep `ATTRIBUTIONS.md` updated as new shadcn components are added
 
 ---
 
@@ -357,7 +361,7 @@ Some leftover Figma Make boilerplate still exists in the project metadata and UI
 
 | Phase | Focus | Outcome |
 |-------|--------|---------|
-| **Phase 1** | Branding polish (§11), dependency trim (§5), README sync | Cleaner repo, less confusion |
+| **Phase 1** ✅ | Branding polish (§11), dependency trim (§5), README sync | Cleaner repo, less confusion |
 | **Phase 2** | Restore primitives (§1), migrate custom demos (§2), Tokens page (§4) | Consistent shadcn usage across all pages |
 | **Phase 3** | New pages (§3), search improvements (§8) | Richer catalog and better DX |
 | **Phase 4** | Deploy (§6), tests (§7), a11y audit (§10) | Production-ready, maintainable site |

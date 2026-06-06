@@ -15,7 +15,7 @@ import { Plus, Minus, ChevronsUpDown } from "lucide-react";
 import { useState } from "react";
 
 const faqItems = [
-  { title: "What is UIKit?", body: "UIKit is a collection of accessible, customizable React components built with Tailwind CSS. Copy and paste any component into your project." },
+  { title: "What is Brickly?", body: "Brickly is a browsable component library and design-system reference built with shadcn/ui patterns and Tailwind CSS. Copy and paste any component into your project." },
   { title: "Does it support dark mode?", body: "Yes — every component uses CSS custom properties so dark mode works out of the box by toggling the html class." },
   { title: "Is TypeScript supported?", body: "Absolutely. All components are written in TypeScript with fully typed props." },
   { title: "Can I customize the styles?", body: "Yes. Modify the Tailwind classes or update the CSS variables in your theme file to match your brand." },
@@ -65,9 +65,9 @@ export const AccordionPage = () => {
 
 <Accordion type="multiple" className="w-full">
   <AccordionItem value="item-1">
-    <AccordionTrigger>What is UIKit?</AccordionTrigger>
+    <AccordionTrigger>What is Brickly?</AccordionTrigger>
     <AccordionContent>
-      UIKit is a collection of accessible, customizable React components.
+      Brickly is a browsable component library built with accessible React components.
     </AccordionContent>
   </AccordionItem>
 </Accordion>`}

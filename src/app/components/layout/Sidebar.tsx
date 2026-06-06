@@ -25,9 +25,8 @@ export const Sidebar = ({ open, onClose }: SidebarProps) => {
           </div>
           <div>
             <span className="text-sm font-semibold tracking-tight text-foreground">
-              UIKit
+              Brickly
             </span>
-            <span className="text-xs text-muted-foreground ml-1">v1.0</span>
           </div>
         </div>
         <button
@@ -73,7 +72,7 @@ export const Sidebar = ({ open, onClose }: SidebarProps) => {
       {/* Footer */}
       <div className="px-5 py-4 border-t border-border">
         <p className="text-xs text-muted-foreground">
-          Built with Tailwind CSS & React
+          Brickly design system
         </p>
       </div>
     </aside>

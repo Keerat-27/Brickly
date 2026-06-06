@@ -49,7 +49,7 @@ const components = [
 ];
 
 const stats = [
-  { label: "Components", value: "21+" },
+  { label: "Components", value: "21" },
   { label: "Variants",   value: "100+" },
   { label: "Dark Mode",  value: "✓" },
   { label: "TypeScript", value: "✓" },
@@ -65,11 +65,11 @@ export const OverviewPage = () => {
           Fully accessible & customizable
         </div>
         <h1 className="text-4xl tracking-tight text-foreground mb-3">
-          UIKit Component Library
+          Brickly Component Library
         </h1>
         <p className="text-muted-foreground max-w-2xl">
-          A collection of beautifully designed, accessible React components built with Tailwind CSS.
-          Copy, paste, and customize — no config needed.
+          A browsable design-system reference of accessible React components built with shadcn/ui
+          patterns and Tailwind CSS. Preview variants, copy snippets, and customize for your project.
         </p>
         <div className="flex flex-wrap gap-3 mt-6">
           <Link
