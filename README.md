@@ -1,8 +1,6 @@
 # Brickly
 
-A browsable React component library and design-system reference, exported from Figma and built on [shadcn/ui](https://ui.shadcn.com/) patterns. Each page documents variants with live previews and copyable code snippets.
-
-**Figma source:** [Component library design](https://www.figma.com/design/JZwgsWsEWkq2JNSoGbkkvF/Component-library-design)
+A browsable React component library and design-system reference built on [shadcn/ui](https://ui.shadcn.com/) patterns. Each page documents variants with live previews and copyable code snippets.
 
 ## Features
 
