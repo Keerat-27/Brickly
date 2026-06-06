@@ -6,7 +6,7 @@ export const TypographyPage = () => {
     <div className="space-y-10">
       <PageHeader
         title="Typography"
-        description="Type scale, body text, code, links, and special text treatments."
+        description="Type scale, body text, code, links, and special text treatments. Color and font tokens are documented on the Design Tokens page."
         badge="Component"
       />
 

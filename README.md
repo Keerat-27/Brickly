@@ -4,7 +4,7 @@ A browsable React component library and design-system reference built on [shadcn
 
 ## Features
 
-- **21 component categories** — buttons, forms, tables, modals, navigation, feedback, and more
+- **22 documentation pages** — 21 component categories plus a design token reference
 - **Live previews** — toggle between Preview and Code on every example
 - **Dark mode** — toggle from the header; uses CSS variables from the theme
 - **TypeScript** — full type coverage across pages and UI primitives
@@ -19,6 +19,10 @@ A browsable React component library and design-system reference built on [shadcn
 | Styling | Tailwind CSS 4, CSS variables (`src/styles/theme.css`) |
 | Components | shadcn/ui-style primitives in `src/app/components/ui/` |
 | Icons | [Lucide React](https://lucide.dev/) |
+
+## Developer documentation
+
+Contributor guides, conventions, and step-by-step instructions live in **[docs/](docs/README.md)**.
 
 ## Getting started
 
@@ -56,6 +60,7 @@ Output is written to `dist/`. Preview the production build with any static file 
 
 ```
 Brickly/
+├── docs/                       # Developer documentation
 ├── public/                   # Static assets (favicon, OG image)
 ├── src/
 │   ├── app/
@@ -84,11 +89,12 @@ import { Button } from "@/app/components/ui/button";
 | Route | Page | Notes |
 |-------|------|--------|
 | `/` | Overview | Index of all components |
+| `/tokens` | Design Tokens | Color, radius, and typography tokens from `theme.css` |
 | `/buttons` | Buttons | Variants, sizes, states |
 | `/badges` | Badges | Status and label styles |
 | `/alerts` | Alerts | Info, success, warning, error |
 | `/avatars` | Avatars | Image, initials, groups |
-| `/cards` | Cards | shadcn Card + aspect ratio layouts |
+| `/cards` | Cards | shadcn Card compositions (stats, profile, media, actions) |
 | `/date-picker` | Date Picker | Inline, popover, range, disabled |
 | `/forms` | Forms | Input, select, checkbox, switch, radio, react-hook-form |
 | `/progress` | Progress | Bar (shadcn) and circular (custom) |
@@ -102,8 +108,8 @@ import { Button } from "@/app/components/ui/button";
 | `/breadcrumbs` | Breadcrumbs | Navigation trail |
 | `/dropdowns` | Dropdowns | Menus, context menu, checkable items |
 | `/sliders` | Sliders | Range and stepped controls |
-| `/pagination` | Pagination | shadcn Pagination + variants |
-| `/toasts` | Toasts | Sonner toast demos |
+| `/pagination` | Pagination | shadcn Pagination with full controls |
+| `/toasts` | Toasts | Sonner-only toast demos |
 | `/stepper` | Stepper | Horizontal, vertical, wizard |
 
 Additional shadcn primitives live under `src/app/components/ui/` (e.g. `calendar`, `chart`, `command`, `carousel`) and can be wired into new pages as needed. See [ROADMAP.md](ROADMAP.md) for planned pages and improvements.
@@ -113,9 +119,11 @@ Additional shadcn primitives live under `src/app/components/ui/` (e.g. `calendar
 - **Tokens** — Semantic colors and spacing are defined in `src/styles/theme.css` and wired through Tailwind (`bg-primary`, `text-muted-foreground`, etc.).
 - **UI primitives** — Most interactive controls use Radix-based shadcn components with `cn()` and CVA variants.
 - **Doc-only components** — `PageHeader`, `ComponentSection`, and `CodeBlock` power the documentation layout; they are not part of the shadcn registry.
-- **Custom demos** — Some pages (stepper, typography) use hand-built markup that follows the same tokens rather than importing every matching shadcn file.
+- **Composition demos** — A few pages (stepper, loading, typography) document patterns built from tokens and primitives rather than a single shadcn file.
 
 ## Adding a new component page
+
+See **[docs/component-pages.md](docs/component-pages.md)** for the full step-by-step guide. Short version:
 
 1. Create `src/app/pages/YourPage.tsx` using `PageHeader` and `ComponentSection`.
 2. Import primitives from `src/app/components/ui/`.

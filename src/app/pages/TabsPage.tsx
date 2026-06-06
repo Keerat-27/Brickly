@@ -1,37 +1,9 @@
 import { PageHeader } from "../components/ui/PageHeader";
 import { ComponentSection } from "../components/ui/ComponentSection";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "../components/ui/tabs";
-import { useState } from "react";
 import { User, Bell, Lock, CreditCard } from "lucide-react";
 
-const VerticalTabs = () => {
-  const [active, setActive] = useState(0);
-  const tabs = ["General", "Profile", "Notifications", "Security", "Billing"];
-
-  return (
-    <div className="flex gap-4 w-full">
-      <div className="flex flex-col w-36 shrink-0 border-r border-border pr-2 space-y-0.5">
-        {tabs.map((tab, i) => (
-          <button
-            key={tab}
-            onClick={() => setActive(i)}
-            className={`text-left px-3 py-2 rounded-md text-sm transition-colors ${
-              i === active
-                ? "bg-accent text-foreground"
-                : "text-muted-foreground hover:bg-accent hover:text-foreground"
-            }`}
-          >
-            {tab}
-          </button>
-        ))}
-      </div>
-      <div className="flex-1">
-        <h4 className="text-foreground mb-2">{tabs[active]}</h4>
-        <p className="text-sm text-muted-foreground">Configure your {tabs[active].toLowerCase()} settings here.</p>
-      </div>
-    </div>
-  );
-}
+const verticalTabs = ["General", "Profile", "Notifications", "Security", "Billing"];
 
 export const TabsPage = () => {
   return (
@@ -45,6 +17,7 @@ export const TabsPage = () => {
       <ComponentSection
         title="Pill Tabs (Default)"
         description="Rounded pill-style tabs in a contained background — the default shadcn style."
+        source="shadcn"
         code={`import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 
 <Tabs defaultValue="overview">
@@ -85,6 +58,7 @@ export const TabsPage = () => {
       <ComponentSection
         title="With Icons"
         description="Tabs with leading icons for richer navigation."
+        source="shadcn"
         code={`<Tabs defaultValue="profile">
   <TabsList>
     <TabsTrigger value="profile"><User className="w-4 h-4" />Profile</TabsTrigger>
@@ -131,6 +105,7 @@ export const TabsPage = () => {
       <ComponentSection
         title="Underline Style"
         description="Classic underline tabs — extended from the shadcn base using className overrides."
+        source="shadcn"
         code={`<Tabs defaultValue="tab1">
   <TabsList className="bg-transparent border-b rounded-none h-auto p-0 w-full justify-start gap-0">
     <TabsTrigger
@@ -166,19 +141,39 @@ export const TabsPage = () => {
 
       <ComponentSection
         title="Vertical Tabs"
-        description="Side navigation tabs for settings and configuration panels."
-        code={`<div className="flex gap-4">
-  <div className="flex flex-col w-36 border-r border-border pr-2 space-y-0.5">
-    {tabs.map((tab, i) => (
-      <button key={tab} className={i === active ? "bg-accent text-foreground" : "text-muted-foreground"}>
-        {tab}
-      </button>
-    ))}
-  </div>
-  <div className="flex-1">Content here</div>
-</div>`}
+        description="Side navigation tabs using shadcn Tabs with vertical orientation."
+        source="shadcn"
+        code={`<Tabs defaultValue="general" orientation="vertical" className="flex flex-row gap-4 w-full">
+  <TabsList className="flex h-fit w-36 flex-col items-stretch bg-transparent p-0">
+    <TabsTrigger value="general" className="justify-start">General</TabsTrigger>
+    <TabsTrigger value="profile" className="justify-start">Profile</TabsTrigger>
+  </TabsList>
+  <TabsContent value="general">Configure your general settings here.</TabsContent>
+</Tabs>`}
       >
-        <VerticalTabs />
+        <Tabs defaultValue="general" orientation="vertical" className="flex flex-row gap-4 w-full">
+          <TabsList className="flex h-fit w-36 shrink-0 flex-col items-stretch rounded-xl bg-muted p-1">
+            {verticalTabs.map((tab) => (
+              <TabsTrigger
+                key={tab}
+                value={tab.toLowerCase()}
+                className="justify-start"
+              >
+                {tab}
+              </TabsTrigger>
+            ))}
+          </TabsList>
+          <div className="flex-1 pt-1">
+            {verticalTabs.map((tab) => (
+              <TabsContent key={tab} value={tab.toLowerCase()}>
+                <h4 className="text-foreground mb-2">{tab}</h4>
+                <p className="text-sm text-muted-foreground">
+                  Configure your {tab.toLowerCase()} settings here.
+                </p>
+              </TabsContent>
+            ))}
+          </div>
+        </Tabs>
       </ComponentSection>
     </div>
   );

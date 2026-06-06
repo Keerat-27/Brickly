@@ -22,6 +22,7 @@ import {
   BellRing,
   ListOrdered,
   CalendarDays,
+  Palette,
 } from "lucide-react";
 
 export interface NavItem {
@@ -41,6 +42,7 @@ export const navItems: NavGroup[] = [
     label: "Getting Started",
     items: [
       { to: "/", label: "Overview", icon: LayoutGrid, end: true },
+      { to: "/tokens", label: "Design Tokens", icon: Palette },
     ],
   },
   {

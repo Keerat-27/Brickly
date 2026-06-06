@@ -12,7 +12,6 @@ import {
   CollapsibleContent,
 } from "../components/ui/collapsible";
 import { Plus, Minus, ChevronsUpDown } from "lucide-react";
-import { useState } from "react";
 
 const faqItems = [
   { title: "What is Brickly?", body: "Brickly is a browsable component library and design-system reference built with shadcn/ui patterns and Tailwind CSS. Copy and paste any component into your project." },
@@ -21,33 +20,24 @@ const faqItems = [
   { title: "Can I customize the styles?", body: "Yes. Modify the Tailwind classes or update the CSS variables in your theme file to match your brand." },
 ];
 
-const PlusMinusAccordion = ({ items }: { items: { title: string; body: string }[] }) => {
-  const [open, setOpen] = useState<number | null>(null);
+const CollapsiblePlusMinus = ({ items }: { items: { title: string; body: string }[] }) => {
   return (
     <div className="space-y-2 w-full">
       {items.map((item, i) => (
-        <div key={i} className="rounded-lg border border-border overflow-hidden">
-          <button
-            className="flex w-full items-center justify-between px-4 py-3.5 text-sm text-foreground bg-muted/40 hover:bg-muted/70 transition-colors text-left"
-            onClick={() => setOpen(open === i ? null : i)}
-          >
+        <Collapsible key={i} className="group rounded-lg border border-border overflow-hidden">
+          <CollapsibleTrigger className="flex w-full items-center justify-between px-4 py-3.5 text-sm text-foreground bg-muted/40 hover:bg-muted/70 transition-colors text-left">
             {item.title}
-            {open === i ? (
-              <Minus className="w-4 h-4 shrink-0 text-primary" />
-            ) : (
-              <Plus className="w-4 h-4 shrink-0 text-muted-foreground" />
-            )}
-          </button>
-          {open === i && (
-            <div className="px-4 py-3 text-sm text-muted-foreground border-t border-border">
-              {item.body}
-            </div>
-          )}
-        </div>
+            <Plus className="w-4 h-4 shrink-0 text-muted-foreground group-data-[state=open]:hidden" />
+            <Minus className="w-4 h-4 shrink-0 text-primary hidden group-data-[state=open]:block" />
+          </CollapsibleTrigger>
+          <CollapsibleContent className="px-4 py-3 text-sm text-muted-foreground border-t border-border">
+            {item.body}
+          </CollapsibleContent>
+        </Collapsible>
       ))}
     </div>
   );
-}
+};
 
 export const AccordionPage = () => {
   return (
@@ -61,6 +51,7 @@ export const AccordionPage = () => {
       <ComponentSection
         title="Default"
         description="Standard bordered accordion with chevron indicator."
+        source="shadcn"
         code={`import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
 
 <Accordion type="multiple" className="w-full">
@@ -85,6 +76,7 @@ export const AccordionPage = () => {
       <ComponentSection
         title="Exclusive (One Open at a Time)"
         description="Only one item can be expanded at a time — ideal for FAQs."
+        source="shadcn"
         code={`<Accordion type="single" collapsible className="w-full">
   {items.map((item, i) => (
     <AccordionItem key={i} value={\`item-\${i}\`}>
@@ -107,6 +99,7 @@ export const AccordionPage = () => {
       <ComponentSection
         title="Flush"
         description="Borderless style with bottom dividers — fits seamlessly in cards or panels."
+        source="shadcn"
         code={`<Accordion type="multiple" className="w-full divide-y divide-border">
   <AccordionItem value="item-1" className="border-none">
     <AccordionTrigger className="hover:no-underline hover:text-primary">
@@ -135,6 +128,7 @@ export const AccordionPage = () => {
       <ComponentSection
         title="Collapsible"
         description="Lightweight single-section expand/collapse using the Collapsible primitive."
+        source="shadcn"
         code={`import { Collapsible, CollapsibleTrigger, CollapsibleContent } from "@/components/ui/collapsible";
 
 <Collapsible>
@@ -160,18 +154,20 @@ export const AccordionPage = () => {
 
       <ComponentSection
         title="Plus / Minus Icon"
-        description="Uses + / − icon instead of chevron for a different visual language."
-        code={`const [open, setOpen] = useState(null);
+        description="Collapsible items with + / − icons instead of chevrons."
+        source="shadcn"
+        code={`import { Collapsible, CollapsibleTrigger, CollapsibleContent } from "@/components/ui/collapsible";
 
-<div className="rounded-lg border border-border overflow-hidden">
-  <button onClick={() => setOpen(open === i ? null : i)}>
+<Collapsible className="rounded-lg border overflow-hidden">
+  <CollapsibleTrigger className="group flex w-full items-center justify-between px-4 py-3.5">
     {item.title}
-    {open === i ? <Minus className="w-4 h-4 text-primary" /> : <Plus className="w-4 h-4" />}
-  </button>
-  {open === i && <div className="px-4 py-3 border-t">{item.body}</div>}
-</div>`}
+    <Plus className="group-data-[state=open]:hidden" />
+    <Minus className="hidden group-data-[state=open]:block" />
+  </CollapsibleTrigger>
+  <CollapsibleContent className="px-4 py-3 border-t">{item.body}</CollapsibleContent>
+</Collapsible>`}
       >
-        <PlusMinusAccordion items={faqItems.slice(0, 3)} />
+        <CollapsiblePlusMinus items={faqItems.slice(0, 3)} />
       </ComponentSection>
     </div>
   );

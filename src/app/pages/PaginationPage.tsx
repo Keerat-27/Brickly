@@ -1,9 +1,8 @@
 import { useState } from "react";
 import { PageHeader } from "../components/ui/PageHeader";
 import { ComponentSection } from "../components/ui/ComponentSection";
-import { Button } from "../components/ui/button";
 import {
-  Pagination as ShadcnPagination,
+  Pagination,
   PaginationContent,
   PaginationItem,
   PaginationLink,
@@ -11,200 +10,35 @@ import {
   PaginationNext,
   PaginationEllipsis,
 } from "../components/ui/pagination";
-import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, MoreHorizontal } from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../components/ui/select";
+import { ChevronsLeft, ChevronsRight } from "lucide-react";
 
-const getPages =(current: number, total: number, delta = 2): (number | "…")[]  => {
-  const pages: (number | "…")[] = [];
-  const left = current - delta;
-  const right = current + delta;
+const getPages = (current: number, total: number, delta = 1): (number | "ellipsis")[] => {
+  const pages: (number | "ellipsis")[] = [];
 
   for (let i = 1; i <= total; i++) {
-    if (i === 1 || i === total || (i >= left && i <= right)) {
+    if (i === 1 || i === total || (i >= current - delta && i <= current + delta)) {
       pages.push(i);
-    } else if (
-      (i === left - 1 && left > 2) ||
-      (i === right + 1 && right < total - 1)
-    ) {
-      pages.push("…");
+    } else if (pages[pages.length - 1] !== "ellipsis") {
+      pages.push("ellipsis");
     }
   }
+
   return pages;
-}
+};
 
-const Pagination = ({
-  total,
-  value,
-  onChange,
-  variant = "default",
-}: {
-  total: number;
-  value: number;
-  onChange: (p: number) => void;
-  variant?: "default" | "outline" | "minimal";
-}) => {
-  const pages = getPages(value, total);
+const ShadcnPaginationDemo = ({ totalPages = 12 }: { totalPages?: number }) => {
+  const [page, setPage] = useState(5);
+  const pages = getPages(page, totalPages);
 
   return (
-    <nav className="flex items-center gap-1" aria-label="Pagination">
-      <Button
-        variant="ghost"
-        size="icon"
-        className="h-8 w-8"
-        disabled={value === 1}
-        onClick={() => onChange(value - 1)}
-      >
-        <ChevronLeft className="w-4 h-4" />
-      </Button>
-
-      {pages.map((page, i) =>
-        page === "…" ? (
-          <span key={`ellipsis-${i}`} className="flex items-center justify-center w-8 h-8 text-muted-foreground">
-            <MoreHorizontal className="w-4 h-4" />
-          </span>
-        ) : (
-          <Button
-            key={page}
-            size="sm"
-            onClick={() => onChange(page as number)}
-            variant={
-              page === value
-                ? variant === "outline"
-                  ? "outline"
-                  : variant === "minimal"
-                  ? "link"
-                  : "default"
-                : "ghost"
-            }
-            className={`h-8 min-w-[2rem] px-2 ${
-              page === value && variant === "outline"
-                ? "border-primary text-primary bg-primary/5"
-                : page === value && variant === "minimal"
-                ? "underline underline-offset-2 h-8 text-primary"
-                : page !== value
-                ? "text-foreground"
-                : ""
-            }`}
-          >
-            {page}
-          </Button>
-        )
-      )}
-
-      <Button
-        variant="ghost"
-        size="icon"
-        className="h-8 w-8"
-        disabled={value === total}
-        onClick={() => onChange(value + 1)}
-      >
-        <ChevronRight className="w-4 h-4" />
-      </Button>
-    </nav>
-  );
-}
-
-const FullPagination = ({ total }: { total: number }) => {
-  const [page, setPage] = useState(1);
-  return (
-    <nav className="flex items-center gap-1" aria-label="Full Pagination">
-      <Button variant="ghost" size="icon" className="h-8 w-8" disabled={page === 1} onClick={() => setPage(1)}>
-        <ChevronsLeft className="w-4 h-4" />
-      </Button>
-      <Button variant="ghost" size="icon" className="h-8 w-8" disabled={page === 1} onClick={() => setPage((p) => p - 1)}>
-        <ChevronLeft className="w-4 h-4" />
-      </Button>
-
-      <span className="px-3 text-sm text-muted-foreground">
-        Page <span className="text-foreground">{page}</span> of {total}
-      </span>
-
-      <Button variant="ghost" size="icon" className="h-8 w-8" disabled={page === total} onClick={() => setPage((p) => p + 1)}>
-        <ChevronRight className="w-4 h-4" />
-      </Button>
-      <Button variant="ghost" size="icon" className="h-8 w-8" disabled={page === total} onClick={() => setPage(total)}>
-        <ChevronsRight className="w-4 h-4" />
-      </Button>
-    </nav>
-  );
-}
-
-const PaginationWithSize = () => {
-  const [page, setPage] = useState(1);
-  const [size, setSize] = useState(10);
-  const total = Math.ceil(100 / size);
-  const safeP = Math.min(page, total);
-
-  return (
-    <div className="flex flex-wrap items-center gap-4">
-      <Pagination total={total} value={safeP} onChange={setPage} />
-      <div className="flex items-center gap-2 text-sm text-muted-foreground">
-        <span>Rows per page</span>
-        <select
-          value={size}
-          onChange={(e) => { setSize(Number(e.target.value)); setPage(1); }}
-          className="rounded-lg border border-border bg-background text-foreground px-2 py-1 text-sm"
-        >
-          {[5, 10, 20, 50].map((n) => <option key={n} value={n}>{n}</option>)}
-        </select>
-      </div>
-      <span className="text-sm text-muted-foreground">
-        Showing {(safeP - 1) * size + 1}–{Math.min(safeP * size, 100)} of 100
-      </span>
-    </div>
-  );
-}
-
-const PillPagination = () => {
-  const [page, setPage] = useState(3);
-  const total = 8;
-  const pages = getPages(page, total);
-
-  return (
-    <nav className="flex items-center gap-1">
-      <Button
-        variant="ghost"
-        onClick={() => setPage((p) => Math.max(1, p - 1))}
-        disabled={page === 1}
-        className="h-8 px-3 rounded-full text-sm flex items-center gap-1"
-      >
-        <ChevronLeft className="w-3.5 h-3.5" /> Prev
-      </Button>
-
-      {pages.map((p, i) =>
-        p === "…" ? (
-          <span key={`e-${i}`} className="w-8 h-8 flex items-center justify-center text-muted-foreground">
-            <MoreHorizontal className="w-4 h-4" />
-          </span>
-        ) : (
-          <Button
-            key={p}
-            onClick={() => setPage(p as number)}
-            variant={p === page ? "default" : "ghost"}
-            className="h-8 min-w-[2rem] px-2.5 rounded-full text-sm"
-          >
-            {p}
-          </Button>
-        )
-      )}
-
-      <Button
-        variant="ghost"
-        onClick={() => setPage((p) => Math.min(total, p + 1))}
-        disabled={page === total}
-        className="h-8 px-3 rounded-full text-sm flex items-center gap-1"
-      >
-        Next <ChevronRight className="w-3.5 h-3.5" />
-      </Button>
-    </nav>
-  );
-}
-
-const ShadcnPaginationDemo = () => {
-  const [page, setPage] = useState(2);
-  const totalPages = 5;
-
-  return (
-    <ShadcnPagination>
+    <Pagination>
       <PaginationContent>
         <PaginationItem>
           <PaginationPrevious
@@ -215,23 +49,26 @@ const ShadcnPaginationDemo = () => {
             }}
           />
         </PaginationItem>
-        {[1, 2, 3, 4, 5].map((p) => (
-          <PaginationItem key={p}>
-            <PaginationLink
-              href="#"
-              isActive={page === p}
-              onClick={(e) => {
-                e.preventDefault();
-                setPage(p);
-              }}
-            >
-              {p}
-            </PaginationLink>
-          </PaginationItem>
-        ))}
-        <PaginationItem>
-          <PaginationEllipsis />
-        </PaginationItem>
+        {pages.map((p, i) =>
+          p === "ellipsis" ? (
+            <PaginationItem key={`ellipsis-${i}`}>
+              <PaginationEllipsis />
+            </PaginationItem>
+          ) : (
+            <PaginationItem key={p}>
+              <PaginationLink
+                href="#"
+                isActive={page === p}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setPage(p);
+                }}
+              >
+                {p}
+              </PaginationLink>
+            </PaginationItem>
+          ),
+        )}
         <PaginationItem>
           <PaginationNext
             href="#"
@@ -242,33 +79,174 @@ const ShadcnPaginationDemo = () => {
           />
         </PaginationItem>
       </PaginationContent>
-    </ShadcnPagination>
+    </Pagination>
+  );
+};
+
+const FullPaginationDemo = ({ total = 15 }: { total?: number }) => {
+  const [page, setPage] = useState(1);
+
+  return (
+    <Pagination>
+      <PaginationContent>
+        <PaginationItem>
+          <PaginationLink
+            href="#"
+            size="icon"
+            aria-label="Go to first page"
+            onClick={(e) => {
+              e.preventDefault();
+              setPage(1);
+            }}
+          >
+            <ChevronsLeft className="size-4" />
+          </PaginationLink>
+        </PaginationItem>
+        <PaginationItem>
+          <PaginationPrevious
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              setPage((p) => Math.max(1, p - 1));
+            }}
+          />
+        </PaginationItem>
+        <PaginationItem>
+          <span className="px-3 text-sm text-muted-foreground">
+            Page <span className="text-foreground">{page}</span> of {total}
+          </span>
+        </PaginationItem>
+        <PaginationItem>
+          <PaginationNext
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              setPage((p) => Math.min(total, p + 1));
+            }}
+          />
+        </PaginationItem>
+        <PaginationItem>
+          <PaginationLink
+            href="#"
+            size="icon"
+            aria-label="Go to last page"
+            onClick={(e) => {
+              e.preventDefault();
+              setPage(total);
+            }}
+          >
+            <ChevronsRight className="size-4" />
+          </PaginationLink>
+        </PaginationItem>
+      </PaginationContent>
+    </Pagination>
+  );
+};
+
+const PaginationWithSize = () => {
+  const [page, setPage] = useState(1);
+  const [size, setSize] = useState("10");
+  const pageSize = Number(size);
+  const total = Math.ceil(100 / pageSize);
+  const safePage = Math.min(page, total);
+  const pages = getPages(safePage, total);
+
+  return (
+    <div className="flex flex-wrap items-center gap-4">
+      <Pagination>
+        <PaginationContent>
+          <PaginationItem>
+            <PaginationPrevious
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                setPage((p) => Math.max(1, p - 1));
+              }}
+            />
+          </PaginationItem>
+          {pages.map((p, i) =>
+            p === "ellipsis" ? (
+              <PaginationItem key={`ellipsis-${i}`}>
+                <PaginationEllipsis />
+              </PaginationItem>
+            ) : (
+              <PaginationItem key={p}>
+                <PaginationLink
+                  href="#"
+                  isActive={safePage === p}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setPage(p);
+                  }}
+                >
+                  {p}
+                </PaginationLink>
+              </PaginationItem>
+            ),
+          )}
+          <PaginationItem>
+            <PaginationNext
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                setPage((p) => Math.min(total, p + 1));
+              }}
+            />
+          </PaginationItem>
+        </PaginationContent>
+      </Pagination>
+      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+        <span>Rows per page</span>
+        <Select
+          value={size}
+          onValueChange={(value) => {
+            setSize(value);
+            setPage(1);
+          }}
+        >
+          <SelectTrigger className="w-20">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            {["5", "10", "20", "50"].map((n) => (
+              <SelectItem key={n} value={n}>
+                {n}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+      <span className="text-sm text-muted-foreground">
+        Showing {(safePage - 1) * pageSize + 1}–{Math.min(safePage * pageSize, 100)} of 100
+      </span>
+    </div>
   );
 };
 
 export const PaginationPage = () => {
-  const [page1, setPage1] = useState(5);
-  const [page2, setPage2] = useState(3);
-  const [page3, setPage3] = useState(4);
-
   return (
     <div className="space-y-10">
       <PageHeader
         title="Pagination"
-        description="Controls for navigating multi-page datasets with multiple visual styles."
+        description="Navigate multi-page datasets with the shadcn Pagination primitive."
         badge="Component"
       />
 
       <ComponentSection
-        title="shadcn Pagination"
-        description="Composable pagination primitive with Previous, Next, and page links."
-        code={`import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationPrevious, PaginationNext } from "@/components/ui/pagination";
+        title="Default"
+        description="Composable pagination with Previous, Next, page links, and ellipsis."
+        source="shadcn"
+        code={`import {
+  Pagination, PaginationContent, PaginationItem,
+  PaginationLink, PaginationPrevious, PaginationNext, PaginationEllipsis,
+} from "@/components/ui/pagination";
 
 <Pagination>
   <PaginationContent>
     <PaginationItem><PaginationPrevious href="#" /></PaginationItem>
-    <PaginationItem><PaginationLink href="#" isActive>1</PaginationLink></PaginationItem>
-    <PaginationItem><PaginationLink href="#">2</PaginationLink></PaginationItem>
+    <PaginationItem><PaginationLink href="#" isActive>5</PaginationLink></PaginationItem>
+    <PaginationItem><PaginationEllipsis /></PaginationItem>
+    <PaginationItem><PaginationLink href="#">12</PaginationLink></PaginationItem>
     <PaginationItem><PaginationNext href="#" /></PaginationItem>
   </PaginationContent>
 </Pagination>`}
@@ -277,75 +255,39 @@ export const PaginationPage = () => {
       </ComponentSection>
 
       <ComponentSection
-        title="Default"
-        description="Filled active page indicator with ellipsis for large page counts."
-        code={`import { Button } from "@/components/ui/button";
-
-<Button variant="default" size="sm">5</Button>  {/* active */}
-<Button variant="ghost" size="sm">6</Button>     {/* inactive */}
-<Button variant="ghost" size="icon" className="h-8 w-8">
-  <ChevronLeft className="w-4 h-4" />
-</Button>`}
-      >
-        <Pagination total={12} value={page1} onChange={setPage1} />
-      </ComponentSection>
-
-      <ComponentSection
-        title="Outline Style"
-        description="Bordered page buttons — a softer alternative to the filled style."
-        code={`<Button variant="outline" size="sm" className="border-primary text-primary bg-primary/5">5</Button>
-<Button variant="ghost" size="sm">6</Button>`}
-      >
-        <Pagination total={10} value={page2} onChange={setPage2} variant="outline" />
-      </ComponentSection>
-
-      <ComponentSection
-        title="Pill Buttons"
-        description="Fully rounded buttons with labeled Prev / Next arrows."
-        code={`<Button variant="ghost" className="rounded-full h-8 px-3 flex items-center gap-1">
-  <ChevronLeft /> Prev
-</Button>
-<Button variant="default" className="rounded-full h-8 min-w-[2rem] px-2.5">5</Button>
-<Button variant="ghost" className="rounded-full h-8 px-3 flex items-center gap-1">
-  Next <ChevronRight />
-</Button>`}
-      >
-        <PillPagination />
-      </ComponentSection>
-
-      <ComponentSection
-        title="Minimal"
-        description="Lightweight text-only style for clean interfaces."
-        code={`<Button variant="link" size="sm" className="underline underline-offset-2 text-primary">5</Button>
-<Button variant="ghost" size="sm" className="text-foreground">6</Button>`}
-      >
-        <Pagination total={8} value={page3} onChange={setPage3} variant="minimal" />
-      </ComponentSection>
-
-      <ComponentSection
         title="Full Controls"
         description="First, previous, next, and last buttons with a page indicator."
-        code={`<Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => setPage(1)}>
-  <ChevronsLeft />
-</Button>
-<span>Page {page} of {total}</span>
-<Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => setPage(total)}>
-  <ChevronsRight />
-</Button>`}
+        source="shadcn"
+        code={`<Pagination>
+  <PaginationContent>
+    <PaginationItem>
+      <PaginationLink href="#" size="icon"><ChevronsLeft /></PaginationLink>
+    </PaginationItem>
+    <PaginationItem><PaginationPrevious href="#" /></PaginationItem>
+    <PaginationItem><span>Page 1 of 15</span></PaginationItem>
+    <PaginationItem><PaginationNext href="#" /></PaginationItem>
+    <PaginationItem>
+      <PaginationLink href="#" size="icon"><ChevronsRight /></PaginationLink>
+    </PaginationItem>
+  </PaginationContent>
+</Pagination>`}
       >
-        <FullPagination total={15} />
+        <FullPaginationDemo />
       </ComponentSection>
 
       <ComponentSection
         title="With Page Size Selector"
-        description="Combines pagination with a rows-per-page select and a result count."
-        code={`<select value={size} onChange={e => setSize(+e.target.value)}
-  className="rounded-lg border border-border bg-background text-foreground px-2 py-1 text-sm">
-  {[5, 10, 20, 50].map(n => <option key={n}>{n}</option>)}
-</select>
-<span className="text-sm text-muted-foreground">
-  Showing {(page - 1) * size + 1}–{Math.min(page * size, total)} of {total}
-</span>`}
+        description="Combines pagination with a shadcn Select for rows-per-page."
+        source="composition"
+        code={`import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
+
+<Select value={size} onValueChange={setSize}>
+  <SelectTrigger className="w-20"><SelectValue /></SelectTrigger>
+  <SelectContent>
+    <SelectItem value="10">10</SelectItem>
+    <SelectItem value="20">20</SelectItem>
+  </SelectContent>
+</Select>`}
       >
         <PaginationWithSize />
       </ComponentSection>

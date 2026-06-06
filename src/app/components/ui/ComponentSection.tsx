@@ -2,10 +2,19 @@ import { useState } from "react";
 import { CodeBlock } from "./CodeBlock";
 import { Code2, Eye } from "lucide-react";
 
+type ComponentSource = "shadcn" | "custom" | "composition";
+
+const sourceLabels: Record<ComponentSource, string> = {
+  shadcn: "shadcn",
+  custom: "custom",
+  composition: "composition",
+};
+
 interface ComponentSectionProps {
   title: string;
   description?: string;
   code: string;
+  source?: ComponentSource;
   children: React.ReactNode;
 }
 
@@ -13,6 +22,7 @@ export const ComponentSection = ({
   title,
   description,
   code,
+  source,
   children,
 }: ComponentSectionProps) => {
   const [tab, setTab] = useState<"preview" | "code">("preview");
@@ -20,7 +30,14 @@ export const ComponentSection = ({
   return (
     <div className="space-y-3">
       <div>
-        <h3 className="text-foreground">{title}</h3>
+        <div className="flex items-center gap-2">
+          <h3 className="text-foreground">{title}</h3>
+          {source && (
+            <span className="rounded-md bg-muted px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-muted-foreground">
+              {sourceLabels[source]}
+            </span>
+          )}
+        </div>
         {description && (
           <p className="text-sm text-muted-foreground mt-0.5">{description}</p>
         )}

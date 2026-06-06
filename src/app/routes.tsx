@@ -22,6 +22,7 @@ import { PaginationPage } from "./pages/PaginationPage";
 import { ToastsPage } from "./pages/ToastsPage";
 import { StepperPage } from "./pages/StepperPage";
 import { DatePickerPage } from "./pages/DatePickerPage";
+import { TokensPage } from "./pages/TokensPage";
 
 export const router = createBrowserRouter([
   {
@@ -50,6 +51,7 @@ export const router = createBrowserRouter([
       { path: "toasts", Component: ToastsPage },
       { path: "stepper", Component: StepperPage },
       { path: "date-picker", Component: DatePickerPage },
+      { path: "tokens", Component: TokensPage },
     ],
   },
 ]);

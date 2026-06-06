@@ -2,8 +2,10 @@ import { PageHeader } from "../components/ui/PageHeader";
 import { ComponentSection } from "../components/ui/ComponentSection";
 import { Progress } from "../components/ui/progress";
 import { Button } from "../components/ui/button";
+import { ChartContainer } from "../components/ui/chart";
 import { useState } from "react";
 import { CheckCircle2 } from "lucide-react";
+import { RadialBarChart, RadialBar, PolarAngleAxis } from "recharts";
 
 const ColorProgress = ({
   value,
@@ -36,33 +38,30 @@ const ColorProgress = ({
       <Progress value={value} className={`${heightClass} ${colorClass}`} />
     </div>
   );
-}
+};
 
-const CircularProgress = ({ value, size = 64, strokeWidth = 6, color = "currentColor" }: {
-  value: number;
-  size?: number;
-  strokeWidth?: number;
-  color?: string;
-}) => {
-  const radius = (size - strokeWidth) / 2;
-  const circumference = 2 * Math.PI * radius;
-  const offset = circumference - (value / 100) * circumference;
-
-  return (
-    <div className="relative inline-flex items-center justify-center">
-      <svg width={size} height={size} className="-rotate-90">
-        <circle cx={size / 2} cy={size / 2} r={radius} fill="none" stroke="currentColor" strokeWidth={strokeWidth} className="text-muted" />
-        <circle
-          cx={size / 2} cy={size / 2} r={radius} fill="none"
-          stroke={color} strokeWidth={strokeWidth}
-          strokeDasharray={circumference} strokeDashoffset={offset}
-          strokeLinecap="round" className="transition-all duration-700"
-        />
-      </svg>
-      <span className="absolute text-sm text-foreground">{value}%</span>
-    </div>
-  );
-}
+const RadialProgress = ({ value, size = 96 }: { value: number; size?: number }) => (
+  <div className="relative" style={{ width: size, height: size }}>
+    <ChartContainer
+      config={{ progress: { label: "Progress", color: "var(--chart-1)" } }}
+      className="aspect-square h-full w-full"
+    >
+      <RadialBarChart
+        data={[{ value, fill: "var(--color-chart-1)" }]}
+        innerRadius="70%"
+        outerRadius="100%"
+        startAngle={90}
+        endAngle={-270}
+      >
+        <PolarAngleAxis type="number" domain={[0, 100]} tick={false} />
+        <RadialBar dataKey="value" background cornerRadius={4} />
+      </RadialBarChart>
+    </ChartContainer>
+    <span className="absolute inset-0 flex items-center justify-center text-sm text-foreground">
+      {value}%
+    </span>
+  </div>
+);
 
 const steps = ["Account", "Profile", "Payment", "Confirm"];
 
@@ -80,15 +79,12 @@ export const ProgressPage = () => {
       <ComponentSection
         title="Progress Bars"
         description="Horizontal bars showing completion percentage with color variants."
+        source="shadcn"
         code={`import { Progress } from "@/components/ui/progress";
 
 <Progress value={72} />
-
-{/* Color variants via className */}
 <Progress value={88} className="[&>div]:bg-green-500" />
-<Progress value={45} className="[&>div]:bg-blue-500" />
-<Progress value={60} className="[&>div]:bg-amber-500" />
-<Progress value={30} className="[&>div]:bg-red-500" />`}
+<Progress value={45} className="[&>div]:bg-blue-500" />`}
       >
         <div className="flex flex-col gap-5 w-full max-w-sm">
           <ColorProgress value={72} label="Storage used" color="primary" />
@@ -102,6 +98,7 @@ export const ProgressPage = () => {
       <ComponentSection
         title="Sizes"
         description="Three heights for different visual weights."
+        source="shadcn"
         code={`<Progress value={60} className="h-1" />
 <Progress value={60} className="h-2" />
 <Progress value={60} className="h-3" />`}
@@ -123,40 +120,40 @@ export const ProgressPage = () => {
       </ComponentSection>
 
       <ComponentSection
-        title="Circular Progress"
-        description="Radial progress indicators for compact layouts."
-        code={`<svg width={64} height={64} className="-rotate-90">
-  <circle cx={32} cy={32} r={26} fill="none" strokeWidth={6} className="text-muted" stroke="currentColor" />
-  <circle cx={32} cy={32} r={26} fill="none" strokeWidth={6}
-    strokeDasharray={163.36} strokeDashoffset={163.36 * (1 - value / 100)}
-    strokeLinecap="round" className="transition-all duration-700" />
-</svg>`}
+        title="Radial Progress"
+        description="Circular indicators using the shadcn Chart primitive and Recharts."
+        source="shadcn"
+        code={`import { ChartContainer } from "@/components/ui/chart";
+import { RadialBarChart, RadialBar, PolarAngleAxis } from "recharts";
+
+<ChartContainer config={{ progress: { label: "Progress", color: "var(--chart-1)" } }}>
+  <RadialBarChart data={[{ value: 75, fill: "var(--color-chart-1)" }]} innerRadius="70%" outerRadius="100%" startAngle={90} endAngle={-270}>
+    <PolarAngleAxis type="number" domain={[0, 100]} tick={false} />
+    <RadialBar dataKey="value" background cornerRadius={4} />
+  </RadialBarChart>
+</ChartContainer>`}
       >
         <div className="flex flex-wrap gap-6 items-center">
-          <CircularProgress value={25} size={64} />
-          <CircularProgress value={50} size={80} />
-          <CircularProgress value={75} size={96} strokeWidth={8} color="#2563eb" />
-          <CircularProgress value={90} size={112} strokeWidth={10} color="#16a34a" />
+          <RadialProgress value={25} size={80} />
+          <RadialProgress value={50} size={96} />
+          <RadialProgress value={75} size={112} />
+          <RadialProgress value={90} size={128} />
         </div>
       </ComponentSection>
 
       <ComponentSection
         title="Step Progress"
-        description="Multi-step workflow indicator showing completed and pending steps."
+        description="Multi-step workflow indicator — composition demo using Button and Progress patterns."
+        source="composition"
         code={`<div className="flex items-center">
   {steps.map((step, i) => (
     <div key={step} className="flex items-center">
       <div className={i < current ? "w-8 h-8 rounded-full bg-primary ..." : ...}>
         {i < current ? <CheckCircle2 /> : <span>{i + 1}</span>}
       </div>
-      {i < steps.length - 1 && (
-        <div className={\`h-0.5 w-16 \${i < current ? "bg-primary" : "bg-border"}\`} />
-      )}
     </div>
   ))}
-</div>
-<Button variant="outline">Back</Button>
-<Button>Next</Button>`}
+</div>`}
       >
         <div className="flex flex-col gap-6 w-full">
           <div className="flex items-center">

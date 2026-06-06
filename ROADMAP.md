@@ -90,14 +90,14 @@ Brickly is **shadcn-based**, but not every doc page demo imports a shadcn primit
 
 ### Tasks
 
-- [ ] Audit each page in `src/app/pages/` and tag every `ComponentSection` as **shadcn** or **custom**
-- [ ] Replace custom card markup on Cards page with `Card` subcomponents
-- [ ] Consolidate Pagination page — pick shadcn `Pagination` as the canonical demo; demote or remove hand-rolled variants
-- [ ] Remove custom toast implementation on Toasts page; document Sonner as the only approach
-- [ ] Refactor Accordion plus/minus demo to use `Collapsible`
-- [ ] Refactor Avatars page groups to use shadcn `Avatar` only
-- [ ] Update code snippets in each migrated section so Preview and Code tabs match
-- [ ] Update README component catalog notes once migrations are complete
+- [x] Audit each page in `src/app/pages/` and tag every `ComponentSection` as **shadcn** or **custom** (via `source` prop on migrated pages)
+- [x] Replace custom card markup on Cards page with `Card` subcomponents
+- [x] Consolidate Pagination page — pick shadcn `Pagination` as the canonical demo; demote or remove hand-rolled variants
+- [x] Remove custom toast implementation on Toasts page; document Sonner as the only approach
+- [x] Refactor Accordion plus/minus demo to use `Collapsible`
+- [x] Refactor Avatars page groups to use shadcn `Avatar` only
+- [x] Update code snippets in each migrated section so Preview and Code tabs match
+- [x] Update README component catalog notes once migrations are complete
 
 ### Definition of done
 
@@ -175,8 +175,8 @@ Today, tokens live in `src/styles/theme.css` but are not documented anywhere in 
 
 ### Tasks
 
-- [ ] Build `TokensPage.tsx` with live swatches that respond to dark mode toggle
-- [ ] Add route and navigation entry
+- [x] Build `TokensPage.tsx` with live swatches that respond to dark mode toggle
+- [x] Add route and navigation entry
 - [x] Update README project structure to reference `theme.css` instead of removed `default_shadcn_theme.css`
 
 ---
@@ -362,7 +362,7 @@ Figma Make boilerplate removed from metadata, UI, and build config.
 | Phase | Focus | Outcome |
 |-------|--------|---------|
 | **Phase 1** ✅ | Branding polish (§11), dependency trim (§5), README sync | Cleaner repo, less confusion |
-| **Phase 2** | Restore primitives (§1), migrate custom demos (§2), Tokens page (§4) | Consistent shadcn usage across all pages |
+| **Phase 2** ✅ | Restore primitives (§1), migrate custom demos (§2), Tokens page (§4) | Consistent shadcn usage across all pages |
 | **Phase 3** | New pages (§3), search improvements (§8) | Richer catalog and better DX |
 | **Phase 4** | Deploy (§6), tests (§7), a11y audit (§10) | Production-ready, maintainable site |
 | **Phase 5** | Copy/install snippets (§9) | Helps consumers use Brickly in real projects |
