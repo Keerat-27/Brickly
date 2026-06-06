@@ -4,7 +4,7 @@ import { ComponentSection } from "../components/ui/ComponentSection";
 import { Button } from "../components/ui/button";
 import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, MoreHorizontal } from "lucide-react";
 
-function getPages(current: number, total: number, delta = 2): (number | "…")[] {
+const getPages =(current: number, total: number, delta = 2): (number | "…")[]  => {
   const pages: (number | "…")[] = [];
   const left = current - delta;
   const right = current + delta;
@@ -22,7 +22,7 @@ function getPages(current: number, total: number, delta = 2): (number | "…")[]
   return pages;
 }
 
-function Pagination({
+const Pagination = ({
   total,
   value,
   onChange,
@@ -32,7 +32,7 @@ function Pagination({
   value: number;
   onChange: (p: number) => void;
   variant?: "default" | "outline" | "minimal";
-}) {
+}) => {
   const pages = getPages(value, total);
 
   return (
@@ -94,7 +94,7 @@ function Pagination({
   );
 }
 
-function FullPagination({ total }: { total: number }) {
+const FullPagination = ({ total }: { total: number }) => {
   const [page, setPage] = useState(1);
   return (
     <nav className="flex items-center gap-1" aria-label="Full Pagination">
@@ -119,7 +119,7 @@ function FullPagination({ total }: { total: number }) {
   );
 }
 
-function PaginationWithSize() {
+const PaginationWithSize = () => {
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(10);
   const total = Math.ceil(100 / size);
@@ -145,7 +145,7 @@ function PaginationWithSize() {
   );
 }
 
-function PillPagination() {
+const PillPagination = () => {
   const [page, setPage] = useState(3);
   const total = 8;
   const pages = getPages(page, total);
@@ -190,7 +190,7 @@ function PillPagination() {
   );
 }
 
-export function PaginationPage() {
+export const PaginationPage = () => {
   const [page1, setPage1] = useState(5);
   const [page2, setPage2] = useState(3);
   const [page3, setPage3] = useState(4);

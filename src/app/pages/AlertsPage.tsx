@@ -4,7 +4,7 @@ import { Alert, AlertTitle, AlertDescription } from "../components/ui/alert";
 import { Info, CheckCircle2, AlertTriangle, XCircle, X, AlertCircle } from "lucide-react";
 import { useState } from "react";
 
-function DismissibleAlert({
+const DismissibleAlert = ({
   children,
   title,
   className,
@@ -14,7 +14,7 @@ function DismissibleAlert({
   title?: string;
   className?: string;
   icon: React.ReactNode;
-}) {
+}) => {
   const [visible, setVisible] = useState(true);
   if (!visible) return null;
   return (
@@ -34,7 +34,7 @@ function DismissibleAlert({
   );
 }
 
-export function AlertsPage() {
+export const AlertsPage = () => {
   return (
     <div className="space-y-10">
       <PageHeader

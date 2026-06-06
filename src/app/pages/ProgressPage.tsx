@@ -5,7 +5,7 @@ import { Button } from "../components/ui/button";
 import { useState } from "react";
 import { CheckCircle2 } from "lucide-react";
 
-function ColorProgress({
+const ColorProgress = ({
   value,
   label,
   color = "primary",
@@ -15,7 +15,7 @@ function ColorProgress({
   label?: string;
   color?: "primary" | "green" | "blue" | "amber" | "red";
   size?: "sm" | "md" | "lg";
-}) {
+}) => {
   const colorClass = {
     primary: "",
     green: "[&>div]:bg-green-500",
@@ -38,12 +38,12 @@ function ColorProgress({
   );
 }
 
-function CircularProgress({ value, size = 64, strokeWidth = 6, color = "currentColor" }: {
+const CircularProgress = ({ value, size = 64, strokeWidth = 6, color = "currentColor" }: {
   value: number;
   size?: number;
   strokeWidth?: number;
   color?: string;
-}) {
+}) => {
   const radius = (size - strokeWidth) / 2;
   const circumference = 2 * Math.PI * radius;
   const offset = circumference - (value / 100) * circumference;
@@ -66,7 +66,7 @@ function CircularProgress({ value, size = 64, strokeWidth = 6, color = "currentC
 
 const steps = ["Account", "Profile", "Payment", "Confirm"];
 
-export function ProgressPage() {
+export const ProgressPage = () => {
   const [currentStep, setCurrentStep] = useState(1);
 
   return (

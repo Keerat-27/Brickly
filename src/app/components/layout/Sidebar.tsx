@@ -7,7 +7,7 @@ interface SidebarProps {
   onClose: () => void;
 }
 
-export function Sidebar({ open, onClose }: SidebarProps) {
+export const Sidebar = ({ open, onClose }: SidebarProps) => {
   return (
     <aside
       className={`

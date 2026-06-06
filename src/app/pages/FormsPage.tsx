@@ -16,7 +16,7 @@ import {
 } from "../components/ui/select";
 import { Eye, EyeOff, Search, UploadCloud, X, File } from "lucide-react";
 
-function PasswordInput({ label, placeholder }: { label?: string; placeholder?: string }) {
+const PasswordInput = ({ label, placeholder }: { label?: string; placeholder?: string }) => {
   const [show, setShow] = useState(false);
   return (
     <div className="space-y-1 w-full">
@@ -35,7 +35,7 @@ function PasswordInput({ label, placeholder }: { label?: string; placeholder?: s
   );
 }
 
-function SearchInput({ label }: { label?: string }) {
+const SearchInput = ({ label }: { label?: string }) => {
   return (
     <div className="space-y-1 w-full">
       {label && <Label>{label}</Label>}
@@ -47,7 +47,7 @@ function SearchInput({ label }: { label?: string }) {
   );
 }
 
-function TextareaWithCount() {
+const TextareaWithCount = () => {
   const [value, setValue] = useState("");
   const MAX = 500;
   const count = value.length;
@@ -71,7 +71,7 @@ function TextareaWithCount() {
   );
 }
 
-function FileUpload() {
+const FileUpload = () => {
   const [dragging, setDragging] = useState(false);
   const [files, setFiles] = useState<File[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -135,7 +135,7 @@ function FileUpload() {
   );
 }
 
-export function FormsPage() {
+export const FormsPage = () => {
   return (
     <div className="space-y-10">
       <PageHeader

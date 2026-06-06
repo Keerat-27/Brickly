@@ -23,7 +23,7 @@ interface ToastItem {
   duration?: number;
 }
 
-function Toast({ toast, onDismiss }: { toast: ToastItem; onDismiss: (id: string) => void }) {
+const Toast = ({ toast, onDismiss }: { toast: ToastItem; onDismiss: (id: string) => void }) => {
   useEffect(() => {
     if (toast.type === "loading") return;
     const t = setTimeout(() => onDismiss(toast.id), toast.duration ?? 4000);
@@ -74,9 +74,9 @@ function Toast({ toast, onDismiss }: { toast: ToastItem; onDismiss: (id: string)
 }
 
 let _uid = 0;
-function uid() { return String(++_uid); }
+const uid = () => { return String(++_uid); }
 
-function useToasts() {
+const useToasts = () => {
   const [toasts, setToasts] = useState<ToastItem[]>([]);
 
   const add = useCallback((toast: Omit<ToastItem, "id">) => {
@@ -92,7 +92,7 @@ function useToasts() {
   return { toasts, add, dismiss };
 }
 
-function ToastDemo({
+const ToastDemo = ({
   toasts,
   dismiss,
   position = "bottom-right",
@@ -100,7 +100,7 @@ function ToastDemo({
   toasts: ToastItem[];
   dismiss: (id: string) => void;
   position?: "top-right" | "top-center" | "bottom-right" | "bottom-center";
-}) {
+}) => {
   const pos = {
     "top-right":    "top-4 right-4",
     "top-center":   "top-4 left-1/2 -translate-x-1/2",
@@ -119,7 +119,7 @@ function ToastDemo({
   );
 }
 
-export function ToastsPage() {
+export const ToastsPage = () => {
   const { toasts, add, dismiss } = useToasts();
 
   return (

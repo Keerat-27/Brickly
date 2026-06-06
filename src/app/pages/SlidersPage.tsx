@@ -5,13 +5,13 @@ import { Slider } from "../components/ui/slider";
 import { Volume2, VolumeX, Sun, Contrast } from "lucide-react";
 
 /* ─── Color slider (custom, shadcn Slider has no color variants) ─ */
-function ColorSlider({
+const ColorSlider = ({
   color,
   initialValue,
 }: {
   color: "primary" | "green" | "amber" | "red";
   initialValue: number;
-}) {
+}) => {
   const [val, setVal] = useState(initialValue);
   const pct = val;
   const colorClass = {
@@ -44,7 +44,7 @@ function ColorSlider({
 }
 
 /* ─── Range slider ───────────────────────────────── */
-function RangeSlider() {
+const RangeSlider = () => {
   const [range, setRange] = useState([20, 75]);
 
   return (
@@ -64,7 +64,7 @@ function RangeSlider() {
 }
 
 /* ─── Tick slider ────────────────────────────────── */
-function TickSlider() {
+const TickSlider = () => {
   const ticks = [0, 25, 50, 75, 100];
   const [value, setValue] = useState([50]);
 
@@ -87,7 +87,7 @@ function TickSlider() {
 }
 
 /* ─── Volume control ─────────────────────────────── */
-function VolumeControl() {
+const VolumeControl = () => {
   const [vol, setVol] = useState([60]);
 
   return (
@@ -102,7 +102,7 @@ function VolumeControl() {
 }
 
 /* ─── Display settings ───────────────────────────── */
-function DisplayControls() {
+const DisplayControls = () => {
   const [brightness, setBrightness] = useState([70]);
   const [contrast, setContrast] = useState([50]);
 
@@ -122,7 +122,7 @@ function DisplayControls() {
   );
 }
 
-export function SlidersPage() {
+export const SlidersPage = () => {
   const [basic, setBasic] = useState([40]);
 
   return (

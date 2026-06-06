@@ -13,12 +13,12 @@ const COLORS = [
   "bg-indigo-500",
 ];
 
-function getColor(name: string) {
+const getColor =(name: string) => {
   const idx = name.charCodeAt(0) % COLORS.length;
   return COLORS[idx];
 }
 
-function getInitials(name: string) {
+const getInitials =(name: string) => {
   return name
     .split(" ")
     .map((n) => n[0])
@@ -34,7 +34,7 @@ const statusColors = {
   away: "bg-amber-400",
 };
 
-function UserAvatar({
+const UserAvatar = ({
   src,
   name,
   size = "md",
@@ -44,7 +44,7 @@ function UserAvatar({
   name?: string;
   size?: "xs" | "sm" | "md" | "lg" | "xl";
   status?: "online" | "offline" | "busy" | "away";
-}) {
+}) => {
   const sizes = {
     xs: "size-6",
     sm: "size-8",
@@ -82,13 +82,13 @@ function UserAvatar({
   );
 }
 
-function AvatarGroup({
+const AvatarGroup = ({
   users,
   max = 4,
 }: {
   users: { name: string; src?: string }[];
   max?: number;
-}) {
+}) => {
   const shown = users.slice(0, max);
   const extra = users.length - max;
 
@@ -119,7 +119,7 @@ const sampleUsers = [
   { name: "Frank Miller" },
 ];
 
-export function AvatarsPage() {
+export const AvatarsPage = () => {
   return (
     <div className="space-y-10">
       <PageHeader

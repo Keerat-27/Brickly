@@ -9,12 +9,12 @@ interface ComponentSectionProps {
   children: React.ReactNode;
 }
 
-export function ComponentSection({
+export const ComponentSection = ({
   title,
   description,
   code,
   children,
-}: ComponentSectionProps) {
+}: ComponentSectionProps) => {
   const [tab, setTab] = useState<"preview" | "code">("preview");
 
   return (

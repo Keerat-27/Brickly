@@ -4,7 +4,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "../components/ui/tabs"
 import { useState } from "react";
 import { User, Bell, Lock, CreditCard } from "lucide-react";
 
-function VerticalTabs() {
+const VerticalTabs = () => {
   const [active, setActive] = useState(0);
   const tabs = ["General", "Profile", "Notifications", "Security", "Billing"];
 
@@ -33,7 +33,7 @@ function VerticalTabs() {
   );
 }
 
-export function TabsPage() {
+export const TabsPage = () => {
   return (
     <div className="space-y-10">
       <PageHeader

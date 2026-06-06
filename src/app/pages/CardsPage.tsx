@@ -4,7 +4,7 @@ import { Button } from "../components/ui/button";
 import { Badge } from "../components/ui/badge";
 import { ArrowUpRight, Star, TrendingUp, Users, ShoppingCart, DollarSign, MoreHorizontal } from "lucide-react";
 
-export function CardsPage() {
+export const CardsPage = () => {
   return (
     <div className="space-y-10">
       <PageHeader

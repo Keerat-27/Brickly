@@ -4,7 +4,7 @@ interface PageHeaderProps {
   badge?: string;
 }
 
-export function PageHeader({ title, description, badge }: PageHeaderProps) {
+export const PageHeader = ({ title, description, badge }: PageHeaderProps) => {
   return (
     <div className="mb-10 pb-8 border-b border-border">
       {badge && (

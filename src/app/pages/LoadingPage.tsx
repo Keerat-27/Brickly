@@ -3,13 +3,13 @@ import { ComponentSection } from "../components/ui/ComponentSection";
 import { Skeleton } from "../components/ui/skeleton";
 import { Loader2 } from "lucide-react";
 
-function Spinner({ size = "md", color = "primary" }: { size?: "sm" | "md" | "lg" | "xl"; color?: "primary" | "white" | "muted" }) {
+const Spinner = ({ size = "md", color = "primary" }: { size?: "sm" | "md" | "lg" | "xl"; color?: "primary" | "white" | "muted" }) => {
   const sizes = { sm: "w-4 h-4", md: "w-6 h-6", lg: "w-8 h-8", xl: "w-12 h-12" };
   const colors = { primary: "text-primary", white: "text-white", muted: "text-muted-foreground" };
   return <Loader2 className={`${sizes[size]} ${colors[color]} animate-spin`} />;
 }
 
-function SkeletonCard() {
+const SkeletonCard = () => {
   return (
     <div className="rounded-xl border border-border p-5 space-y-4 w-64">
       <div className="flex items-center gap-3">
@@ -27,7 +27,7 @@ function SkeletonCard() {
   );
 }
 
-function SkeletonTable() {
+const SkeletonTable = () => {
   return (
     <div className="w-full rounded-xl border border-border overflow-hidden">
       <div className="flex gap-4 px-4 py-3 bg-muted/50 border-b border-border">
@@ -47,7 +47,7 @@ function SkeletonTable() {
   );
 }
 
-function Dots() {
+const Dots = () => {
   return (
     <div className="flex gap-1.5 items-center">
       {[0, 1, 2].map((i) => (
@@ -61,7 +61,7 @@ function Dots() {
   );
 }
 
-function PulseLoader() {
+const PulseLoader = () => {
   return (
     <div className="flex gap-2 items-center">
       {[0, 1, 2, 3].map((i) => (
@@ -75,7 +75,7 @@ function PulseLoader() {
   );
 }
 
-export function LoadingPage() {
+export const LoadingPage = () => {
   return (
     <div className="space-y-10">
       <PageHeader

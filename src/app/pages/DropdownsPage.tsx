@@ -27,7 +27,7 @@ import {
 } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 
-function ContextMenu() {
+const ContextMenu = () => {
   const [pos, setPos] = useState<{ x: number; y: number } | null>(null);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -63,7 +63,7 @@ function ContextMenu() {
   );
 }
 
-function ThemeDropdown() {
+const ThemeDropdown = () => {
   const [theme, setTheme] = useState<"light" | "dark" | "system">("system");
   return (
     <DropdownMenu>
@@ -90,7 +90,7 @@ function ThemeDropdown() {
   );
 }
 
-export function DropdownsPage() {
+export const DropdownsPage = () => {
   return (
     <div className="space-y-10">
       <PageHeader

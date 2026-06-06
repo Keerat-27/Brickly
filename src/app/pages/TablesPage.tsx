@@ -31,19 +31,19 @@ const data = [
   { id: 5, name: "Eve Davis", role: "Designer", status: "Active", joined: "Feb 2024", salary: "$88,000" },
 ];
 
-function StatusBadge({ status }: { status: string }) {
+const StatusBadge = ({ status }: { status: string }) => {
   if (status === "Active") return <Badge className="bg-green-100 text-green-800 border-transparent dark:bg-green-900/30 dark:text-green-400">{status}</Badge>;
   if (status === "Away") return <Badge className="bg-amber-100 text-amber-800 border-transparent dark:bg-amber-900/30 dark:text-amber-400">{status}</Badge>;
   return <Badge variant="secondary">{status}</Badge>;
 }
 
-function SortIcon({ col, sortCol, sortDir }: { col: string; sortCol: string; sortDir: SortDir }) {
+const SortIcon = ({ col, sortCol, sortDir }: { col: string; sortCol: string; sortDir: SortDir }) => {
   if (sortCol !== col) return <ArrowUpDown className="w-3.5 h-3.5 opacity-40" />;
   if (sortDir === "asc") return <ArrowUp className="w-3.5 h-3.5 text-primary" />;
   return <ArrowDown className="w-3.5 h-3.5 text-primary" />;
 }
 
-export function TablesPage() {
+export const TablesPage = () => {
   const [sortCol, setSortCol] = useState("name");
   const [sortDir, setSortDir] = useState<SortDir>("asc");
   const [selectedRows, setSelectedRows] = useState<number[]>([]);

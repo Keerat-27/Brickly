@@ -4,7 +4,7 @@ import { Badge } from "../components/ui/badge";
 import { Button } from "../components/ui/button";
 import { CheckCircle, AlertCircle, Clock, Star, X } from "lucide-react";
 
-export function BadgesPage() {
+export const BadgesPage = () => {
   return (
     <div className="space-y-10">
       <PageHeader

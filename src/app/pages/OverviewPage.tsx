@@ -55,7 +55,7 @@ const stats = [
   { label: "TypeScript", value: "✓" },
 ];
 
-export function OverviewPage() {
+export const OverviewPage = () => {
   return (
     <div>
       {/* Hero */}

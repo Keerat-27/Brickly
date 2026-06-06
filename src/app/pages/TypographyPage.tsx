@@ -1,7 +1,7 @@
 import { PageHeader } from "../components/ui/PageHeader";
 import { ComponentSection } from "../components/ui/ComponentSection";
 
-export function TypographyPage() {
+export const TypographyPage = () => {
   return (
     <div className="space-y-10">
       <PageHeader

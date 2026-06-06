@@ -28,7 +28,7 @@ const longCrumbs: Crumb[] = [
   { label: "Breadcrumbs" },
 ];
 
-function DefaultBreadcrumb({ crumbs, separator }: { crumbs: Crumb[]; separator?: "slash" | "dot" }) {
+const DefaultBreadcrumb = ({ crumbs, separator }: { crumbs: Crumb[]; separator?: "slash" | "dot" }) => {
   return (
     <Breadcrumb>
       <BreadcrumbList>
@@ -54,7 +54,7 @@ function DefaultBreadcrumb({ crumbs, separator }: { crumbs: Crumb[]; separator?:
   );
 }
 
-function HomeBreadcrumb({ crumbs }: { crumbs: Crumb[] }) {
+const HomeBreadcrumb = ({ crumbs }: { crumbs: Crumb[] }) => {
   return (
     <Breadcrumb>
       <BreadcrumbList>
@@ -81,7 +81,7 @@ function HomeBreadcrumb({ crumbs }: { crumbs: Crumb[] }) {
   );
 }
 
-function CollapsedBreadcrumb({ crumbs }: { crumbs: Crumb[] }) {
+const CollapsedBreadcrumb = ({ crumbs }: { crumbs: Crumb[] }) => {
   const first = crumbs[0];
   const last = crumbs[crumbs.length - 1];
   return (
@@ -103,7 +103,7 @@ function CollapsedBreadcrumb({ crumbs }: { crumbs: Crumb[] }) {
   );
 }
 
-function BadgeBreadcrumb({ crumbs }: { crumbs: Crumb[] }) {
+const BadgeBreadcrumb = ({ crumbs }: { crumbs: Crumb[] }) => {
   return (
     <Breadcrumb>
       <BreadcrumbList>
@@ -131,7 +131,7 @@ function BadgeBreadcrumb({ crumbs }: { crumbs: Crumb[] }) {
   );
 }
 
-export function BreadcrumbsPage() {
+export const BreadcrumbsPage = () => {
   return (
     <div className="space-y-10">
       <PageHeader

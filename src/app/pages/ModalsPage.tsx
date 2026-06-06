@@ -21,7 +21,7 @@ import {
 } from "../components/ui/sheet";
 import { AlertTriangle, CheckCircle2 } from "lucide-react";
 
-export function ModalsPage() {
+export const ModalsPage = () => {
   return (
     <div className="space-y-10">
       <PageHeader

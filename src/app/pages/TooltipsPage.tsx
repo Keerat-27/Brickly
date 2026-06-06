@@ -14,7 +14,7 @@ import {
 import { Button } from "../components/ui/button";
 import { Info, HelpCircle, Settings, Copy, Trash2 } from "lucide-react";
 
-export function TooltipsPage() {
+export const TooltipsPage = () => {
   return (
     <div className="space-y-10">
       <PageHeader

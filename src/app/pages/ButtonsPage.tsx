@@ -4,7 +4,7 @@ import { Button } from "../components/ui/button";
 import { Loader2, Download, ArrowRight, Trash2, Plus, Heart } from "lucide-react";
 import { useState } from "react";
 
-export function ButtonsPage() {
+export const ButtonsPage = () => {
   const [loading, setLoading] = useState(false);
 
   const handleLoad = () => {

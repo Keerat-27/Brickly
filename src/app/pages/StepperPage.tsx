@@ -14,8 +14,8 @@ interface Step {
   icon?: React.ReactNode;
 }
 
-function HorizontalStepper({ steps, current }: { steps: Step[]; current: number }) {
-  function status(i: number): StepStatus {
+const HorizontalStepper = ({ steps, current }: { steps: Step[]; current: number }) => {
+  const status =(i: number): StepStatus  => {
     if (i < current) return "complete";
     if (i === current) return "current";
     return "upcoming";
@@ -61,14 +61,14 @@ function HorizontalStepper({ steps, current }: { steps: Step[]; current: number 
   );
 }
 
-function VerticalStepper({
+const VerticalStepper = ({
   steps,
   current,
 }: {
   steps: (Step & { content?: React.ReactNode })[];
   current: number;
-}) {
-  function status(i: number): StepStatus {
+}) => {
+  const status =(i: number): StepStatus  => {
     if (i < current) return "complete";
     if (i === current) return "current";
     return "upcoming";
@@ -115,7 +115,7 @@ function VerticalStepper({
   );
 }
 
-function IconStepper({ steps, current }: { steps: Step[]; current: number }) {
+const IconStepper = ({ steps, current }: { steps: Step[]; current: number }) => {
   return (
     <nav className="flex items-center gap-0 w-full">
       {steps.map((step, i) => {
@@ -151,7 +151,7 @@ function IconStepper({ steps, current }: { steps: Step[]; current: number }) {
   );
 }
 
-function Wizard() {
+const Wizard = () => {
   const [step, setStep] = useState(0);
   const steps = ["Account", "Details", "Review", "Done"];
   const panels = [
@@ -232,7 +232,7 @@ const orderSteps: (Step & { content?: React.ReactNode })[] = [
   { label: "Delivered", icon: <Check className="w-3.5 h-3.5" /> },
 ];
 
-export function StepperPage() {
+export const StepperPage = () => {
   const [hStep, setHStep] = useState(1);
 
   return (

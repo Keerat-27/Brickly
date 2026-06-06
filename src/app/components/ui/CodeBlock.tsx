@@ -7,7 +7,7 @@ interface CodeBlockProps {
   seamless?: boolean;
 }
 
-export function CodeBlock({ code, language = "tsx", seamless = false }: CodeBlockProps) {
+export const CodeBlock = ({ code, language = "tsx", seamless = false }: CodeBlockProps) => {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = () => {

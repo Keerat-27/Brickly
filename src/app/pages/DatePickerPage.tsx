@@ -14,7 +14,7 @@ import {
 import { cn } from "../components/ui/utils";
 
 /* ─── Inline single date ─────────────────────────── */
-function InlineCalendar() {
+const InlineCalendar = () => {
   const [date, setDate] = useState<Date | undefined>(new Date());
   return (
     <div className="space-y-3">
@@ -34,7 +34,7 @@ function InlineCalendar() {
 }
 
 /* ─── Popover date picker ────────────────────────── */
-function PopoverDatePicker() {
+const PopoverDatePicker = () => {
   const [date, setDate] = useState<Date | undefined>();
   return (
     <Popover>
@@ -63,7 +63,7 @@ function PopoverDatePicker() {
 }
 
 /* ─── Date range picker ──────────────────────────── */
-function DateRangePicker() {
+const DateRangePicker = () => {
   const [range, setRange] = useState<DateRange | undefined>();
   return (
     <Popover>
@@ -101,7 +101,7 @@ function DateRangePicker() {
 }
 
 /* ─── Disabled dates ─────────────────────────────── */
-function DisabledDatesPicker() {
+const DisabledDatesPicker = () => {
   const [date, setDate] = useState<Date | undefined>();
   return (
     <div className="space-y-3">
@@ -118,7 +118,7 @@ function DisabledDatesPicker() {
 }
 
 /* ─── Multi-select ───────────────────────────────── */
-function MultiSelectPicker() {
+const MultiSelectPicker = () => {
   const [dates, setDates] = useState<Date[] | undefined>();
   return (
     <div className="space-y-3">
@@ -140,7 +140,7 @@ function MultiSelectPicker() {
   );
 }
 
-export function DatePickerPage() {
+export const DatePickerPage = () => {
   return (
     <div className="space-y-10">
       <PageHeader

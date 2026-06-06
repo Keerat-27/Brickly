@@ -9,6 +9,12 @@ import {
   CommandItem,
   CommandList,
 } from "../ui/command";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "../ui/tooltip";
 import { navItems } from "./nav-config";
 
 interface HeaderProps {
@@ -17,7 +23,7 @@ interface HeaderProps {
   onDarkModeToggle: () => void;
 }
 
-function ComponentSearch() {
+const ComponentSearch = () => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
 
@@ -42,15 +48,19 @@ function ComponentSearch() {
 
   return (
     <>
-      <button
-        type="button"
-        onClick={() => setOpen(true)}
-        className="p-2 rounded-md hover:bg-accent text-muted-foreground transition-colors"
-        title="Search components (⌘K)"
-        aria-label="Search components"
-      >
-        <Search className="w-4 h-4" />
-      </button>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <button
+            type="button"
+            onClick={() => setOpen(true)}
+            className="p-2 rounded-md hover:bg-accent text-muted-foreground transition-colors"
+            aria-label="Search components"
+          >
+            <Search className="w-4 h-4" />
+          </button>
+        </TooltipTrigger>
+        <TooltipContent side="bottom">Search components (⌘K)</TooltipContent>
+      </Tooltip>
 
       <CommandDialog open={open} onOpenChange={setOpen} title="Search components">
         <CommandInput placeholder="Search components…" />
@@ -76,7 +86,7 @@ function ComponentSearch() {
   );
 }
 
-export function Header({ onMenuClick, darkMode, onDarkModeToggle }: HeaderProps) {
+export const Header = ({ onMenuClick, darkMode, onDarkModeToggle }: HeaderProps) => {
   return (
     <header className="sticky top-0 z-10 flex items-center justify-between px-4 md:px-6 h-14 border-b border-border bg-background/95 backdrop-blur-sm">
       <div className="flex items-center gap-3">
@@ -88,29 +98,39 @@ export function Header({ onMenuClick, darkMode, onDarkModeToggle }: HeaderProps)
         </button>
       </div>
 
-      <div className="flex items-center gap-2">
-        <ComponentSearch />
-        <button
-          onClick={onDarkModeToggle}
-          className="p-2 rounded-md hover:bg-accent text-muted-foreground transition-colors"
-          title={darkMode ? "Switch to light mode" : "Switch to dark mode"}
-        >
-          {darkMode ? (
-            <Sun className="w-4 h-4" />
-          ) : (
-            <Moon className="w-4 h-4" />
-          )}
-        </button>
-        <div className="h-6 w-px bg-border" />
-        <a
-          href="https://github.com/Keerat-27/Brickly"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="px-3 py-1.5 rounded-md bg-primary text-primary-foreground text-xs hover:opacity-90 transition-opacity"
-        >
-          GitHub
-        </a>
-      </div>
+      <TooltipProvider>
+        <div className="flex items-center gap-2">
+          <ComponentSearch />
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <button
+                type="button"
+                onClick={onDarkModeToggle}
+                className="p-2 rounded-md hover:bg-accent text-muted-foreground transition-colors"
+                aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"}
+              >
+                {darkMode ? (
+                  <Sun className="w-4 h-4" />
+                ) : (
+                  <Moon className="w-4 h-4" />
+                )}
+              </button>
+            </TooltipTrigger>
+            <TooltipContent side="bottom">
+              {darkMode ? "Switch to light mode" : "Switch to dark mode"}
+            </TooltipContent>
+          </Tooltip>
+          <div className="h-6 w-px bg-border" />
+          <a
+            href="https://github.com/Keerat-27/Brickly"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-3 py-1.5 rounded-md bg-primary text-primary-foreground text-xs hover:opacity-90 transition-opacity"
+          >
+            GitHub
+          </a>
+        </div>
+      </TooltipProvider>
     </header>
   );
 }

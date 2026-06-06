@@ -16,7 +16,7 @@ const faqItems = [
   { title: "Can I customize the styles?", body: "Yes. Modify the Tailwind classes or update the CSS variables in your theme file to match your brand." },
 ];
 
-function PlusMinusAccordion({ items }: { items: { title: string; body: string }[] }) {
+const PlusMinusAccordion = ({ items }: { items: { title: string; body: string }[] }) => {
   const [open, setOpen] = useState<number | null>(null);
   return (
     <div className="space-y-2 w-full">
@@ -44,7 +44,7 @@ function PlusMinusAccordion({ items }: { items: { title: string; body: string }[
   );
 }
 
-export function AccordionPage() {
+export const AccordionPage = () => {
   return (
     <div className="space-y-10">
       <PageHeader
