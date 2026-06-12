@@ -23,6 +23,12 @@ import {
   ListOrdered,
   CalendarDays,
   Palette,
+  BarChart3,
+  Terminal,
+  PanelLeft,
+  KeyRound,
+  Columns2,
+  GalleryHorizontal,
 } from "lucide-react";
 
 const components = [
@@ -34,13 +40,19 @@ const components = [
   { to: "/breadcrumbs", label: "Breadcrumbs",  icon: Navigation,       description: "Separators, home icon, collapsed",  count: 5 },
   { to: "/buttons",     label: "Buttons",      icon: Square,           description: "Variants, sizes, states",           count: 8 },
   { to: "/cards",       label: "Cards",        icon: CreditCard,       description: "shadcn Card layouts and compositions", count: 6 },
+  { to: "/carousel",    label: "Carousel",     icon: GalleryHorizontal,description: "Image, card, and autoplay sliders", count: 3 },
+  { to: "/charts",      label: "Charts",       icon: BarChart3,        description: "Bar, line, area, pie with live data", count: 5 },
+  { to: "/command",     label: "Command",      icon: Terminal,         description: "Palette, groups, empty and loading", count: 4 },
   { to: "/date-picker", label: "Date Picker", icon: CalendarDays,     description: "Inline, popover, range, disabled",  count: 6 },
   { to: "/dropdowns",   label: "Dropdowns",    icon: Menu,             description: "Menu, profile, context, checkable", count: 5 },
   { to: "/forms",       label: "Forms",        icon: FormInput,        description: "Inputs, checkboxes, selects, toggles", count: 7 },
   { to: "/loading",     label: "Loading",      icon: Loader,           description: "Spinner, skeleton, dots",           count: 4 },
   { to: "/modals",      label: "Modals",       icon: Layers,           description: "Dialog, drawer, confirm",           count: 3 },
+  { to: "/otp",         label: "OTP Input",    icon: KeyRound,         description: "Split digits, masked, validation",  count: 5 },
   { to: "/pagination",  label: "Pagination",   icon: ChevronRight,     description: "shadcn Pagination, full controls",  count: 3 },
   { to: "/progress",    label: "Progress",     icon: Activity,         description: "Bar, circular, steps",              count: 4 },
+  { to: "/resizable",   label: "Resizable",    icon: Columns2,         description: "Horizontal, vertical, constraints", count: 3 },
+  { to: "/sidebar",     label: "Sidebar",      icon: PanelLeft,        description: "Collapsible, icon, floating variants", count: 3 },
   { to: "/sliders",     label: "Sliders",      icon: SlidersHorizontal,description: "Basic, range, ticks, colors",       count: 6 },
   { to: "/stepper",     label: "Stepper",      icon: ListOrdered,      description: "Horizontal, vertical, wizard",      count: 4 },
   { to: "/tables",      label: "Tables",       icon: Table2,           description: "Basic, striped, sortable",          count: 3 },
@@ -51,8 +63,8 @@ const components = [
 ];
 
 const stats = [
-  { label: "Pages", value: "22" },
-  { label: "Variants",   value: "100+" },
+  { label: "Pages", value: "28" },
+  { label: "Variants",   value: "120+" },
   { label: "Dark Mode",  value: "✓" },
   { label: "TypeScript", value: "✓" },
 ];
@@ -72,6 +84,11 @@ export const OverviewPage = () => {
         <p className="text-muted-foreground max-w-2xl">
           A browsable design-system reference of accessible React components built with shadcn/ui
           patterns and Tailwind CSS. Preview variants, copy snippets, and customize for your project.
+          Press{" "}
+          <kbd className="rounded border border-border bg-muted px-1.5 py-0.5 text-xs font-mono">
+            ⌘K
+          </kbd>{" "}
+          anywhere to jump to a component.
         </p>
         <div className="flex flex-wrap gap-3 mt-6">
           <Link

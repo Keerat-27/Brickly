@@ -56,7 +56,7 @@ During cleanup, several shadcn/ui components were removed because they were not 
 
 ### Restored, awaiting dedicated pages (see §3)
 
-`chart`, `carousel`, `input-otp`, `menubar`, `navigation-menu`, `resizable`, `scroll-area`, `sidebar`, `separator`
+`menubar`, `navigation-menu`, `scroll-area`, `separator`
 
 ---
 
@@ -143,10 +143,10 @@ Brickly currently covers 21 categories. These pages would fill the biggest gaps 
 
 ### Tasks
 
-- [ ] Create page component in `src/app/pages/`
-- [ ] Register route in `src/app/routes.tsx`
-- [ ] Add entry to `OverviewPage` and `nav-config.ts`
-- [ ] Follow existing `PageHeader` + `ComponentSection` pattern with Preview/Code tabs
+- [x] Create page component in `src/app/pages/`
+- [x] Register route in `src/app/routes.tsx`
+- [x] Add entry to `OverviewPage` and `nav-config.ts`
+- [x] Follow existing `PageHeader` + `ComponentSection` pattern with Preview/Code tabs
 
 ---
 
@@ -280,9 +280,9 @@ The header already has a ⌘K command dialog. It can be expanded into a full-fea
 
 ### Tasks
 
-- [ ] Extend `ComponentSearch` in `Header.tsx`
-- [ ] Add recent-items hook with `localStorage` persistence
-- [ ] Update Tooltips page or add a note on the Overview about ⌘K
+- [x] Extend `ComponentSearch` in `Header.tsx`
+- [x] Add recent-items hook with `localStorage` persistence
+- [x] Update Tooltips page or add a note on the Overview about ⌘K
 
 ---
 
@@ -363,7 +363,7 @@ Figma Make boilerplate removed from metadata, UI, and build config.
 |-------|--------|---------|
 | **Phase 1** ✅ | Branding polish (§11), dependency trim (§5), README sync | Cleaner repo, less confusion |
 | **Phase 2** ✅ | Restore primitives (§1), migrate custom demos (§2), Tokens page (§4) | Consistent shadcn usage across all pages |
-| **Phase 3** | New pages (§3), search improvements (§8) | Richer catalog and better DX |
+| **Phase 3** ✅ | New pages (§3), search improvements (§8) | Richer catalog and better DX |
 | **Phase 4** | Deploy (§6), tests (§7), a11y audit (§10) | Production-ready, maintainable site |
 | **Phase 5** | Copy/install snippets (§9) | Helps consumers use Brickly in real projects |
 

@@ -4,7 +4,7 @@ A browsable React component library and design-system reference built on [shadcn
 
 ## Features
 
-- **22 documentation pages** — 21 component categories plus a design token reference
+- **28 documentation pages** — 27 component categories plus a design token reference
 - **Live previews** — toggle between Preview and Code on every example
 - **Dark mode** — toggle from the header; uses CSS variables from the theme
 - **TypeScript** — full type coverage across pages and UI primitives
@@ -95,10 +95,16 @@ import { Button } from "@/app/components/ui/button";
 | `/alerts` | Alerts | Info, success, warning, error |
 | `/avatars` | Avatars | Image, initials, groups |
 | `/cards` | Cards | shadcn Card compositions (stats, profile, media, actions) |
+| `/carousel` | Carousel | Image, card, and autoplay sliders |
+| `/charts` | Charts | Bar, line, area, pie with Recharts |
+| `/command` | Command | Inline palette, dialog, empty/loading states |
 | `/date-picker` | Date Picker | Inline, popover, range, disabled |
 | `/forms` | Forms | Input, select, checkbox, switch, radio, react-hook-form |
-| `/progress` | Progress | Bar (shadcn) and circular (custom) |
+| `/progress` | Progress | Bar (shadcn) and radial (chart) |
+| `/resizable` | Resizable | Horizontal, vertical, panel constraints |
+| `/sidebar` | Sidebar | Collapsible, icon, floating variants |
 | `/modals` | Modals | Dialog, sheet, drawer, alert dialog |
+| `/otp` | OTP Input | Split digits, masked, form validation |
 | `/tabs` | Tabs | Default, pills, vertical |
 | `/tables` | Tables | Basic, striped, sortable |
 | `/loading` | Loading | Spinner, skeleton, dots |
@@ -112,7 +118,7 @@ import { Button } from "@/app/components/ui/button";
 | `/toasts` | Toasts | Sonner-only toast demos |
 | `/stepper` | Stepper | Horizontal, vertical, wizard |
 
-Additional shadcn primitives live under `src/app/components/ui/` (e.g. `calendar`, `chart`, `command`, `carousel`) and can be wired into new pages as needed. See [ROADMAP.md](ROADMAP.md) for planned pages and improvements.
+Additional shadcn primitives live under `src/app/components/ui/` (e.g. `calendar`, `menubar`, `navigation-menu`) and can be wired into new pages as needed. See [ROADMAP.md](ROADMAP.md) for planned improvements.
 
 ## Design system
 

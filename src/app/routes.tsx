@@ -23,6 +23,12 @@ import { ToastsPage } from "./pages/ToastsPage";
 import { StepperPage } from "./pages/StepperPage";
 import { DatePickerPage } from "./pages/DatePickerPage";
 import { TokensPage } from "./pages/TokensPage";
+import { ChartsPage } from "./pages/ChartsPage";
+import { CommandPage } from "./pages/CommandPage";
+import { SidebarPage } from "./pages/SidebarPage";
+import { OtpPage } from "./pages/OtpPage";
+import { ResizablePage } from "./pages/ResizablePage";
+import { CarouselPage } from "./pages/CarouselPage";
 
 export const router = createBrowserRouter([
   {
@@ -52,6 +58,12 @@ export const router = createBrowserRouter([
       { path: "stepper", Component: StepperPage },
       { path: "date-picker", Component: DatePickerPage },
       { path: "tokens", Component: TokensPage },
+      { path: "charts", Component: ChartsPage },
+      { path: "command", Component: CommandPage },
+      { path: "sidebar", Component: SidebarPage },
+      { path: "otp", Component: OtpPage },
+      { path: "resizable", Component: ResizablePage },
+      { path: "carousel", Component: CarouselPage },
     ],
   },
 ]);

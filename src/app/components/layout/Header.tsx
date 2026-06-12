@@ -1,5 +1,5 @@
 import { Menu, Moon, Sun, Search } from "lucide-react";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router";
 import {
   CommandDialog,
@@ -8,6 +8,8 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
+  CommandSeparator,
+  CommandShortcut,
 } from "../ui/command";
 import {
   Tooltip,
@@ -16,6 +18,7 @@ import {
   TooltipTrigger,
 } from "../ui/tooltip";
 import { navItems } from "./nav-config";
+import { useRecentNavItems } from "./useRecentNavItems";
 
 interface HeaderProps {
   onMenuClick: () => void;
@@ -23,16 +26,30 @@ interface HeaderProps {
   onDarkModeToggle: () => void;
 }
 
+const flatNavItems = navItems.flatMap((group) =>
+  group.items.map((item) => ({ ...item, group: group.label })),
+);
+
 const ComponentSearch = () => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
+  const { recent, recordVisit } = useRecentNavItems();
+
+  const recentItems = useMemo(
+    () =>
+      recent
+        .map((path) => flatNavItems.find((item) => item.to === path))
+        .filter((item): item is (typeof flatNavItems)[number] => Boolean(item)),
+    [recent],
+  );
 
   const selectItem = useCallback(
     (to: string) => {
+      recordVisit(to);
       navigate(to);
       setOpen(false);
     },
-    [navigate],
+    [navigate, recordVisit],
   );
 
   useEffect(() => {
@@ -63,24 +80,50 @@ const ComponentSearch = () => {
       </Tooltip>
 
       <CommandDialog open={open} onOpenChange={setOpen} title="Search components">
-        <CommandInput placeholder="Search components…" />
+        <CommandInput placeholder="Search by name or route (e.g. /charts)…" />
         <CommandList>
           <CommandEmpty>No components found.</CommandEmpty>
+          {recentItems.length > 0 && (
+            <>
+              <CommandGroup heading="Recent">
+                {recentItems.map((item) => (
+                  <CommandItem
+                    key={`recent-${item.to}`}
+                    value={`${item.label} ${item.to}`}
+                    onSelect={() => selectItem(item.to)}
+                  >
+                    <item.icon className="w-4 h-4 text-muted-foreground" />
+                    {item.label}
+                    <CommandShortcut>{item.to}</CommandShortcut>
+                  </CommandItem>
+                ))}
+              </CommandGroup>
+              <CommandSeparator />
+            </>
+          )}
           {navItems.map((group) => (
             <CommandGroup key={group.label} heading={group.label}>
               {group.items.map((item) => (
                 <CommandItem
                   key={item.to}
-                  value={item.label}
+                  value={`${item.label} ${item.to}`}
+                  keywords={[item.to.replace(/^\//, "")]}
                   onSelect={() => selectItem(item.to)}
                 >
                   <item.icon className="w-4 h-4 text-muted-foreground" />
                   {item.label}
+                  {item.to !== "/" && (
+                    <CommandShortcut>{item.to}</CommandShortcut>
+                  )}
                 </CommandItem>
               ))}
             </CommandGroup>
           ))}
         </CommandList>
+        <div className="flex items-center justify-between border-t px-3 py-2 text-xs text-muted-foreground">
+          <span>↑↓ navigate · Enter select · Esc close</span>
+          <CommandShortcut>⌘K</CommandShortcut>
+        </div>
       </CommandDialog>
     </>
   );
