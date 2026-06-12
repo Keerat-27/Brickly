@@ -22,7 +22,6 @@ import {
   Cell,
   CartesianGrid,
   XAxis,
-  YAxis,
 } from "recharts";
 
 const staticData = [

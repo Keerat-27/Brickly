@@ -29,6 +29,10 @@ import {
   KeyRound,
   Columns2,
   GalleryHorizontal,
+  SquareMenu,
+  Compass,
+  ScrollText,
+  SeparatorHorizontal,
 } from "lucide-react";
 
 export interface NavItem {
@@ -68,11 +72,15 @@ export const navItems: NavGroup[] = [
       { to: "/dropdowns", label: "Dropdowns", icon: Menu },
       { to: "/forms", label: "Forms", icon: FormInput },
       { to: "/loading", label: "Loading", icon: Loader },
+      { to: "/menubar", label: "Menubar", icon: SquareMenu },
       { to: "/modals", label: "Modals", icon: Layers },
+      { to: "/navigation-menu", label: "Navigation Menu", icon: Compass },
       { to: "/otp", label: "OTP Input", icon: KeyRound },
       { to: "/pagination", label: "Pagination", icon: ChevronRight },
       { to: "/progress", label: "Progress", icon: Activity },
       { to: "/resizable", label: "Resizable", icon: Columns2 },
+      { to: "/scroll-area", label: "Scroll Area", icon: ScrollText },
+      { to: "/separator", label: "Separator", icon: SeparatorHorizontal },
       { to: "/sidebar", label: "Sidebar", icon: PanelLeft },
       { to: "/sliders", label: "Sliders", icon: SlidersHorizontal },
       { to: "/stepper", label: "Stepper", icon: ListOrdered },

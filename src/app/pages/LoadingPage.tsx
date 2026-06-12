@@ -87,6 +87,7 @@ export const LoadingPage = () => {
       <ComponentSection
         title="Spinners"
         description="Simple rotating spinners in different sizes and a ring variant."
+        source="custom"
         code={`{/* Icon spinner */}
 import { Loader2 } from "lucide-react";
 <Loader2 className="w-6 h-6 text-primary animate-spin" />
@@ -108,6 +109,7 @@ import { Loader2 } from "lucide-react";
       <ComponentSection
         title="Dot Loaders"
         description="Bouncing dot animations for inline loading states."
+        source="custom"
         code={`<div className="flex gap-1.5 items-center">
   {[0, 1, 2].map((i) => (
     <div
@@ -136,6 +138,8 @@ import { Loader2 } from "lucide-react";
       <ComponentSection
         title="Skeleton Cards"
         description="Placeholder content while data is loading."
+        source="shadcn"
+        shadcnComponent="skeleton"
         code={`import { Skeleton } from "@/components/ui/skeleton";
 
 <div className="rounded-xl border border-border p-5 space-y-4">
@@ -160,6 +164,8 @@ import { Loader2 } from "lucide-react";
       <ComponentSection
         title="Skeleton Table"
         description="Table placeholder while data is being fetched."
+        source="shadcn"
+        shadcnComponent="skeleton"
         code={`<div className="w-full rounded-xl border border-border overflow-hidden">
   <div className="flex gap-4 px-4 py-3 bg-muted/50 border-b border-border">
     {[120, 80, 60, 80].map((w, i) => (
@@ -181,6 +187,7 @@ import { Loader2 } from "lucide-react";
       <ComponentSection
         title="Overlay Loading"
         description="Full-area loading state that blocks interaction."
+        source="composition"
         code={`<div className="relative rounded-xl border border-border p-6 h-40">
   <div className="absolute inset-0 bg-background/80 backdrop-blur-sm flex items-center justify-center rounded-xl z-10">
     <div className="flex flex-col items-center gap-2">

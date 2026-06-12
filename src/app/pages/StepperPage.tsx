@@ -155,7 +155,7 @@ const Wizard = () => {
   const [step, setStep] = useState(0);
   const steps = ["Account", "Details", "Review", "Done"];
   const panels = [
-    <div className="space-y-3">
+    <div key="account" className="space-y-3">
       <div className="space-y-1">
         <Label>Email</Label>
         <Input placeholder="you@example.com" type="email" />
@@ -165,7 +165,7 @@ const Wizard = () => {
         <Input type="password" placeholder="••••••••" />
       </div>
     </div>,
-    <div className="space-y-3">
+    <div key="details" className="space-y-3">
       <div className="space-y-1">
         <Label>Full name</Label>
         <Input placeholder="Jane Smith" />
@@ -175,12 +175,12 @@ const Wizard = () => {
         <Input placeholder="Acme Inc." />
       </div>
     </div>,
-    <div className="rounded-xl border border-border p-4 space-y-2 text-sm">
+    <div key="review" className="rounded-xl border border-border p-4 space-y-2 text-sm">
       <p className="text-muted-foreground">Please confirm your details before submitting.</p>
       <p><span className="text-muted-foreground">Email:</span> <span className="text-foreground">you@example.com</span></p>
       <p><span className="text-muted-foreground">Name:</span> <span className="text-foreground">Jane Smith</span></p>
     </div>,
-    <div className="text-center py-4">
+    <div key="done" className="text-center py-4">
       <div className="w-12 h-12 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center mx-auto mb-3">
         <Check className="w-6 h-6 text-green-600" />
       </div>
@@ -246,6 +246,7 @@ export const StepperPage = () => {
       <ComponentSection
         title="Horizontal"
         description="Left-to-right step track with a connector line between steps."
+        source="composition"
         code={`function HorizontalStepper({ steps, current }) {
   return (
     <nav className="flex items-start w-full">
@@ -291,6 +292,7 @@ export const StepperPage = () => {
       <ComponentSection
         title="Vertical"
         description="Top-to-bottom stepper with expandable content for the active step."
+        source="composition"
         code={`<div className="flex flex-col gap-0">
   {steps.map((step, i) => (
     <div key={i} className="flex gap-4">
@@ -314,6 +316,7 @@ export const StepperPage = () => {
       <ComponentSection
         title="With Icons"
         description="Replace numbers with contextual icons for a richer visual style."
+        source="composition"
         code={`<div className="w-10 h-10 rounded-full ...">
   {s === "complete" ? <Check /> : step.icon}
 </div>`}
@@ -332,6 +335,7 @@ export const StepperPage = () => {
       <ComponentSection
         title="Interactive Wizard"
         description="A fully interactive multi-step form with back and continue buttons."
+        source="composition"
         code={`import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";

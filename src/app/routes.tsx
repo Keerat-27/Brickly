@@ -29,6 +29,10 @@ import { SidebarPage } from "./pages/SidebarPage";
 import { OtpPage } from "./pages/OtpPage";
 import { ResizablePage } from "./pages/ResizablePage";
 import { CarouselPage } from "./pages/CarouselPage";
+import { MenubarPage } from "./pages/MenubarPage";
+import { NavigationMenuPage } from "./pages/NavigationMenuPage";
+import { ScrollAreaPage } from "./pages/ScrollAreaPage";
+import { SeparatorPage } from "./pages/SeparatorPage";
 
 export const appRoutes = [
   {
@@ -64,6 +68,10 @@ export const appRoutes = [
       { path: "otp", Component: OtpPage },
       { path: "resizable", Component: ResizablePage },
       { path: "carousel", Component: CarouselPage },
+      { path: "menubar", Component: MenubarPage },
+      { path: "navigation-menu", Component: NavigationMenuPage },
+      { path: "scroll-area", Component: ScrollAreaPage },
+      { path: "separator", Component: SeparatorPage },
     ],
   },
 ];

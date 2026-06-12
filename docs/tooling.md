@@ -9,13 +9,18 @@ Scripts, build pipeline, and troubleshooting.
 | `dev` | `vite` | Development server with HMR (port 5173) |
 | `build` | `vite build` | Production bundle to `dist/` |
 | `typecheck` | `tsc --noEmit` | TypeScript validation (strict) |
+| `lint` | `eslint src` | ESLint with `eslint-plugin-jsx-a11y` recommended rules |
+| `preview` | `vite preview` | Local production preview |
+| `test` | `vitest run` | Vitest smoke tests |
 
-### Planned (see ROADMAP)
+Run before every PR:
 
-| Script | Purpose |
-|--------|---------|
-| `preview` | `vite preview` — local production preview |
-| `test` | Vitest smoke tests |
+```bash
+npm run typecheck
+npm run lint
+npm run test
+npm run build
+```
 
 ## TypeScript
 
@@ -25,12 +30,6 @@ Config: `tsconfig.json`
 - **Path alias:** `@/*` → `./src/*`
 - **Include:** `src/` only
 - **JSX:** `react-jsx` (no React import required)
-
-Run before every PR:
-
-```bash
-npm run typecheck
-```
 
 ## Vite
 
@@ -43,7 +42,14 @@ Config: `vite.config.ts`
 
 ## Linting
 
-No ESLint config in repo today. ROADMAP Phase 4 mentions optional `eslint-plugin-jsx-a11y`. Until then, rely on TypeScript strict mode and manual review.
+Config: `eslint.config.js` (flat config)
+
+- **TypeScript** — `typescript-eslint` recommended rules
+- **React** — `eslint-plugin-react` recommended + jsx-runtime
+- **Accessibility** — `eslint-plugin-jsx-a11y` recommended rules on all `src/` files
+- **CI** — `npm run lint` runs on every push and PR (see `.github/workflows/ci.yml`)
+
+UI primitive wrappers under `src/app/components/ui/` relax `heading-has-content` and `anchor-has-content` because content is supplied by consumers at usage sites.
 
 ## Dependencies
 
@@ -51,7 +57,7 @@ No ESLint config in repo today. ROADMAP Phase 4 mentions optional `eslint-plugin
 
 1. Confirm it's required by a shadcn primitive or page demo.
 2. `npm install <package>`
-3. Run `typecheck` + `build`.
+3. Run `typecheck` + `lint` + `build`.
 4. Avoid bloating the bundle — check if the primitive is used on a frequently visited page.
 
 ### Auditing unused deps
@@ -88,6 +94,12 @@ Recharts (via `chart.tsx`) increases bundle size. Consider route-level code spli
 ### Type errors on `@/` imports
 
 Confirm `tsconfig.json` paths and `vite.config.ts` alias both map `@` to `src`.
+
+### ESLint failures on a new page
+
+- Icon-only buttons need `aria-label`.
+- Elements in arrays need `key` props.
+- Run `npm run lint` locally before pushing.
 
 ### Styles not applying
 

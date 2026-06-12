@@ -54,9 +54,9 @@ During cleanup, several shadcn/ui components were removed because they were not 
 | Collapsible | Accordion |
 | Toggle, Toggle Group | Buttons |
 
-### Restored, awaiting dedicated pages (see §3)
+### Restored with dedicated pages (done)
 
-`menubar`, `navigation-menu`, `scroll-area`, `separator`
+`menubar`, `navigation-menu`, `scroll-area`, `separator` — see `/menubar`, `/navigation-menu`, `/scroll-area`, `/separator`.
 
 ---
 
@@ -79,13 +79,13 @@ Brickly is **shadcn-based**, but not every doc page demo imports a shadcn primit
 | **Cards** | Basic Card, Aspect Ratio | Stat, profile, horizontal, and action cards → `Card`, `CardHeader`, `CardContent`, `CardFooter` |
 | **Pagination** | shadcn Pagination section | Default, outline, pill, minimal, full, page-size variants → shadcn `Pagination` primitives or remove duplicates |
 | **Toasts** | Sonner section | Custom toast system (`Toast`, `useToasts`, `ToastDemo`) → Sonner only |
-| **Stepper** | Button, Input, Label | Horizontal, vertical, icon, wizard steppers → evaluate shadcn pattern or keep as "composition" demo |
-| **Loading** | Skeleton | Spinner, dots, pulse loaders → keep as custom or document as non-shadcn patterns |
-| **Progress** | Progress bar | Circular progress → shadcn `Progress` or `chart` |
-| **Typography** | — | All hand-built HTML → token-based typography page (see §4) |
+| **Stepper** | Button, Input, Label | Horizontal, vertical, icon, wizard steppers → tagged **composition** (no shadcn stepper primitive) |
+| **Loading** | Skeleton | Spinner, dots, pulse loaders → skeleton sections **shadcn**; spinners/dots **custom** |
+| **Progress** | Progress bar | Circular progress → shadcn `Progress` + `chart` (done) |
+| **Typography** | — | Token-based typography page — tagged **custom** (see §4) |
 | **Accordion** | Accordion, Collapsible | Plus/minus accordion → `Collapsible` or `Accordion` |
 | **Avatars** | Avatar, AvatarImage, AvatarFallback | Custom `UserAvatar`, `AvatarGroup`, color helpers → shadcn `Avatar` compositions |
-| **Tabs** | Tabs (default) | Vertical tabs demo → shadcn `Tabs` with `orientation="vertical"` |
+| **Tabs** | Tabs (default) | Vertical tabs demo → shadcn `Tabs` with `orientation="vertical"` (done) |
 | **Alerts** | Alert | Dismissible alert wrapper → shadcn `Alert` + local state |
 
 ### Tasks
@@ -140,6 +140,26 @@ Brickly currently covers 21 categories. These pages would fill the biggest gaps 
 
 - Image carousel, card carousel, and autoplay variants
 - Prev/next controls and dot indicators
+
+### Menubar (`/menubar`)
+
+- Desktop-style menu bar with File/Edit/View patterns
+- Submenus, checkbox items, and radio groups
+
+### Navigation Menu (`/navigation-menu`)
+
+- Dropdown panels and mega-menu grid layouts
+- Simple flat link navigation variant
+
+### Scroll Area (`/scroll-area`)
+
+- Vertical and horizontal custom scrollbars
+- Scrollable lists with separators
+
+### Separator (`/separator`)
+
+- Horizontal and vertical dividers
+- Section dividers in card layouts
 
 ### Tasks
 
@@ -303,6 +323,7 @@ Every `ComponentSection` already shows copyable code. The next step is making it
 - [x] Add optional `installCommand` prop to `ComponentSection`
 - [x] Map each UI primitive to its shadcn registry name
 - [x] Document the copy workflow on the Overview page
+- [x] Import path toggle in `CodeBlock` (`@/app/components/ui/` vs relative paths)
 
 ---
 
@@ -326,7 +347,7 @@ Component libraries should model accessible patterns, not just visual ones.
 - [x] Run [axe DevTools](https://www.deque.com/axe/devtools/) or Lighthouse accessibility audit on each page
 - [x] Fix issues found in Modals, Forms, and Dropdowns first (highest interaction complexity)
 - [x] Add an **Accessibility** section to each `ComponentSection` where relevant (e.g. "Use `aria-expanded` on accordion triggers")
-- [ ] Optionally add `eslint-plugin-jsx-a11y` to catch issues in CI
+- [x] Optionally add `eslint-plugin-jsx-a11y` to catch issues in CI
 
 ---
 
@@ -366,8 +387,21 @@ Figma Make boilerplate removed from metadata, UI, and build config.
 | **Phase 3** ✅ | New pages (§3), search improvements (§8) | Richer catalog and better DX |
 | **Phase 4** ✅ | Deploy (§6), tests (§7), a11y audit (§10) | Production-ready, maintainable site |
 | **Phase 5** ✅ | Copy/install snippets (§9) | Helps consumers use Brickly in real projects |
+| **Phase 6** ✅ | Primitive catalog pages (§1), ESLint a11y (§10), snippet path toggle (§9) | Full shadcn coverage, CI accessibility checks |
 
 ---
+
+## Future work
+
+Ideas not yet scheduled — pick any of these for the next PR:
+
+| Area | Idea |
+|------|------|
+| §9 | Full-section export — copy an entire `ComponentSection` including imports as one snippet |
+| §9 | "Open in StackBlitz" — prefilled sandbox link per demo (larger effort) |
+| Layout | Adopt shadcn `sidebar.tsx` in the app shell instead of custom `layout/Sidebar.tsx` |
+| Performance | Route-level code splitting for chart/carousel-heavy pages |
+| DX | Expand route smoke tests to cover all catalog pages |
 
 ## Contributing
 

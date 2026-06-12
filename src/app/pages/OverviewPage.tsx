@@ -29,6 +29,10 @@ import {
   KeyRound,
   Columns2,
   GalleryHorizontal,
+  SquareMenu,
+  Compass,
+  ScrollText,
+  SeparatorHorizontal,
 } from "lucide-react";
 
 const components = [
@@ -47,11 +51,15 @@ const components = [
   { to: "/dropdowns",   label: "Dropdowns",    icon: Menu,             description: "Menu, profile, context, checkable", count: 5 },
   { to: "/forms",       label: "Forms",        icon: FormInput,        description: "Inputs, checkboxes, selects, toggles", count: 7 },
   { to: "/loading",     label: "Loading",      icon: Loader,           description: "Spinner, skeleton, dots",           count: 4 },
+  { to: "/menubar",     label: "Menubar",      icon: SquareMenu,       description: "Desktop menu bar, submenus",        count: 3 },
   { to: "/modals",      label: "Modals",       icon: Layers,           description: "Dialog, drawer, confirm",           count: 3 },
+  { to: "/navigation-menu", label: "Navigation Menu", icon: Compass,    description: "Mega-menu and site nav patterns",   count: 2 },
   { to: "/otp",         label: "OTP Input",    icon: KeyRound,         description: "Split digits, masked, validation",  count: 5 },
   { to: "/pagination",  label: "Pagination",   icon: ChevronRight,     description: "shadcn Pagination, full controls",  count: 3 },
   { to: "/progress",    label: "Progress",     icon: Activity,         description: "Bar, circular, steps",              count: 4 },
   { to: "/resizable",   label: "Resizable",    icon: Columns2,         description: "Horizontal, vertical, constraints", count: 3 },
+  { to: "/scroll-area", label: "Scroll Area",  icon: ScrollText,       description: "Vertical, horizontal scrollbars",   count: 3 },
+  { to: "/separator",   label: "Separator",    icon: SeparatorHorizontal, description: "Horizontal and vertical dividers", count: 3 },
   { to: "/sidebar",     label: "Sidebar",      icon: PanelLeft,        description: "Collapsible, icon, floating variants", count: 3 },
   { to: "/sliders",     label: "Sliders",      icon: SlidersHorizontal,description: "Basic, range, ticks, colors",       count: 6 },
   { to: "/stepper",     label: "Stepper",      icon: ListOrdered,      description: "Horizontal, vertical, wizard",      count: 4 },
@@ -63,7 +71,7 @@ const components = [
 ];
 
 const stats = [
-  { label: "Pages", value: "28" },
+  { label: "Pages", value: "32" },
   { label: "Variants",   value: "120+" },
   { label: "Dark Mode",  value: "✓" },
   { label: "TypeScript", value: "✓" },
@@ -140,6 +148,12 @@ export const OverviewPage = () => {
               npx shadcn@latest add button
             </code>
             ). Click it to copy the install command.
+          </li>
+          <li>
+            <span className="text-foreground">Adjust import paths</span> — use the{" "}
+            <span className="font-medium text-foreground">@/ alias</span> or{" "}
+            <span className="font-medium text-foreground">Relative</span> toggle in
+            the Code tab when copying snippets into your project layout.
           </li>
           <li>
             <span className="text-foreground">Check the source badge</span> —{" "}

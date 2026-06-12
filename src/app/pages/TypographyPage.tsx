@@ -13,6 +13,7 @@ export const TypographyPage = () => {
       <ComponentSection
         title="Headings"
         description="Semantic heading levels with consistent size and weight."
+        source="custom"
         code={`<h1>Heading 1</h1>
 <h2>Heading 2</h2>
 <h3>Heading 3</h3>
@@ -29,6 +30,7 @@ export const TypographyPage = () => {
       <ComponentSection
         title="Body Text"
         description="Regular paragraph text in different sizes."
+        source="custom"
         code={`<p className="text-lg text-foreground">Large — Lorem ipsum dolor sit amet.</p>
 <p className="text-base text-foreground">Base — Lorem ipsum dolor sit amet.</p>
 <p className="text-sm text-muted-foreground">Small — Lorem ipsum dolor sit amet.</p>
@@ -53,6 +55,7 @@ export const TypographyPage = () => {
       <ComponentSection
         title="Text Styles"
         description="Bold, italic, underline, strikethrough, and highlight treatments."
+        source="custom"
         code={`<span className="font-semibold">Semibold text</span>
 <span className="italic text-muted-foreground">Italic text</span>
 <span className="underline underline-offset-2">Underlined text</span>
@@ -73,6 +76,7 @@ export const TypographyPage = () => {
       <ComponentSection
         title="Code"
         description="Inline code and code block styling."
+        source="custom"
         code={`{/* Inline code */}
 <code className="px-1.5 py-0.5 rounded bg-muted text-sm font-mono">npm install react</code>
 
@@ -108,6 +112,7 @@ export const TypographyPage = () => {
       <ComponentSection
         title="Lists"
         description="Unordered and ordered list styles."
+        source="custom"
         code={`<ul className="list-disc list-inside space-y-1 text-sm text-foreground">
   <li>First item in the list</li>
   <li>Second item in the list</li>
@@ -136,6 +141,7 @@ export const TypographyPage = () => {
       <ComponentSection
         title="Blockquote"
         description="Styled blockquotes for pull quotes and callouts."
+        source="custom"
         code={`<blockquote className="pl-4 border-l-4 border-primary italic text-muted-foreground">
   "Design is not just what it looks like and feels like. Design is how it works."
   <footer className="mt-1 text-sm not-italic text-muted-foreground">— Steve Jobs</footer>

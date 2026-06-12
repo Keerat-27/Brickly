@@ -1,5 +1,9 @@
 import { useState } from "react";
 import { Check, Copy, Terminal } from "lucide-react";
+import {
+  transformImportPaths,
+  type ImportPathStyle,
+} from "./transformImportPaths";
 
 interface CodeBlockProps {
   code: string;
@@ -16,9 +20,17 @@ export const CodeBlock = ({
 }: CodeBlockProps) => {
   const [copied, setCopied] = useState(false);
   const [installCopied, setInstallCopied] = useState(false);
+  const [importPathStyle, setImportPathStyle] =
+    useState<ImportPathStyle>("alias");
+
+  const displayCode = transformImportPaths(code, importPathStyle);
+  const hasImportPaths =
+    code.includes("@/components/ui/") ||
+    code.includes("@/app/components/ui/") ||
+    code.includes("../components/ui/");
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(code);
+    navigator.clipboard.writeText(displayCode);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -71,10 +83,44 @@ export const CodeBlock = ({
       )}
 
       <div className="relative">
-        <div className="flex items-center justify-between border-b border-border px-4 py-2">
-          <span className="rounded-md bg-background/80 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-muted-foreground">
-            {language}
-          </span>
+        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-border px-4 py-2">
+          <div className="flex items-center gap-2">
+            <span className="rounded-md bg-background/80 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-muted-foreground">
+              {language}
+            </span>
+            {hasImportPaths && (
+              <div
+                role="group"
+                aria-label="Import path style"
+                className="flex items-center rounded-md bg-background/80 p-0.5"
+              >
+                <button
+                  type="button"
+                  aria-pressed={importPathStyle === "alias"}
+                  onClick={() => setImportPathStyle("alias")}
+                  className={`rounded px-2 py-0.5 text-[10px] font-medium transition-colors ${
+                    importPathStyle === "alias"
+                      ? "bg-background text-foreground shadow-sm"
+                      : "text-muted-foreground hover:text-foreground"
+                  }`}
+                >
+                  @/ alias
+                </button>
+                <button
+                  type="button"
+                  aria-pressed={importPathStyle === "relative"}
+                  onClick={() => setImportPathStyle("relative")}
+                  className={`rounded px-2 py-0.5 text-[10px] font-medium transition-colors ${
+                    importPathStyle === "relative"
+                      ? "bg-background text-foreground shadow-sm"
+                      : "text-muted-foreground hover:text-foreground"
+                  }`}
+                >
+                  Relative
+                </button>
+              </div>
+            )}
+          </div>
           <button
             type="button"
             onClick={handleCopy}
@@ -94,7 +140,7 @@ export const CodeBlock = ({
           </button>
         </div>
         <pre className="overflow-x-auto p-4 text-sm font-mono leading-relaxed text-foreground/90 whitespace-pre-wrap break-all">
-          <code>{code}</code>
+          <code>{displayCode}</code>
         </pre>
       </div>
     </div>
