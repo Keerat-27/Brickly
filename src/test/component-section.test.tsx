@@ -53,8 +53,11 @@ describe("ComponentSection", () => {
       </ComponentSection>,
     );
 
+    await user.click(screen.getByRole("tab", { name: "Code" }));
     await user.click(screen.getByRole("button", { name: "Relative" }));
-    await user.click(screen.getByRole("button", { name: "Copy full example" }));
+    await user.click(
+      screen.getByRole("button", { name: "Copy full example" }),
+    );
 
     expect(buildFullExample).toHaveBeenLastCalledWith(code, "relative", undefined);
   });

@@ -37,6 +37,7 @@ export const CodeBlock = ({
     code.includes("@/components/ui/") ||
     code.includes("@/app/components/ui/") ||
     code.includes("../components/ui/");
+  const showToolbar = !seamless || !isImportPathControlled;
 
   const handleCopy = () => {
     navigator.clipboard.writeText(displayCode);
@@ -92,62 +93,66 @@ export const CodeBlock = ({
       )}
 
       <div className="relative">
-        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-border px-4 py-2">
-          <div className="flex items-center gap-2">
-            <span className="rounded-md bg-background/80 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-muted-foreground">
-              {language}
-            </span>
-            {hasImportPaths && !isImportPathControlled && (
-              <div
-                role="group"
-                aria-label="Import path style"
-                className="flex items-center rounded-md bg-background/80 p-0.5"
-              >
-                <button
-                  type="button"
-                  aria-pressed={importPathStyle === "alias"}
-                  onClick={() => setImportPathStyle("alias")}
-                  className={`rounded px-2 py-0.5 text-[10px] font-medium transition-colors ${
-                    importPathStyle === "alias"
-                      ? "bg-background text-foreground shadow-sm"
-                      : "text-muted-foreground hover:text-foreground"
-                  }`}
+        {showToolbar && (
+          <div className="flex flex-col gap-2 border-b border-border px-3 py-2 sm:flex-row sm:items-center sm:justify-between sm:px-4">
+            <div className="flex items-center gap-2">
+              <span className="rounded-md bg-background/80 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-muted-foreground">
+                {language}
+              </span>
+              {hasImportPaths && !isImportPathControlled && (
+                <div
+                  role="group"
+                  aria-label="Import path style"
+                  className="flex items-center rounded-md bg-background/80 p-0.5"
                 >
-                  @/ alias
-                </button>
-                <button
-                  type="button"
-                  aria-pressed={importPathStyle === "relative"}
-                  onClick={() => setImportPathStyle("relative")}
-                  className={`rounded px-2 py-0.5 text-[10px] font-medium transition-colors ${
-                    importPathStyle === "relative"
-                      ? "bg-background text-foreground shadow-sm"
-                      : "text-muted-foreground hover:text-foreground"
-                  }`}
-                >
-                  Relative
-                </button>
-              </div>
-            )}
+                  <button
+                    type="button"
+                    aria-pressed={importPathStyle === "alias"}
+                    onClick={() => setImportPathStyle("alias")}
+                    className={`rounded px-2 py-0.5 text-[10px] font-medium transition-colors ${
+                      importPathStyle === "alias"
+                        ? "bg-background text-foreground shadow-sm"
+                        : "text-muted-foreground hover:text-foreground"
+                    }`}
+                  >
+                    <span className="sm:hidden">@/</span>
+                    <span className="hidden sm:inline">@/ alias</span>
+                  </button>
+                  <button
+                    type="button"
+                    aria-pressed={importPathStyle === "relative"}
+                    onClick={() => setImportPathStyle("relative")}
+                    className={`rounded px-2 py-0.5 text-[10px] font-medium transition-colors ${
+                      importPathStyle === "relative"
+                        ? "bg-background text-foreground shadow-sm"
+                        : "text-muted-foreground hover:text-foreground"
+                    }`}
+                  >
+                    Relative
+                  </button>
+                </div>
+              )}
+            </div>
+            <button
+              type="button"
+              onClick={handleCopy}
+              aria-label={copied ? "Copied example" : "Copy example"}
+              className="ml-auto flex shrink-0 items-center gap-1.5 rounded-md px-2 py-1 text-xs text-muted-foreground transition-colors hover:bg-accent hover:text-foreground sm:ml-0 sm:px-2.5"
+            >
+              {copied ? (
+                <>
+                  <Check className="h-3.5 w-3.5 shrink-0 text-green-500" />
+                  <span className="hidden text-green-500 sm:inline">Copied</span>
+                </>
+              ) : (
+                <>
+                  <Copy className="h-3.5 w-3.5 shrink-0" />
+                  <span className="hidden sm:inline">Copy example</span>
+                </>
+              )}
+            </button>
           </div>
-          <button
-            type="button"
-            onClick={handleCopy}
-            className="flex items-center gap-1.5 rounded-md px-2.5 py-1 text-xs text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
-          >
-            {copied ? (
-              <>
-                <Check className="h-3.5 w-3.5 text-green-500" />
-                <span className="text-green-500">Copied</span>
-              </>
-            ) : (
-              <>
-                <Copy className="h-3.5 w-3.5" />
-                <span>Copy example</span>
-              </>
-            )}
-          </button>
-        </div>
+        )}
         <pre className="overflow-x-auto p-4 text-sm font-mono leading-relaxed text-foreground/90 whitespace-pre-wrap break-all">
           <code>{displayCode}</code>
         </pre>

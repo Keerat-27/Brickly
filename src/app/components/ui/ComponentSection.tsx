@@ -89,11 +89,11 @@ export const ComponentSection = ({
       </div>
       <div className="rounded-xl border border-border overflow-hidden">
         {/* Tab bar */}
-        <div className="flex items-center border-b border-border bg-muted/50 px-4 py-2.5 gap-1">
+        <div className="flex flex-col gap-2 border-b border-border bg-muted/50 px-3 py-2 sm:flex-row sm:items-center sm:justify-between sm:gap-3 sm:px-4 sm:py-2.5">
           <div
             role="tablist"
             aria-label={`${title} view`}
-            className="flex items-center bg-muted rounded-lg p-0.5 gap-0.5"
+            className="flex w-fit shrink-0 items-center rounded-lg bg-muted p-0.5 gap-0.5"
           >
             <button
               type="button"
@@ -102,13 +102,13 @@ export const ComponentSection = ({
               aria-selected={tab === "preview"}
               aria-controls={`${tabId}-preview-panel`}
               onClick={() => setTab("preview")}
-              className={`flex items-center gap-1.5 px-3 py-1.5 text-xs rounded-md transition-all ${
+              className={`flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-xs transition-all sm:px-3 ${
                 tab === "preview"
                   ? "bg-background text-foreground shadow-sm"
                   : "text-muted-foreground hover:text-foreground"
               }`}
             >
-              <Eye className="w-3.5 h-3.5" />
+              <Eye className="h-3.5 w-3.5 shrink-0" />
               Preview
             </button>
             <button
@@ -118,23 +118,23 @@ export const ComponentSection = ({
               aria-selected={tab === "code"}
               aria-controls={`${tabId}-code-panel`}
               onClick={() => setTab("code")}
-              className={`flex items-center gap-1.5 px-3 py-1.5 text-xs rounded-md transition-all ${
+              className={`flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-xs transition-all sm:px-3 ${
                 tab === "code"
                   ? "bg-background text-foreground shadow-sm"
                   : "text-muted-foreground hover:text-foreground"
               }`}
             >
-              <Code2 className="w-3.5 h-3.5" />
+              <Code2 className="h-3.5 w-3.5 shrink-0" />
               Code
             </button>
           </div>
 
-          <div className="ml-auto flex flex-wrap items-center gap-2">
-            {hasImportPaths && (
+          <div className="flex min-w-0 items-center justify-between gap-2 sm:ml-auto sm:justify-end">
+            {tab === "code" && hasImportPaths && (
               <div
                 role="group"
                 aria-label="Import path style"
-                className="flex items-center rounded-md bg-muted p-0.5"
+                className="flex shrink-0 items-center rounded-md bg-muted p-0.5"
               >
                 <button
                   type="button"
@@ -146,7 +146,8 @@ export const ComponentSection = ({
                       : "text-muted-foreground hover:text-foreground"
                   }`}
                 >
-                  @/ alias
+                  <span className="sm:hidden">@/</span>
+                  <span className="hidden sm:inline">@/ alias</span>
                 </button>
                 <button
                   type="button"
@@ -165,17 +166,20 @@ export const ComponentSection = ({
             <button
               type="button"
               onClick={handleCopyFullExample}
-              className="flex items-center gap-1.5 rounded-md px-2.5 py-1 text-xs text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+              aria-label={
+                fullExampleCopied ? "Copied full example" : "Copy full example"
+              }
+              className="ml-auto flex shrink-0 items-center gap-1.5 rounded-md px-2 py-1 text-xs text-muted-foreground transition-colors hover:bg-accent hover:text-foreground sm:ml-0 sm:px-2.5"
             >
               {fullExampleCopied ? (
                 <>
-                  <Check className="h-3.5 w-3.5 text-green-500" />
-                  <span className="text-green-500">Copied</span>
+                  <Check className="h-3.5 w-3.5 shrink-0 text-green-500" />
+                  <span className="hidden text-green-500 sm:inline">Copied</span>
                 </>
               ) : (
                 <>
-                  <Copy className="h-3.5 w-3.5" />
-                  <span>Copy full example</span>
+                  <Copy className="h-3.5 w-3.5 shrink-0" />
+                  <span className="hidden sm:inline">Copy full example</span>
                 </>
               )}
             </button>
