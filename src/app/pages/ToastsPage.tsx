@@ -20,6 +20,7 @@ export const ToastsPage = () => {
         title="Types"
         description="Four semantic types plus a neutral default — all via Sonner."
         source="shadcn"
+        shadcnComponent="sonner"
         code={`import { toast } from "sonner";
 import { Toaster } from "@/components/ui/sonner";
 
@@ -65,6 +66,7 @@ import { Toaster } from "@/components/ui/sonner";
         title="With Description"
         description="Add a secondary line for more context."
         source="shadcn"
+        shadcnComponent="sonner"
         code={`toast.success("File uploaded", {
   description: "report-q4.pdf · 2.4 MB",
 });`}
@@ -81,6 +83,7 @@ import { Toaster } from "@/components/ui/sonner";
         title="With Action"
         description="Include a clickable action inside the notification."
         source="shadcn"
+        shadcnComponent="sonner"
         code={`toast.info("Update available", {
   description: "Version 2.1.0 is ready.",
   action: {
@@ -106,6 +109,7 @@ import { Toaster } from "@/components/ui/sonner";
         title="Loading"
         description="Persistent spinner toast for async operations."
         source="shadcn"
+        shadcnComponent="sonner"
         code={`const id = toast.loading("Uploading file…");
 // Later, dismiss when done:
 toast.dismiss(id);
@@ -133,6 +137,7 @@ toast.success("Upload complete");`}
         title="Promise"
         description="Automatically resolve or reject based on an async operation."
         source="shadcn"
+        shadcnComponent="sonner"
         code={`toast.promise(fetch("/api/save"), {
   loading: "Saving…",
   success: "Saved successfully!",

@@ -80,6 +80,7 @@ export const ProgressPage = () => {
         title="Progress Bars"
         description="Horizontal bars showing completion percentage with color variants."
         source="shadcn"
+        shadcnComponent="progress"
         code={`import { Progress } from "@/components/ui/progress";
 
 <Progress value={72} />
@@ -99,6 +100,7 @@ export const ProgressPage = () => {
         title="Sizes"
         description="Three heights for different visual weights."
         source="shadcn"
+        shadcnComponent="progress"
         code={`<Progress value={60} className="h-1" />
 <Progress value={60} className="h-2" />
 <Progress value={60} className="h-3" />`}
@@ -123,6 +125,7 @@ export const ProgressPage = () => {
         title="Radial Progress"
         description="Circular indicators using the shadcn Chart primitive and Recharts."
         source="shadcn"
+        shadcnComponent="chart"
         code={`import { ChartContainer } from "@/components/ui/chart";
 import { RadialBarChart, RadialBar, PolarAngleAxis } from "recharts";
 

@@ -120,6 +120,45 @@ export const OverviewPage = () => {
         ))}
       </div>
 
+      {/* Copy workflow */}
+      <div className="mb-12 rounded-xl border border-border bg-muted/20 p-6">
+        <h2 className="text-foreground mb-2">Using snippets in your project</h2>
+        <p className="text-sm text-muted-foreground max-w-2xl mb-4">
+          Every component page includes Preview and Code tabs. Open the Code tab to copy
+          runnable examples into your own app.
+        </p>
+        <ol className="space-y-3 text-sm text-muted-foreground list-decimal list-inside">
+          <li>
+            <span className="text-foreground">Copy the example</span> — click{" "}
+            <span className="font-medium text-foreground">Copy code</span> to grab the
+            snippet shown in the Code tab.
+          </li>
+          <li>
+            <span className="text-foreground">Install the primitive</span> — shadcn demos
+            show a CLI strip at the top of the Code tab (e.g.{" "}
+            <code className="rounded bg-muted px-1.5 py-0.5 text-xs font-mono text-foreground">
+              npx shadcn@latest add button
+            </code>
+            ). Click it to copy the install command.
+          </li>
+          <li>
+            <span className="text-foreground">Check the source badge</span> —{" "}
+            <span className="rounded-md bg-muted px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wide text-muted-foreground">
+              shadcn
+            </span>{" "}
+            sections map to the registry;{" "}
+            <span className="rounded-md bg-muted px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wide text-muted-foreground">
+              composition
+            </span>{" "}
+            and{" "}
+            <span className="rounded-md bg-muted px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wide text-muted-foreground">
+              custom
+            </span>{" "}
+            demos are built from tokens and primitives in this repo.
+          </li>
+        </ol>
+      </div>
+
       {/* Components grid */}
       <div>
         <h2 className="text-foreground mb-6">All Components</h2>

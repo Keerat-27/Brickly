@@ -36,6 +36,7 @@ export const OtpPage = () => {
         title="Split Digits"
         description="Six separate slots — the default verification code pattern."
         source="shadcn"
+        shadcnComponent="input-otp"
         code={`import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
 
 <InputOTP maxLength={6}>
@@ -65,6 +66,7 @@ export const OtpPage = () => {
         title="With Separator"
         description="Grouped as 3 + 3 digits for readability."
         source="shadcn"
+        shadcnComponent="input-otp"
         code={`<InputOTP maxLength={6}>
   <InputOTPGroup>
     <InputOTPSlot index={0} />
@@ -98,6 +100,7 @@ export const OtpPage = () => {
         title="Masked Input"
         description="Toggle password-style masking for sensitive codes."
         source="shadcn"
+        shadcnComponent="input-otp"
         code={`<InputOTP maxLength={4} type={masked ? "password" : "text"}>
   ...
 </InputOTP>`}
@@ -121,6 +124,7 @@ export const OtpPage = () => {
         title="Form Validation"
         description="React Hook Form integration with required PIN validation."
         source="shadcn"
+        shadcnComponent="form"
         code={`const form = useForm({ defaultValues: { pin: "" } });
 
 <FormField
@@ -183,6 +187,7 @@ export const OtpPage = () => {
         title="Disabled State"
         description="Non-interactive slots for pending verification flows."
         source="shadcn"
+        shadcnComponent="input-otp"
         code={`<InputOTP maxLength={6} disabled value="123456">
   ...
 </InputOTP>`}

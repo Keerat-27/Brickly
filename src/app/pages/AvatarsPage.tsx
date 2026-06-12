@@ -75,6 +75,7 @@ export const AvatarsPage = () => {
         title="Sizes"
         description="Five sizes to match different UI contexts."
         source="shadcn"
+        shadcnComponent="avatar"
         code={`import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
 <Avatar className="size-6">
@@ -106,6 +107,7 @@ export const AvatarsPage = () => {
         title="Fallback Types"
         description="Show initials or a default icon when no image is provided."
         source="shadcn"
+        shadcnComponent="avatar"
         code={`<Avatar>
   <AvatarFallback className="bg-muted">
     <User className="w-5 h-5 text-muted-foreground" />
@@ -151,6 +153,7 @@ export const AvatarsPage = () => {
         title="Avatar Group"
         description="Stack overlapping avatars to represent teams or collaborators."
         source="shadcn"
+        shadcnComponent="avatar"
         code={`<div className="flex -space-x-3">
   {users.slice(0, 4).map((user) => (
     <Avatar key={user.name} className="ring-2 ring-background">

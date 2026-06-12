@@ -10,6 +10,7 @@ Step-by-step guide for adding a new page to the Brickly catalog (e.g. Charts, Ca
 - [ ] Add overview card in `src/app/pages/OverviewPage.tsx`
 - [ ] Use `PageHeader` + one or more `ComponentSection` blocks
 - [ ] Set `source` on each section (`shadcn` / `composition` / `custom`)
+- [ ] Set `shadcnComponent` on shadcn sections for install hints (see `shadcn-registry.ts`)
 - [ ] Run `npm run typecheck && npm run build`
 - [ ] Update `README.md` component catalog table (optional but recommended)
 

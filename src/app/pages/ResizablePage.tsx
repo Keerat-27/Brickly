@@ -19,6 +19,7 @@ export const ResizablePage = () => {
         title="Horizontal Split"
         description="Two panels side by side with a draggable handle."
         source="shadcn"
+        shadcnComponent="resizable"
         code={`import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from "@/components/ui/resizable";
 
 <ResizablePanelGroup direction="horizontal" className="min-h-[200px] rounded-lg border">
@@ -50,6 +51,7 @@ export const ResizablePage = () => {
         title="Vertical Split"
         description="Stacked panels — useful for editor + preview layouts."
         source="shadcn"
+        shadcnComponent="resizable"
         code={`<ResizablePanelGroup direction="vertical" className="min-h-[280px] rounded-lg border">
   <ResizablePanel defaultSize={60}>Editor</ResizablePanel>
   <ResizableHandle />
@@ -75,6 +77,7 @@ export const ResizablePage = () => {
         title="Three-Panel Layout"
         description="Nested groups with min/max size constraints on the center panel."
         source="shadcn"
+        shadcnComponent="resizable"
         code={`<ResizablePanelGroup direction="horizontal">
   <ResizablePanel defaultSize={20} minSize={15}>Nav</ResizablePanel>
   <ResizableHandle />

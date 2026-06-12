@@ -116,6 +116,7 @@ export const SidebarPage = () => {
         title="Interactive Demo"
         description="Switch variant and collapsible mode, then use the trigger to collapse."
         source="shadcn"
+        shadcnComponent="sidebar"
         code={`import { SidebarProvider, Sidebar, SidebarTrigger, SidebarInset } from "@/components/ui/sidebar";
 
 <SidebarProvider>
@@ -214,6 +215,7 @@ export const SidebarPage = () => {
         title="Icon-Only Collapsed State"
         description="When collapsible is set to icon, labels hide and tooltips appear on hover."
         source="shadcn"
+        shadcnComponent="sidebar"
         code={`<Sidebar collapsible="icon">
   <SidebarMenuButton tooltip="Home">
     <Home />

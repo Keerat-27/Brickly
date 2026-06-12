@@ -135,6 +135,7 @@ export const CarouselPage = () => {
         title="Image Carousel"
         description="Full-width slides with previous/next controls and dot indicators."
         source="shadcn"
+        shadcnComponent="carousel"
         code={`import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "@/components/ui/carousel";
 
 <Carousel setApi={setApi}>
@@ -176,6 +177,7 @@ export const CarouselPage = () => {
         title="Card Carousel"
         description="Pricing or feature cards in a horizontal slider."
         source="shadcn"
+        shadcnComponent="carousel"
         code={`<Carousel opts={{ align: "start" }} className="w-full max-w-sm">
   <CarouselContent>
     {plans.map((plan) => (
@@ -212,6 +214,7 @@ export const CarouselPage = () => {
         title="Autoplay"
         description="Auto-advances every 3 seconds — pause with the toggle button."
         source="shadcn"
+        shadcnComponent="carousel"
         code={`useEffect(() => {
   if (!api || !playing) return;
   const id = setInterval(() => {

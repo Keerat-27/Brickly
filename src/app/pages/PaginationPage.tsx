@@ -236,6 +236,7 @@ export const PaginationPage = () => {
         title="Default"
         description="Composable pagination with Previous, Next, page links, and ellipsis."
         source="shadcn"
+        shadcnComponent="pagination"
         code={`import {
   Pagination, PaginationContent, PaginationItem,
   PaginationLink, PaginationPrevious, PaginationNext, PaginationEllipsis,
@@ -258,6 +259,7 @@ export const PaginationPage = () => {
         title="Full Controls"
         description="First, previous, next, and last buttons with a page indicator."
         source="shadcn"
+        shadcnComponent="pagination"
         code={`<Pagination>
   <PaginationContent>
     <PaginationItem>

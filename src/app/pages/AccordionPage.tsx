@@ -52,6 +52,7 @@ export const AccordionPage = () => {
         title="Default"
         description="Standard bordered accordion with chevron indicator."
         source="shadcn"
+        shadcnComponent="accordion"
         code={`import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
 
 <Accordion type="multiple" className="w-full">
@@ -77,6 +78,7 @@ export const AccordionPage = () => {
         title="Exclusive (One Open at a Time)"
         description="Only one item can be expanded at a time — ideal for FAQs."
         source="shadcn"
+        shadcnComponent="accordion"
         code={`<Accordion type="single" collapsible className="w-full">
   {items.map((item, i) => (
     <AccordionItem key={i} value={\`item-\${i}\`}>
@@ -100,6 +102,7 @@ export const AccordionPage = () => {
         title="Flush"
         description="Borderless style with bottom dividers — fits seamlessly in cards or panels."
         source="shadcn"
+        shadcnComponent="accordion"
         code={`<Accordion type="multiple" className="w-full divide-y divide-border">
   <AccordionItem value="item-1" className="border-none">
     <AccordionTrigger className="hover:no-underline hover:text-primary">
@@ -129,6 +132,7 @@ export const AccordionPage = () => {
         title="Collapsible"
         description="Lightweight single-section expand/collapse using the Collapsible primitive."
         source="shadcn"
+        shadcnComponent="collapsible"
         code={`import { Collapsible, CollapsibleTrigger, CollapsibleContent } from "@/components/ui/collapsible";
 
 <Collapsible>
@@ -156,6 +160,7 @@ export const AccordionPage = () => {
         title="Plus / Minus Icon"
         description="Collapsible items with + / − icons instead of chevrons."
         source="shadcn"
+        shadcnComponent="collapsible"
         code={`import { Collapsible, CollapsibleTrigger, CollapsibleContent } from "@/components/ui/collapsible";
 
 <Collapsible className="rounded-lg border overflow-hidden">

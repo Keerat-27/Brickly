@@ -1,5 +1,9 @@
 import { useState } from "react";
 import { CodeBlock } from "./CodeBlock";
+import {
+  getShadcnInstallCommand,
+  type ShadcnComponentName,
+} from "./shadcn-registry";
 import { Code2, Eye } from "lucide-react";
 
 type ComponentSource = "shadcn" | "custom" | "composition";
@@ -15,6 +19,10 @@ interface ComponentSectionProps {
   description?: string;
   code: string;
   source?: ComponentSource;
+  /** shadcn registry name — derives `npx shadcn@latest add …` when set */
+  shadcnComponent?: ShadcnComponentName;
+  /** Override the auto-generated shadcn install command */
+  installCommand?: string;
   accessibility?: string;
   children: React.ReactNode;
 }
@@ -24,11 +32,16 @@ export const ComponentSection = ({
   description,
   code,
   source,
+  shadcnComponent,
+  installCommand,
   accessibility,
   children,
 }: ComponentSectionProps) => {
   const [tab, setTab] = useState<"preview" | "code">("preview");
   const tabId = title.toLowerCase().replace(/\s+/g, "-");
+  const resolvedInstallCommand =
+    installCommand ??
+    (shadcnComponent ? getShadcnInstallCommand(shadcnComponent) : undefined);
 
   return (
     <div className="space-y-3">
@@ -111,7 +124,11 @@ export const ComponentSection = ({
             aria-labelledby={`${tabId}-code-tab`}
             className="bg-muted"
           >
-            <CodeBlock code={code} seamless />
+            <CodeBlock
+              code={code}
+              seamless
+              installCommand={resolvedInstallCommand}
+            />
           </div>
         )}
       </div>

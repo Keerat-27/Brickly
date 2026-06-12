@@ -35,6 +35,7 @@ export const CardsPage = () => {
         title="Basic Card"
         description="shadcn Card primitive with header, content, and footer slots."
         source="shadcn"
+        shadcnComponent="card"
         code={`import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
 
 <Card className="w-72">
@@ -72,6 +73,7 @@ export const CardsPage = () => {
         title="Stat Cards"
         description="Display key metrics with trend indicators."
         source="shadcn"
+        shadcnComponent="card"
         code={`import { Card, CardHeader, CardContent } from "@/components/ui/card";
 
 <Card className="w-52">
@@ -112,6 +114,7 @@ export const CardsPage = () => {
         title="Profile / User Card"
         description="Display user information in a structured card layout."
         source="shadcn"
+        shadcnComponent="card"
         code={`import { Card, CardHeader, CardContent, CardFooter } from "@/components/ui/card";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
@@ -165,6 +168,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
         title="Media Card (Aspect Ratio)"
         description="Lock image proportions with the AspectRatio primitive."
         source="shadcn"
+        shadcnComponent="aspect-ratio"
         code={`import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 
@@ -193,6 +197,7 @@ import { AspectRatio } from "@/components/ui/aspect-ratio";
         title="Horizontal Card"
         description="Side-by-side layout for articles and media content."
         source="shadcn"
+        shadcnComponent="card"
         code={`import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
@@ -233,6 +238,7 @@ import { AspectRatio } from "@/components/ui/aspect-ratio";
         title="Action Card"
         description="Cards with contextual actions and overflow menus."
         source="shadcn"
+        shadcnComponent="card"
         code={`import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardAction } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 

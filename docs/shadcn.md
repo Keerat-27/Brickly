@@ -116,6 +116,6 @@ When extending variants, follow existing `cva` patterns in `button.tsx` or `badg
 | Is it typography, spinners, or steppers? | Build from tokens + primitives, tag `composition` or `custom` |
 | Is it a token reference swatch? | Tag `custom` |
 
-## Install command hints (future)
+## Install command hints
 
-ROADMAP Phase 5 plans optional `installCommand` on `ComponentSection` (e.g. `npx shadcn@latest add button`). Not implemented yet — document manually in PR descriptions when adding primitives.
+`ComponentSection` accepts optional `shadcnComponent` and `installCommand` props. When set, the Code tab shows a copyable `npx shadcn@latest add …` row above the snippet. Registry names live in `shadcn-registry.ts`.

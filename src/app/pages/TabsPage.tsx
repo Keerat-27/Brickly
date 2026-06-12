@@ -18,6 +18,7 @@ export const TabsPage = () => {
         title="Pill Tabs (Default)"
         description="Rounded pill-style tabs in a contained background — the default shadcn style."
         source="shadcn"
+        shadcnComponent="tabs"
         code={`import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 
 <Tabs defaultValue="overview">
@@ -59,6 +60,7 @@ export const TabsPage = () => {
         title="With Icons"
         description="Tabs with leading icons for richer navigation."
         source="shadcn"
+        shadcnComponent="tabs"
         code={`<Tabs defaultValue="profile">
   <TabsList>
     <TabsTrigger value="profile"><User className="w-4 h-4" />Profile</TabsTrigger>
@@ -106,6 +108,7 @@ export const TabsPage = () => {
         title="Underline Style"
         description="Classic underline tabs — extended from the shadcn base using className overrides."
         source="shadcn"
+        shadcnComponent="tabs"
         code={`<Tabs defaultValue="tab1">
   <TabsList className="bg-transparent border-b rounded-none h-auto p-0 w-full justify-start gap-0">
     <TabsTrigger
@@ -143,6 +146,7 @@ export const TabsPage = () => {
         title="Vertical Tabs"
         description="Side navigation tabs using shadcn Tabs with vertical orientation."
         source="shadcn"
+        shadcnComponent="tabs"
         code={`<Tabs defaultValue="general" orientation="vertical" className="flex flex-row gap-4 w-full">
   <TabsList className="flex h-fit w-36 flex-col items-stretch bg-transparent p-0">
     <TabsTrigger value="general" className="justify-start">General</TabsTrigger>

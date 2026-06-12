@@ -300,9 +300,9 @@ Every `ComponentSection` already shows copyable code. The next step is making it
 
 ### Tasks
 
-- [ ] Add optional `installCommand` prop to `ComponentSection`
-- [ ] Map each UI primitive to its shadcn registry name
-- [ ] Document the copy workflow on the Overview page
+- [x] Add optional `installCommand` prop to `ComponentSection`
+- [x] Map each UI primitive to its shadcn registry name
+- [x] Document the copy workflow on the Overview page
 
 ---
 
@@ -365,7 +365,7 @@ Figma Make boilerplate removed from metadata, UI, and build config.
 | **Phase 2** ✅ | Restore primitives (§1), migrate custom demos (§2), Tokens page (§4) | Consistent shadcn usage across all pages |
 | **Phase 3** ✅ | New pages (§3), search improvements (§8) | Richer catalog and better DX |
 | **Phase 4** ✅ | Deploy (§6), tests (§7), a11y audit (§10) | Production-ready, maintainable site |
-| **Phase 5** | Copy/install snippets (§9) | Helps consumers use Brickly in real projects |
+| **Phase 5** ✅ | Copy/install snippets (§9) | Helps consumers use Brickly in real projects |
 
 ---
 

@@ -55,6 +55,7 @@ export const CommandPage = () => {
         title="Inline Command Menu"
         description="Embedded palette with grouped commands and keyboard shortcut hints."
         source="shadcn"
+        shadcnComponent="command"
         code={`import { Command, CommandInput, CommandList, CommandGroup, CommandItem, CommandShortcut } from "@/components/ui/command";
 
 <Command className="rounded-lg border shadow-md max-w-md">
@@ -112,6 +113,7 @@ export const CommandPage = () => {
         title="Command Dialog"
         description="Modal palette — open with the button below or ⌘⇧P in this demo."
         source="shadcn"
+        shadcnComponent="command"
         code={`import { CommandDialog, CommandInput, CommandList, CommandGroup, CommandItem } from "@/components/ui/command";
 
 <CommandDialog open={open} onOpenChange={setOpen}>
@@ -164,6 +166,7 @@ export const CommandPage = () => {
         title="Empty State"
         description="Shown when the filter matches no commands."
         source="shadcn"
+        shadcnComponent="command"
         code={`<CommandInput placeholder="Try typing xyz…" />
 <CommandList>
   <CommandEmpty>No results found.</CommandEmpty>
@@ -187,6 +190,7 @@ export const CommandPage = () => {
         title="Loading State"
         description="Placeholder while async commands are fetched."
         source="shadcn"
+        shadcnComponent="command"
         code={`{loading ? (
   <div className="flex items-center gap-2 p-6 text-sm text-muted-foreground">
     <Loader2 className="animate-spin" /> Loading commands…

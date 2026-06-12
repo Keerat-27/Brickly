@@ -89,6 +89,7 @@ export const ChartsPage = () => {
         title="Bar Chart"
         description="Grouped bars themed with --chart-1 and --chart-2."
         source="shadcn"
+        shadcnComponent="chart"
         code={`import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
 
@@ -117,6 +118,7 @@ import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
         title="Line Chart"
         description="Trend lines with tooltip and legend."
         source="shadcn"
+        shadcnComponent="chart"
         code={`import { Line, LineChart } from "recharts";
 
 <ChartContainer config={chartConfig} className="h-[250px] w-full">
@@ -158,6 +160,7 @@ import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
         title="Area Chart"
         description="Stacked areas for cumulative metrics."
         source="shadcn"
+        shadcnComponent="chart"
         code={`<AreaChart data={data}>
   <CartesianGrid vertical={false} />
   <XAxis dataKey="month" tickLine={false} axisLine={false} />
@@ -195,6 +198,7 @@ import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
         title="Pie Chart"
         description="Segment colors mapped to --chart-1 through --chart-5."
         source="shadcn"
+        shadcnComponent="chart"
         code={`<PieChart>
   <ChartTooltip content={<ChartTooltipContent hideLabel />} />
   <Pie data={pieData} dataKey="value" nameKey="name" innerRadius={60} strokeWidth={2} />
@@ -216,6 +220,7 @@ import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
         title="Live Data Toggle"
         description="Switch between static sample data and animated updates every 2 seconds."
         source="shadcn"
+        shadcnComponent="chart"
         code={`const [animated, setAnimated] = useState(false);
 
 useEffect(() => {
