@@ -1,19 +1,16 @@
 import { screen } from "@testing-library/react";
+import {
+  assertRoutesMatchNav,
+  getRouteExpectations,
+} from "@/app/route-expectations";
 import { renderWithRouter } from "./renderWithRouter";
 
-const routeExpectations = [
-  { path: "/", heading: "Brickly Component Library" },
-  { path: "/buttons", heading: "Buttons" },
-  { path: "/modals", heading: "Modals" },
-  { path: "/forms", heading: "Forms" },
-  { path: "/dropdowns", heading: "Dropdowns" },
-  { path: "/tokens", heading: "Design Tokens" },
-  { path: "/charts", heading: "Charts" },
-  { path: "/command", heading: "Command" },
-] as const;
-
 describe("routing", () => {
-  it.each(routeExpectations)(
+  it("keeps nav items and appRoutes in sync", () => {
+    expect(() => assertRoutesMatchNav()).not.toThrow();
+  });
+
+  it.each(getRouteExpectations())(
     "renders $heading at $path",
     async ({ path, heading }) => {
       renderWithRouter(path);
@@ -21,5 +18,6 @@ describe("routing", () => {
         await screen.findByRole("heading", { level: 1, name: heading }),
       ).toBeInTheDocument();
     },
+    15_000,
   );
 });

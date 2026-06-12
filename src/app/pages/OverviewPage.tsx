@@ -137,9 +137,16 @@ export const OverviewPage = () => {
         </p>
         <ol className="space-y-3 text-sm text-muted-foreground list-decimal list-inside">
           <li>
-            <span className="text-foreground">Copy the example</span> — click{" "}
-            <span className="font-medium text-foreground">Copy code</span> to grab the
-            snippet shown in the Code tab.
+            <span className="text-foreground">Copy the full example</span> — click{" "}
+            <span className="font-medium text-foreground">Copy full example</span>{" "}
+            in any section to grab the install command (when shown) plus the snippet
+            with your chosen import path style.
+          </li>
+          <li>
+            <span className="text-foreground">Copy the code snippet</span> — open the
+            Code tab and click{" "}
+            <span className="font-medium text-foreground">Copy example</span> for the
+            snippet only.
           </li>
           <li>
             <span className="text-foreground">Install the primitive</span> — shadcn demos

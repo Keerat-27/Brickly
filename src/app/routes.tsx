@@ -1,38 +1,43 @@
 import { createBrowserRouter } from "react-router";
 import { Layout } from "./components/layout/Layout";
-import { OverviewPage } from "./pages/OverviewPage";
-import { ButtonsPage } from "./pages/ButtonsPage";
-import { BadgesPage } from "./pages/BadgesPage";
-import { AlertsPage } from "./pages/AlertsPage";
-import { AvatarsPage } from "./pages/AvatarsPage";
-import { CardsPage } from "./pages/CardsPage";
-import { FormsPage } from "./pages/FormsPage";
-import { ProgressPage } from "./pages/ProgressPage";
-import { ModalsPage } from "./pages/ModalsPage";
-import { TabsPage } from "./pages/TabsPage";
-import { TablesPage } from "./pages/TablesPage";
-import { LoadingPage } from "./pages/LoadingPage";
-import { TypographyPage } from "./pages/TypographyPage";
-import { TooltipsPage } from "./pages/TooltipsPage";
-import { AccordionPage } from "./pages/AccordionPage";
-import { BreadcrumbsPage } from "./pages/BreadcrumbsPage";
-import { DropdownsPage } from "./pages/DropdownsPage";
-import { SlidersPage } from "./pages/SlidersPage";
-import { PaginationPage } from "./pages/PaginationPage";
-import { ToastsPage } from "./pages/ToastsPage";
-import { StepperPage } from "./pages/StepperPage";
-import { DatePickerPage } from "./pages/DatePickerPage";
-import { TokensPage } from "./pages/TokensPage";
-import { ChartsPage } from "./pages/ChartsPage";
-import { CommandPage } from "./pages/CommandPage";
-import { SidebarPage } from "./pages/SidebarPage";
-import { OtpPage } from "./pages/OtpPage";
-import { ResizablePage } from "./pages/ResizablePage";
-import { CarouselPage } from "./pages/CarouselPage";
-import { MenubarPage } from "./pages/MenubarPage";
-import { NavigationMenuPage } from "./pages/NavigationMenuPage";
-import { ScrollAreaPage } from "./pages/ScrollAreaPage";
-import { SeparatorPage } from "./pages/SeparatorPage";
+import { lazyPage } from "./lazy-page";
+
+const OverviewPage = lazyPage(() => import("./pages/OverviewPage"), "OverviewPage");
+const ButtonsPage = lazyPage(() => import("./pages/ButtonsPage"), "ButtonsPage");
+const BadgesPage = lazyPage(() => import("./pages/BadgesPage"), "BadgesPage");
+const AlertsPage = lazyPage(() => import("./pages/AlertsPage"), "AlertsPage");
+const AvatarsPage = lazyPage(() => import("./pages/AvatarsPage"), "AvatarsPage");
+const CardsPage = lazyPage(() => import("./pages/CardsPage"), "CardsPage");
+const FormsPage = lazyPage(() => import("./pages/FormsPage"), "FormsPage");
+const ProgressPage = lazyPage(() => import("./pages/ProgressPage"), "ProgressPage");
+const ModalsPage = lazyPage(() => import("./pages/ModalsPage"), "ModalsPage");
+const TabsPage = lazyPage(() => import("./pages/TabsPage"), "TabsPage");
+const TablesPage = lazyPage(() => import("./pages/TablesPage"), "TablesPage");
+const LoadingPage = lazyPage(() => import("./pages/LoadingPage"), "LoadingPage");
+const TypographyPage = lazyPage(() => import("./pages/TypographyPage"), "TypographyPage");
+const TooltipsPage = lazyPage(() => import("./pages/TooltipsPage"), "TooltipsPage");
+const AccordionPage = lazyPage(() => import("./pages/AccordionPage"), "AccordionPage");
+const BreadcrumbsPage = lazyPage(() => import("./pages/BreadcrumbsPage"), "BreadcrumbsPage");
+const DropdownsPage = lazyPage(() => import("./pages/DropdownsPage"), "DropdownsPage");
+const SlidersPage = lazyPage(() => import("./pages/SlidersPage"), "SlidersPage");
+const PaginationPage = lazyPage(() => import("./pages/PaginationPage"), "PaginationPage");
+const ToastsPage = lazyPage(() => import("./pages/ToastsPage"), "ToastsPage");
+const StepperPage = lazyPage(() => import("./pages/StepperPage"), "StepperPage");
+const DatePickerPage = lazyPage(() => import("./pages/DatePickerPage"), "DatePickerPage");
+const TokensPage = lazyPage(() => import("./pages/TokensPage"), "TokensPage");
+const ChartsPage = lazyPage(() => import("./pages/ChartsPage"), "ChartsPage");
+const CommandPage = lazyPage(() => import("./pages/CommandPage"), "CommandPage");
+const SidebarPage = lazyPage(() => import("./pages/SidebarPage"), "SidebarPage");
+const OtpPage = lazyPage(() => import("./pages/OtpPage"), "OtpPage");
+const ResizablePage = lazyPage(() => import("./pages/ResizablePage"), "ResizablePage");
+const CarouselPage = lazyPage(() => import("./pages/CarouselPage"), "CarouselPage");
+const MenubarPage = lazyPage(() => import("./pages/MenubarPage"), "MenubarPage");
+const NavigationMenuPage = lazyPage(
+  () => import("./pages/NavigationMenuPage"),
+  "NavigationMenuPage",
+);
+const ScrollAreaPage = lazyPage(() => import("./pages/ScrollAreaPage"), "ScrollAreaPage");
+const SeparatorPage = lazyPage(() => import("./pages/SeparatorPage"), "SeparatorPage");
 
 export const appRoutes = [
   {

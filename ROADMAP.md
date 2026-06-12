@@ -388,20 +388,70 @@ Figma Make boilerplate removed from metadata, UI, and build config.
 | **Phase 4** ✅ | Deploy (§6), tests (§7), a11y audit (§10) | Production-ready, maintainable site |
 | **Phase 5** ✅ | Copy/install snippets (§9) | Helps consumers use Brickly in real projects |
 | **Phase 6** ✅ | Primitive catalog pages (§1), ESLint a11y (§10), snippet path toggle (§9) | Full shadcn coverage, CI accessibility checks |
+| **Phase 7** ✅ | Test coverage (§12), snippet export (§13), performance (§14) | Hardened catalog, faster loads, better copy DX |
+| **Phase 8** | App shell sidebar (§15), StackBlitz (§16) | Production layout parity, try-in-browser demos |
 
 ---
 
-## Future work
+## 12. Expand route smoke tests
 
-Ideas not yet scheduled — pick any of these for the next PR:
+`src/test/routes.test.tsx` covers 8 routes today; the catalog has 33 page routes in `routes.tsx`.
 
-| Area | Idea |
-|------|------|
-| §9 | Full-section export — copy an entire `ComponentSection` including imports as one snippet |
-| §9 | "Open in StackBlitz" — prefilled sandbox link per demo (larger effort) |
-| Layout | Adopt shadcn `sidebar.tsx` in the app shell instead of custom `layout/Sidebar.tsx` |
-| Performance | Route-level code splitting for chart/carousel-heavy pages |
-| DX | Expand route smoke tests to cover all catalog pages |
+### Tasks
+
+- [x] Derive `routeExpectations` from `navItems` or `appRoutes` so new pages are picked up automatically
+- [x] Add a test that every child route in `appRoutes` renders its `PageHeader` h1 without crashing
+- [x] Optionally lazy-load heavy page modules in tests to keep CI fast
+
+---
+
+## 13. Full-section snippet export
+
+§9 added per-snippet copy and import-path toggle. Next: copy an entire demo section in one action.
+
+### Tasks
+
+- [x] Add "Copy full example" control to `ComponentSection` (imports + preview markup + install command)
+- [x] Respect the Code tab import-path toggle (`@/` vs relative) when building the export
+- [x] Document the workflow on the Overview page next to the existing copy/install notes
+
+---
+
+## 14. Route-level code splitting
+
+Charts, carousel, and command demos pull in Recharts, Embla, and `cmdk` — worth splitting so the initial bundle stays lean.
+
+### Tasks
+
+- [x] Convert page imports in `routes.tsx` to `React.lazy()` + `Suspense` fallbacks (skeleton or spinner)
+- [x] Verify `npm run build` chunk output and that GitHub Pages deploy still works with the base path
+- [x] Smoke-test lazy routes in `routes.test.tsx` (or a dedicated lazy-load test)
+
+---
+
+## 15. Adopt shadcn sidebar in the app shell
+
+`/sidebar` documents the shadcn `sidebar.tsx` primitive; the doc site still uses custom `layout/Sidebar.tsx`.
+
+### Tasks
+
+- [ ] Prototype replacing `layout/Sidebar.tsx` with shadcn `Sidebar` + `SidebarProvider`
+- [ ] Preserve current nav groups, icons, active states, and mobile collapse behavior
+- [ ] Update Layout tests and any a11y notes after the swap
+
+---
+
+## 16. Open in StackBlitz
+
+Optional try-in-browser links for individual demos (larger effort than §13).
+
+### Tasks
+
+- [ ] Spike a minimal StackBlitz template with Brickly theme + one primitive
+- [ ] Add optional `stackBlitzUrl` (or generator) prop on `ComponentSection`
+- [ ] Start with 2–3 high-traffic pages (Buttons, Forms, Modals) before rolling out catalog-wide
+
+---
 
 ## Contributing
 

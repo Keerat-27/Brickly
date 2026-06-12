@@ -10,6 +10,8 @@ interface CodeBlockProps {
   language?: string;
   seamless?: boolean;
   installCommand?: string;
+  importPathStyle?: ImportPathStyle;
+  onImportPathStyleChange?: (style: ImportPathStyle) => void;
 }
 
 export const CodeBlock = ({
@@ -17,11 +19,18 @@ export const CodeBlock = ({
   language = "tsx",
   seamless = false,
   installCommand,
+  importPathStyle: controlledImportPathStyle,
+  onImportPathStyleChange,
 }: CodeBlockProps) => {
   const [copied, setCopied] = useState(false);
   const [installCopied, setInstallCopied] = useState(false);
-  const [importPathStyle, setImportPathStyle] =
+  const [internalImportPathStyle, setInternalImportPathStyle] =
     useState<ImportPathStyle>("alias");
+
+  const importPathStyle = controlledImportPathStyle ?? internalImportPathStyle;
+  const setImportPathStyle =
+    onImportPathStyleChange ?? setInternalImportPathStyle;
+  const isImportPathControlled = controlledImportPathStyle !== undefined;
 
   const displayCode = transformImportPaths(code, importPathStyle);
   const hasImportPaths =
@@ -88,7 +97,7 @@ export const CodeBlock = ({
             <span className="rounded-md bg-background/80 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-muted-foreground">
               {language}
             </span>
-            {hasImportPaths && (
+            {hasImportPaths && !isImportPathControlled && (
               <div
                 role="group"
                 aria-label="Import path style"

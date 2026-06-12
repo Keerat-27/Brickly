@@ -1,10 +1,14 @@
 import { useState } from "react";
 import { CodeBlock } from "./CodeBlock";
+import { buildFullExample } from "./buildFullExample";
 import {
   getShadcnInstallCommand,
   type ShadcnComponentName,
 } from "./shadcn-registry";
-import { Code2, Eye } from "lucide-react";
+import {
+  type ImportPathStyle,
+} from "./transformImportPaths";
+import { Check, Code2, Copy, Eye } from "lucide-react";
 
 type ComponentSource = "shadcn" | "custom" | "composition";
 
@@ -38,10 +42,29 @@ export const ComponentSection = ({
   children,
 }: ComponentSectionProps) => {
   const [tab, setTab] = useState<"preview" | "code">("preview");
+  const [importPathStyle, setImportPathStyle] =
+    useState<ImportPathStyle>("alias");
+  const [fullExampleCopied, setFullExampleCopied] = useState(false);
   const tabId = title.toLowerCase().replace(/\s+/g, "-");
   const resolvedInstallCommand =
     installCommand ??
     (shadcnComponent ? getShadcnInstallCommand(shadcnComponent) : undefined);
+
+  const handleCopyFullExample = () => {
+    const text = buildFullExample(
+      code,
+      importPathStyle,
+      resolvedInstallCommand,
+    );
+    navigator.clipboard.writeText(text);
+    setFullExampleCopied(true);
+    setTimeout(() => setFullExampleCopied(false), 2000);
+  };
+
+  const hasImportPaths =
+    code.includes("@/components/ui/") ||
+    code.includes("@/app/components/ui/") ||
+    code.includes("../components/ui/");
 
   return (
     <div className="space-y-3">
@@ -105,6 +128,58 @@ export const ComponentSection = ({
               Code
             </button>
           </div>
+
+          <div className="ml-auto flex flex-wrap items-center gap-2">
+            {hasImportPaths && (
+              <div
+                role="group"
+                aria-label="Import path style"
+                className="flex items-center rounded-md bg-muted p-0.5"
+              >
+                <button
+                  type="button"
+                  aria-pressed={importPathStyle === "alias"}
+                  onClick={() => setImportPathStyle("alias")}
+                  className={`rounded px-2 py-0.5 text-[10px] font-medium transition-colors ${
+                    importPathStyle === "alias"
+                      ? "bg-background text-foreground shadow-sm"
+                      : "text-muted-foreground hover:text-foreground"
+                  }`}
+                >
+                  @/ alias
+                </button>
+                <button
+                  type="button"
+                  aria-pressed={importPathStyle === "relative"}
+                  onClick={() => setImportPathStyle("relative")}
+                  className={`rounded px-2 py-0.5 text-[10px] font-medium transition-colors ${
+                    importPathStyle === "relative"
+                      ? "bg-background text-foreground shadow-sm"
+                      : "text-muted-foreground hover:text-foreground"
+                  }`}
+                >
+                  Relative
+                </button>
+              </div>
+            )}
+            <button
+              type="button"
+              onClick={handleCopyFullExample}
+              className="flex items-center gap-1.5 rounded-md px-2.5 py-1 text-xs text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+            >
+              {fullExampleCopied ? (
+                <>
+                  <Check className="h-3.5 w-3.5 text-green-500" />
+                  <span className="text-green-500">Copied</span>
+                </>
+              ) : (
+                <>
+                  <Copy className="h-3.5 w-3.5" />
+                  <span>Copy full example</span>
+                </>
+              )}
+            </button>
+          </div>
         </div>
 
         {/* Content */}
@@ -128,6 +203,8 @@ export const ComponentSection = ({
               code={code}
               seamless
               installCommand={resolvedInstallCommand}
+              importPathStyle={importPathStyle}
+              onImportPathStyleChange={setImportPathStyle}
             />
           </div>
         )}
