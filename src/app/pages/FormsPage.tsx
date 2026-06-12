@@ -38,6 +38,7 @@ const PasswordInput = ({ label, placeholder }: { label?: string; placeholder?: s
           type="button"
           onClick={() => setShow(!show)}
           className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+          aria-label={show ? "Hide password" : "Show password"}
         >
           {show ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
         </button>
@@ -144,10 +145,19 @@ const FileUpload = () => {
   return (
     <div className="w-full max-w-sm space-y-2">
       <div
+        role="button"
+        tabIndex={0}
         onClick={() => inputRef.current?.click()}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            inputRef.current?.click();
+          }
+        }}
         onDragOver={(e) => { e.preventDefault(); setDragging(true); }}
         onDragLeave={() => setDragging(false)}
         onDrop={(e) => { e.preventDefault(); setDragging(false); addFiles(e.dataTransfer.files); }}
+        aria-label="Upload files by clicking or dragging and dropping"
         className={`flex flex-col items-center justify-center gap-2 w-full rounded-xl border-2 border-dashed px-6 py-8 cursor-pointer transition-colors text-center
           ${dragging ? "border-primary bg-primary/5" : "border-border hover:border-primary/50 hover:bg-accent/40"}`}
       >
@@ -163,6 +173,8 @@ const FileUpload = () => {
           type="file"
           multiple
           className="hidden"
+          aria-hidden="true"
+          tabIndex={-1}
           onChange={(e) => addFiles(e.target.files)}
         />
       </div>
@@ -179,8 +191,10 @@ const FileUpload = () => {
                 {(file.size / 1024).toFixed(0)} KB
               </span>
               <button
+                type="button"
                 onClick={(e) => { e.stopPropagation(); removeFile(i); }}
                 className="shrink-0 text-muted-foreground hover:text-foreground transition-colors"
+                aria-label={`Remove ${file.name}`}
               >
                 <X className="w-3.5 h-3.5" />
               </button>
@@ -204,6 +218,7 @@ export const FormsPage = () => {
       <ComponentSection
         title="Text Inputs"
         description="Standard text input in default, with hint, and error states."
+        accessibility="Pair every input with a Label (or aria-label). Use aria-invalid on fields with validation errors."
         code={`import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
@@ -391,6 +406,7 @@ import { Label } from "@/components/ui/label";
       <ComponentSection
         title="React Hook Form"
         description="Form primitive with validation via react-hook-form."
+        accessibility="FormMessage links errors to fields automatically. Submit with a button type='submit' inside the form element."
         code={`import { useForm } from "react-hook-form";
 import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
 
@@ -417,6 +433,7 @@ const form = useForm({ defaultValues: { email: "" } });
       <ComponentSection
         title="File Upload"
         description="Drag-and-drop or click-to-browse file input with file list preview."
+        accessibility="The drop zone is keyboard-activatable (Enter/Space). Icon-only remove buttons include aria-label with the file name."
         code={`<div
   onClick={() => inputRef.current?.click()}
   onDragOver={(e) => { e.preventDefault(); setDragging(true); }}

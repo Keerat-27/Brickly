@@ -54,6 +54,7 @@ export const ModalsPage = () => {
       <ComponentSection
         title="Basic Modal"
         description="A simple dialog with title, content, and action buttons."
+        accessibility="Radix Dialog traps focus and closes on Escape. Always include DialogTitle and DialogDescription for screen readers."
         code={`import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
 
 <Dialog>
@@ -98,6 +99,7 @@ export const ModalsPage = () => {
       <ComponentSection
         title="Form Modal"
         description="Modal containing a form for data collection."
+        accessibility="Associate inputs with Label htmlFor/id pairs. Keep the primary action as a submit button when the modal contains a form."
         code={`<Dialog>
   <DialogTrigger asChild>
     <Button variant="outline">Open Form Modal</Button>
@@ -248,6 +250,7 @@ export const ModalsPage = () => {
       <ComponentSection
         title="Alert Dialog"
         description="Destructive confirmation that requires explicit user action."
+        accessibility="Use AlertDialog for irreversible actions — it blocks dismissal by clicking outside and keeps focus on explicit Cancel/Continue choices."
         code={`import { AlertDialog, AlertDialogTrigger, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription, AlertDialogFooter, AlertDialogCancel, AlertDialogAction } from "@/components/ui/alert-dialog";
 
 <AlertDialog>

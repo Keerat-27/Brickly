@@ -30,7 +30,7 @@ import { OtpPage } from "./pages/OtpPage";
 import { ResizablePage } from "./pages/ResizablePage";
 import { CarouselPage } from "./pages/CarouselPage";
 
-export const router = createBrowserRouter([
+export const appRoutes = [
   {
     path: "/",
     Component: Layout,
@@ -66,4 +66,8 @@ export const router = createBrowserRouter([
       { path: "carousel", Component: CarouselPage },
     ],
   },
-]);
+];
+
+export const router = createBrowserRouter(appRoutes, {
+  basename: import.meta.env.BASE_URL.replace(/\/$/, "") || undefined,
+});

@@ -134,8 +134,11 @@ export const Header = ({ onMenuClick, darkMode, onDarkModeToggle }: HeaderProps)
     <header className="sticky top-0 z-10 flex items-center justify-between px-4 md:px-6 h-14 border-b border-border bg-background/95 backdrop-blur-sm">
       <div className="flex items-center gap-3">
         <button
+          type="button"
           onClick={onMenuClick}
           className="lg:hidden p-2 rounded-md hover:bg-accent text-muted-foreground"
+          aria-label="Open navigation menu"
+          aria-expanded={false}
         >
           <Menu className="w-5 h-5" />
         </button>

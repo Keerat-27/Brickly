@@ -229,11 +229,11 @@ Brickly is currently a local-only Vite app. Publishing it makes the component re
 
 ### Deployment checklist
 
-- [ ] Add `preview` script: `vite preview` for local production testing
-- [ ] Configure base path if deploying to a subpath (e.g. `/Brickly/` on GitHub Pages)
-- [ ] Set up CI to run `npm run build` on push to `main`
-- [ ] Add deploy badge and live URL to `README.md`
-- [ ] Ensure `dist/` stays gitignored; build artifacts are generated in CI only
+- [x] Add `preview` script: `vite preview` for local production testing
+- [x] Configure base path if deploying to a subpath (e.g. `/Brickly/` on GitHub Pages)
+- [x] Set up CI to run `npm run build` on push to `main`
+- [x] Add deploy badge and live URL to `README.md`
+- [x] Ensure `dist/` stays gitignored; build artifacts are generated in CI only
 
 ---
 
@@ -258,10 +258,10 @@ There are no tests today. A lightweight suite would catch regressions as pages a
 
 ### Tasks
 
-- [ ] Install Vitest + RTL and add `test` script to `package.json`
-- [ ] Add `vitest.config.ts` with `@/` path alias matching Vite
-- [ ] Write smoke tests for 3–5 critical pages
-- [ ] Optionally add GitHub Actions workflow to run tests on PRs
+- [x] Install Vitest + RTL and add `test` script to `package.json`
+- [x] Add `vitest.config.ts` with `@/` path alias matching Vite
+- [x] Write smoke tests for 3–5 critical pages
+- [x] Optionally add GitHub Actions workflow to run tests on PRs
 
 ---
 
@@ -323,9 +323,9 @@ Component libraries should model accessible patterns, not just visual ones.
 
 ### Tasks
 
-- [ ] Run [axe DevTools](https://www.deque.com/axe/devtools/) or Lighthouse accessibility audit on each page
-- [ ] Fix issues found in Modals, Forms, and Dropdowns first (highest interaction complexity)
-- [ ] Add an **Accessibility** section to each `ComponentSection` where relevant (e.g. "Use `aria-expanded` on accordion triggers")
+- [x] Run [axe DevTools](https://www.deque.com/axe/devtools/) or Lighthouse accessibility audit on each page
+- [x] Fix issues found in Modals, Forms, and Dropdowns first (highest interaction complexity)
+- [x] Add an **Accessibility** section to each `ComponentSection` where relevant (e.g. "Use `aria-expanded` on accordion triggers")
 - [ ] Optionally add `eslint-plugin-jsx-a11y` to catch issues in CI
 
 ---
@@ -364,7 +364,7 @@ Figma Make boilerplate removed from metadata, UI, and build config.
 | **Phase 1** ✅ | Branding polish (§11), dependency trim (§5), README sync | Cleaner repo, less confusion |
 | **Phase 2** ✅ | Restore primitives (§1), migrate custom demos (§2), Tokens page (§4) | Consistent shadcn usage across all pages |
 | **Phase 3** ✅ | New pages (§3), search improvements (§8) | Richer catalog and better DX |
-| **Phase 4** | Deploy (§6), tests (§7), a11y audit (§10) | Production-ready, maintainable site |
+| **Phase 4** ✅ | Deploy (§6), tests (§7), a11y audit (§10) | Production-ready, maintainable site |
 | **Phase 5** | Copy/install snippets (§9) | Helps consumers use Brickly in real projects |
 
 ---

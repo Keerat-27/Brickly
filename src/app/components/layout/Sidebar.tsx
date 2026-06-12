@@ -30,15 +30,17 @@ export const Sidebar = ({ open, onClose }: SidebarProps) => {
           </div>
         </div>
         <button
+          type="button"
           onClick={onClose}
           className="lg:hidden p-1 rounded-md hover:bg-accent text-muted-foreground"
+          aria-label="Close navigation menu"
         >
           <X className="w-4 h-4" />
         </button>
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 overflow-y-auto px-3 py-4 space-y-6">
+      <nav className="flex-1 overflow-y-auto px-3 py-4 space-y-6" aria-label="Component navigation">
         {navItems.map((group) => (
           <div key={group.label}>
             <p className="px-2 mb-2 text-xs font-semibold uppercase tracking-widest text-muted-foreground">

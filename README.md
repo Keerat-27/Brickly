@@ -1,5 +1,8 @@
 # Brickly
 
+[![CI](https://github.com/Keerat-27/Brickly/actions/workflows/ci.yml/badge.svg)](https://github.com/Keerat-27/Brickly/actions/workflows/ci.yml)
+[![Live Demo](https://img.shields.io/badge/demo-GitHub%20Pages-blue)](https://keerat-27.github.io/Brickly/)
+
 A browsable React component library and design-system reference built on [shadcn/ui](https://ui.shadcn.com/) patterns. Each page documents variants with live previews and copyable code snippets.
 
 ## Features
@@ -40,13 +43,22 @@ npm run dev
 
 Open [http://localhost:5173](http://localhost:5173) in your browser.
 
+**Live site:** [https://keerat-27.github.io/Brickly/](https://keerat-27.github.io/Brickly/) (deployed from `main` via GitHub Pages)
+
 ### Build for production
 
 ```bash
 npm run build
+npm run preview
 ```
 
-Output is written to `dist/`. Preview the production build with any static file server pointed at that folder.
+Output is written to `dist/`. Use `npm run preview` to serve the production bundle locally before deploying.
+
+For GitHub Pages (subpath `/Brickly/`), build with:
+
+```bash
+GITHUB_PAGES=true npm run build
+```
 
 ## Scripts
 
@@ -54,12 +66,16 @@ Output is written to `dist/`. Preview the production build with any static file 
 |---------|-------------|
 | `npm run dev` | Start the Vite dev server with HMR |
 | `npm run build` | Bundle for production |
+| `npm run preview` | Serve the production build locally |
+| `npm run test` | Run Vitest smoke tests once |
+| `npm run test:watch` | Run Vitest in watch mode |
 | `npm run typecheck` | Run TypeScript without emitting files |
 
 ## Project structure
 
 ```
 Brickly/
+├── .github/workflows/        # CI and GitHub Pages deploy
 ├── docs/                       # Developer documentation
 ├── public/                   # Static assets (favicon, OG image)
 ├── src/
@@ -71,6 +87,7 @@ Brickly/
 │   │   ├── App.tsx
 │   │   └── routes.tsx
 │   ├── styles/               # Global CSS, theme tokens, Tailwind entry
+│   ├── test/                 # Vitest setup and smoke tests
 │   └── main.tsx
 ├── ATTRIBUTIONS.md           # Third-party licenses
 └── ROADMAP.md                # Planned improvements and priorities

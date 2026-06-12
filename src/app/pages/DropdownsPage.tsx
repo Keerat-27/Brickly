@@ -74,6 +74,7 @@ export const DropdownsPage = () => {
       <ComponentSection
         title="Basic Menu"
         description="Simple action menu with icons and keyboard shortcuts."
+        accessibility="DropdownMenuTrigger opens the menu with Enter/Space/Arrow keys. Menu items are reachable via arrow keys; Escape closes the menu."
         code={`import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuShortcut } from "@/components/ui/dropdown-menu";
 
 <DropdownMenu>
@@ -160,9 +161,10 @@ export const DropdownsPage = () => {
       <ComponentSection
         title="Icon Button Trigger"
         description="Compact three-dot menu for table rows and list items."
+        accessibility="Icon-only triggers need aria-label describing the menu purpose, e.g. 'Open row actions menu'."
         code={`<DropdownMenu>
   <DropdownMenuTrigger asChild>
-    <Button variant="outline" size="icon">
+    <Button variant="outline" size="icon" aria-label="Open row actions menu">
       <MoreHorizontal className="w-4 h-4 text-muted-foreground" />
     </Button>
   </DropdownMenuTrigger>
@@ -176,7 +178,7 @@ export const DropdownsPage = () => {
       >
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" size="icon">
+            <Button variant="outline" size="icon" aria-label="Open row actions menu">
               <MoreHorizontal className="w-4 h-4 text-muted-foreground" />
             </Button>
           </DropdownMenuTrigger>
@@ -192,6 +194,7 @@ export const DropdownsPage = () => {
       <ComponentSection
         title="Context Menu"
         description="Right-click to reveal a contextual menu using the shadcn ContextMenu primitive."
+        accessibility="Context menus supplement — not replace — visible actions. The trigger should describe the interactive region for keyboard and touch users."
         code={`import { ContextMenu, ContextMenuTrigger, ContextMenuContent, ContextMenuItem, ContextMenuSeparator } from "@/components/ui/context-menu";
 
 <ContextMenu>
