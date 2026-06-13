@@ -2,7 +2,7 @@
  * Maps Brickly UI files to shadcn/ui registry names for CLI install hints.
  * @see https://ui.shadcn.com/docs/components
  */
-export const SHADCN_REGISTRY = {
+const SHADCN_REGISTRY = {
   accordion: "accordion",
   alert: "alert",
   "alert-dialog": "alert-dialog",

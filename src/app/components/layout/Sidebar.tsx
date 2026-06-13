@@ -1,5 +1,6 @@
 import { NavLink } from "react-router";
 import { X, Sparkles } from "lucide-react";
+import { ScrollArea } from "../ui/scroll-area";
 import { navItems } from "./nav-config";
 
 interface SidebarProps {
@@ -40,35 +41,39 @@ export const Sidebar = ({ open, onClose }: SidebarProps) => {
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 overflow-y-auto px-3 py-4 space-y-6" aria-label="Component navigation">
-        {navItems.map((group) => (
-          <div key={group.label}>
-            <p className="px-2 mb-2 text-xs font-semibold uppercase tracking-widest text-muted-foreground">
-              {group.label}
-            </p>
-            <ul className="space-y-0.5">
-              {group.items.map((item) => (
-                <li key={item.to}>
-                  <NavLink
-                    to={item.to}
-                    end={item.end}
-                    onClick={onClose}
-                    className={({ isActive }) =>
-                      `flex items-center gap-3 px-2 py-2 rounded-md text-sm transition-colors ${
-                        isActive
-                          ? "bg-primary text-primary-foreground"
-                          : "text-muted-foreground hover:bg-accent hover:text-foreground"
-                      }`
-                    }
-                  >
-                    <item.icon className="w-4 h-4 shrink-0" />
-                    {item.label}
-                  </NavLink>
-                </li>
-              ))}
-            </ul>
+      <nav className="flex-1 min-h-0" aria-label="Component navigation">
+        <ScrollArea className="h-full" type="always">
+          <div className="px-3 py-4 space-y-6">
+            {navItems.map((group) => (
+              <div key={group.label}>
+                <p className="px-2 mb-2 text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+                  {group.label}
+                </p>
+                <ul className="space-y-0.5">
+                  {group.items.map((item) => (
+                    <li key={item.to}>
+                      <NavLink
+                        to={item.to}
+                        end={item.end}
+                        onClick={onClose}
+                        className={({ isActive }) =>
+                          `flex items-center gap-3 px-2 py-2 rounded-md text-sm transition-colors ${
+                            isActive
+                              ? "bg-primary text-primary-foreground"
+                              : "text-muted-foreground hover:bg-accent hover:text-foreground"
+                          }`
+                        }
+                      >
+                        <item.icon className="w-4 h-4 shrink-0" />
+                        {item.label}
+                      </NavLink>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
-        ))}
+        </ScrollArea>
       </nav>
 
       {/* Footer */}

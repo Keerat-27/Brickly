@@ -17,7 +17,7 @@ export const getRouteExpectations = (): RouteExpectation[] =>
     })),
   );
 
-export const getAppChildRoutePaths = (): string[] => {
+const getAppChildRoutePaths = (): string[] => {
   const layoutRoute = appRoutes[0];
   if (!layoutRoute?.children) return [];
 

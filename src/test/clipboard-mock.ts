@@ -1,6 +1,6 @@
 import { vi } from "vitest";
 
-export const clipboardWriteTextMock = vi
+const clipboardWriteTextMock = vi
   .fn()
   .mockResolvedValue(undefined);
 

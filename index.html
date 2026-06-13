@@ -23,6 +23,13 @@
       content="Browsable React component library and design-system reference built on shadcn/ui patterns."
     />
     <style>html, body { height: 100%; margin: 0; } #root { height: 100%; }</style>
+    <script>
+      try {
+        if (localStorage.getItem("brickly-theme") === "dark") {
+          document.documentElement.classList.add("dark");
+        }
+      } catch {}
+    </script>
   </head>
   <body>
     <div id="root"></div>

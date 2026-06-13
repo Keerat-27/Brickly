@@ -35,7 +35,7 @@ import {
   SeparatorHorizontal,
 } from "lucide-react";
 
-export interface NavItem {
+interface NavItem {
   to: string;
   label: string;
   icon: LucideIcon;

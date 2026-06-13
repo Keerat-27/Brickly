@@ -1,8 +1,10 @@
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useState } from "react";
 import { Outlet } from "react-router";
 import { Sidebar } from "./Sidebar";
 import { Header } from "./Header";
 import { Skeleton } from "../ui/skeleton";
+import { ScrollArea } from "../ui/scroll-area";
+import { useTheme } from "./useTheme";
 
 const PageFallback = () => (
   <div className="space-y-4" aria-busy="true" aria-label="Loading page">
@@ -14,11 +16,7 @@ const PageFallback = () => (
 
 export const Layout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [darkMode, setDarkMode] = useState(false);
-
-  useEffect(() => {
-    document.documentElement.classList.toggle("dark", darkMode);
-  }, [darkMode]);
+  const { darkMode, toggleDarkMode } = useTheme();
 
   return (
     <div className="flex h-screen bg-background text-foreground overflow-hidden">
@@ -42,14 +40,16 @@ export const Layout = () => {
           <Header
             onMenuClick={() => setSidebarOpen(true)}
             darkMode={darkMode}
-            onDarkModeToggle={() => setDarkMode(!darkMode)}
+            onDarkModeToggle={toggleDarkMode}
           />
-          <main className="flex-1 overflow-y-auto">
-            <div className="max-w-5xl mx-auto px-6 py-10">
-              <Suspense fallback={<PageFallback />}>
-                <Outlet />
-              </Suspense>
-            </div>
+          <main className="flex-1 min-h-0">
+            <ScrollArea className="h-full" type="always">
+              <div className="max-w-5xl mx-auto px-6 py-10">
+                <Suspense fallback={<PageFallback />}>
+                  <Outlet />
+                </Suspense>
+              </div>
+            </ScrollArea>
           </main>
         </div>
       </div>
