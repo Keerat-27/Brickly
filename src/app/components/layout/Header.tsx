@@ -26,11 +26,16 @@ interface HeaderProps {
   onDarkModeToggle: () => void;
 }
 
+interface ComponentSearchProps {
+  darkMode: boolean;
+  onDarkModeToggle: () => void;
+}
+
 const flatNavItems = navItems.flatMap((group) =>
   group.items.map((item) => ({ ...item, group: group.label })),
 );
 
-const ComponentSearch = () => {
+const ComponentSearch = ({ darkMode, onDarkModeToggle }: ComponentSearchProps) => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const { recent, recordVisit } = useRecentNavItems();
@@ -83,6 +88,28 @@ const ComponentSearch = () => {
         <CommandInput placeholder="Search by name or route (e.g. /charts)…" />
         <CommandList>
           <CommandEmpty>No components found.</CommandEmpty>
+          <CommandGroup heading="Theme">
+            <CommandItem
+              value={
+                darkMode
+                  ? "switch to light mode theme appearance"
+                  : "switch to dark mode theme appearance"
+              }
+              keywords={["theme", "dark", "light", "appearance", "mode", "toggle"]}
+              onSelect={() => {
+                onDarkModeToggle();
+                setOpen(false);
+              }}
+            >
+              {darkMode ? (
+                <Sun className="w-4 h-4 text-muted-foreground" />
+              ) : (
+                <Moon className="w-4 h-4 text-muted-foreground" />
+              )}
+              {darkMode ? "Switch to light mode" : "Switch to dark mode"}
+            </CommandItem>
+          </CommandGroup>
+          <CommandSeparator />
           {recentItems.length > 0 && (
             <>
               <CommandGroup heading="Recent">
@@ -129,7 +156,11 @@ const ComponentSearch = () => {
   );
 }
 
-export const Header = ({ onMenuClick, darkMode, onDarkModeToggle }: HeaderProps) => {
+export const Header = ({
+  onMenuClick,
+  darkMode,
+  onDarkModeToggle,
+}: HeaderProps) => {
   return (
     <header className="sticky top-0 z-10 flex items-center justify-between px-4 md:px-6 h-14 border-b border-border bg-background/95 backdrop-blur-sm">
       <div className="flex items-center gap-3">
@@ -146,7 +177,7 @@ export const Header = ({ onMenuClick, darkMode, onDarkModeToggle }: HeaderProps)
 
       <TooltipProvider>
         <div className="flex items-center gap-2">
-          <ComponentSearch />
+          <ComponentSearch darkMode={darkMode} onDarkModeToggle={onDarkModeToggle} />
           <Tooltip>
             <TooltipTrigger asChild>
               <button

@@ -6,23 +6,36 @@ import { MinusIcon } from "lucide-react";
 
 import { cn } from "./utils";
 
+type InputOTPMaskContextValue = {
+  mask?: boolean;
+  maskChar?: string;
+};
+
+const InputOTPMaskContext = React.createContext<InputOTPMaskContextValue>({});
+
 const InputOTP = ({
   className,
   containerClassName,
+  mask,
+  maskChar = "•",
   ...props
 }: React.ComponentProps<typeof OTPInput> & {
   containerClassName?: string;
+  mask?: boolean;
+  maskChar?: string;
 }) => {
   return (
-    <OTPInput
-      data-slot="input-otp"
-      containerClassName={cn(
-        "flex items-center gap-2 has-disabled:opacity-50",
-        containerClassName,
-      )}
-      className={cn("disabled:cursor-not-allowed", className)}
-      {...props}
-    />
+    <InputOTPMaskContext.Provider value={{ mask, maskChar }}>
+      <OTPInput
+        data-slot="input-otp"
+        containerClassName={cn(
+          "flex items-center gap-2 has-disabled:opacity-50",
+          containerClassName,
+        )}
+        className={cn("disabled:cursor-not-allowed", className)}
+        {...props}
+      />
+    </InputOTPMaskContext.Provider>
   );
 }
 
@@ -39,12 +52,20 @@ const InputOTPGroup = ({ className, ...props }: React.ComponentProps<"div">) => 
 const InputOTPSlot = ({
   index,
   className,
+  mask,
+  maskChar,
   ...props
 }: React.ComponentProps<"div"> & {
   index: number;
+  mask?: boolean;
+  maskChar?: string;
 }) => {
   const inputOTPContext = React.useContext(OTPInputContext);
+  const maskContext = React.useContext(InputOTPMaskContext);
   const { char, hasFakeCaret, isActive } = inputOTPContext?.slots[index] ?? {};
+  const shouldMask = mask ?? maskContext.mask;
+  const displayChar =
+    shouldMask && char ? (maskChar ?? maskContext.maskChar ?? "•") : char;
 
   return (
     <div
@@ -56,7 +77,7 @@ const InputOTPSlot = ({
       )}
       {...props}
     >
-      {char}
+      {displayChar}
       {hasFakeCaret && (
         <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
           <div className="animate-caret-blink bg-foreground h-4 w-px duration-1000" />

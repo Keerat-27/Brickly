@@ -101,12 +101,12 @@ export const OtpPage = () => {
         description="Toggle password-style masking for sensitive codes."
         source="shadcn"
         shadcnComponent="input-otp"
-        code={`<InputOTP maxLength={4} type={masked ? "password" : "text"}>
+        code={`<InputOTP maxLength={4} mask={masked}>
   ...
 </InputOTP>`}
       >
         <div className="flex flex-col gap-3">
-          <InputOTP maxLength={4} type={masked ? "password" : "text"}>
+          <InputOTP maxLength={4} mask={masked}>
             <InputOTPGroup>
               <InputOTPSlot index={0} />
               <InputOTPSlot index={1} />
