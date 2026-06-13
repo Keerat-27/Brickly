@@ -74,14 +74,16 @@ export const CardsPage = () => {
         description="Display key metrics with trend indicators."
         source="shadcn"
         shadcnComponent="card"
-        code={`import { Card, CardHeader, CardContent } from "@/components/ui/card";
+        code={`import { Card, CardHeader, CardContent, CardAction } from "@/components/ui/card";
 
 <Card className="w-52">
-  <CardHeader className="flex-row items-center justify-between pb-2">
+  <CardHeader className="items-center pb-2">
     <span className="text-sm text-muted-foreground">Total Revenue</span>
-    <div className="p-2 rounded-lg bg-muted">
-      <DollarSign className="w-4 h-4 text-muted-foreground" />
-    </div>
+    <CardAction>
+      <div className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-muted">
+        <DollarSign className="size-4 text-muted-foreground" />
+      </div>
+    </CardAction>
   </CardHeader>
   <CardContent>
     <p className="text-2xl text-foreground">$45,231</p>
@@ -93,11 +95,13 @@ export const CardsPage = () => {
       >
         {stats.map((stat) => (
           <Card key={stat.label} className="w-52">
-            <CardHeader className="flex-row items-center justify-between pb-2">
+            <CardHeader className="items-center pb-2">
               <span className="text-sm text-muted-foreground">{stat.label}</span>
-              <div className="p-2 rounded-lg bg-muted">
-                <stat.icon className="w-4 h-4 text-muted-foreground" />
-              </div>
+              <CardAction>
+                <div className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-muted">
+                  <stat.icon className="size-4 text-muted-foreground" />
+                </div>
+              </CardAction>
             </CardHeader>
             <CardContent>
               <p className="text-2xl text-foreground">{stat.value}</p>
@@ -119,7 +123,7 @@ export const CardsPage = () => {
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
 <Card className="w-64 text-center">
-  <CardHeader className="items-center">
+  <CardHeader className="justify-items-center text-center">
     <Avatar className="size-20">
       <AvatarFallback className="bg-blue-500 text-white text-2xl">AJ</AvatarFallback>
     </Avatar>
@@ -137,7 +141,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 </Card>`}
       >
         <Card className="w-64 text-center">
-          <CardHeader className="items-center">
+          <CardHeader className="justify-items-center text-center">
             <Avatar className="size-20">
               <AvatarFallback className="bg-blue-500 text-white text-2xl">AJ</AvatarFallback>
             </Avatar>
@@ -200,13 +204,10 @@ import { AspectRatio } from "@/components/ui/aspect-ratio";
         shadcnComponent="card"
         code={`import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { AspectRatio } from "@/components/ui/aspect-ratio";
 
 <Card className="flex w-full max-w-md flex-row overflow-hidden p-0">
-  <div className="w-32 shrink-0">
-    <AspectRatio ratio={1}>
-      <div className="h-full w-full bg-gradient-to-br from-blue-400 to-purple-500" />
-    </AspectRatio>
+  <div className="w-32 shrink-0 self-stretch">
+    <div className="h-full w-full bg-gradient-to-br from-blue-400 to-purple-500" />
   </div>
   <CardContent className="space-y-2 py-4">
     <Badge variant="secondary">Article</Badge>
@@ -216,10 +217,8 @@ import { AspectRatio } from "@/components/ui/aspect-ratio";
 </Card>`}
       >
         <Card className="flex w-full max-w-md flex-row overflow-hidden p-0">
-          <div className="w-32 shrink-0">
-            <AspectRatio ratio={1}>
-              <div className="h-full w-full bg-gradient-to-br from-blue-400 to-purple-500" />
-            </AspectRatio>
+          <div className="w-32 shrink-0 self-stretch">
+            <div className="h-full w-full bg-gradient-to-br from-blue-400 to-purple-500" />
           </div>
           <CardContent className="space-y-2 py-4">
             <Badge variant="secondary">Article</Badge>
