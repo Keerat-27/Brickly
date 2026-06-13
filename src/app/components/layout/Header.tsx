@@ -22,6 +22,7 @@ import { useRecentNavItems } from "./useRecentNavItems";
 
 interface HeaderProps {
   onMenuClick: () => void;
+  sidebarOpen: boolean;
   darkMode: boolean;
   onDarkModeToggle: () => void;
 }
@@ -158,6 +159,7 @@ const ComponentSearch = ({ darkMode, onDarkModeToggle }: ComponentSearchProps) =
 
 export const Header = ({
   onMenuClick,
+  sidebarOpen,
   darkMode,
   onDarkModeToggle,
 }: HeaderProps) => {
@@ -169,7 +171,8 @@ export const Header = ({
           onClick={onMenuClick}
           className="lg:hidden p-2 rounded-md hover:bg-accent text-muted-foreground"
           aria-label="Open navigation menu"
-          aria-expanded={false}
+          aria-expanded={sidebarOpen}
+          aria-controls="component-navigation"
         >
           <Menu className="w-5 h-5" />
         </button>

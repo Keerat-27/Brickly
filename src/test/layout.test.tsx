@@ -45,11 +45,14 @@ describe("layout", () => {
     const user = userEvent.setup();
     renderWithRouter("/");
 
+    const menuButton = screen.getByRole("button", { name: "Open navigation menu" });
     const sidebar = screen.getByRole("navigation", { name: "Component navigation" });
+    expect(menuButton).toHaveAttribute("aria-expanded", "false");
     expect(sidebar.closest("aside")).toHaveClass("-translate-x-full");
 
-    await user.click(screen.getByRole("button", { name: "Open navigation menu" }));
+    await user.click(menuButton);
 
+    expect(menuButton).toHaveAttribute("aria-expanded", "true");
     expect(sidebar.closest("aside")).toHaveClass("translate-x-0");
   });
 });

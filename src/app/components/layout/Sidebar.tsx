@@ -41,7 +41,11 @@ export const Sidebar = ({ open, onClose }: SidebarProps) => {
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 min-h-0" aria-label="Component navigation">
+      <nav
+        id="component-navigation"
+        className="flex-1 min-h-0"
+        aria-label="Component navigation"
+      >
         <ScrollArea className="h-full" type="always">
           <div className="px-3 py-4 space-y-6">
             {navItems.map((group) => (
