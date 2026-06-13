@@ -32,34 +32,47 @@ Output goes to `dist/`. The `dist/` folder is gitignored — generate it locally
 To preview the production build locally:
 
 ```bash
-npx vite preview
+npm run preview
 ```
 
-(`preview` script may be added to `package.json` in a future roadmap item.)
-
-## Type checking
+For GitHub Pages (subpath `/Brickly/`), build with:
 
 ```bash
-npm run typecheck
+GITHUB_PAGES=true npm run build
+npm run preview
 ```
 
-Runs `tsc --noEmit` with strict mode. Fix all errors before submitting a PR.
+## Type checking, lint, and tests
+
+```bash
+npm run typecheck   # tsc --noEmit (strict mode)
+npm run lint        # ESLint + jsx-a11y
+npm run test        # Vitest smoke tests
+```
+
+Fix all errors before submitting a PR. CI runs the same checks on every push and pull request.
 
 ## Typical workflow
 
 1. Pull latest `main`.
 2. Create a branch: `git checkout -b feat/charts-page`.
 3. Make changes (see [Component pages](component-pages.md)).
-4. Run `npm run typecheck && npm run build`.
+4. Run `npm run typecheck && npm run lint && npm run test && npm run build`.
 5. Open a PR with a short summary and test plan.
 
 ## Environment variables
 
 Brickly has **no required `.env` file** today. The app is a static Vite SPA with no backend.
 
+Optional build-time variable:
+
+| Variable | When | Effect |
+|----------|------|--------|
+| `GITHUB_PAGES=true` | Production build | Sets Vite `base` to `/Brickly/` for GitHub Pages |
+
 ## Dark mode during development
 
-Toggle dark mode from the **header** (moon/sun icon). It adds/removes the `dark` class on `<html>`. All theme tokens in `src/styles/theme.css` respond automatically.
+Toggle dark mode from the **header** (moon/sun icon). The `useTheme` hook adds/removes the `dark` class on `<html>` and persists the choice to `localStorage` under `brickly-theme`. All theme tokens in `src/styles/theme.css` respond automatically.
 
 ## Common first tasks
 

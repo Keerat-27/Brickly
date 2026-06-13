@@ -7,7 +7,7 @@ A browsable React component library and design-system reference built on [shadcn
 
 ## Features
 
-- **28 documentation pages** — 27 component categories plus a design token reference
+- **33 documentation pages** — Overview, design tokens, and 31 component categories
 - **Live previews** — toggle between Preview and Code on every example
 - **Dark mode** — toggle from the header; uses CSS variables from the theme
 - **TypeScript** — full type coverage across pages and UI primitives
@@ -69,6 +69,7 @@ GITHUB_PAGES=true npm run build
 | `npm run preview` | Serve the production build locally |
 | `npm run test` | Run Vitest smoke tests once |
 | `npm run test:watch` | Run Vitest in watch mode |
+| `npm run lint` | Run ESLint (includes jsx-a11y rules) |
 | `npm run typecheck` | Run TypeScript without emitting files |
 
 ## Project structure
@@ -125,6 +126,10 @@ import { Button } from "@/app/components/ui/button";
 | `/tabs` | Tabs | Default, pills, vertical |
 | `/tables` | Tables | Basic, striped, sortable |
 | `/loading` | Loading | Spinner, skeleton, dots |
+| `/menubar` | Menubar | Desktop menu bar, submenus |
+| `/navigation-menu` | Navigation Menu | Mega-menu and site nav patterns |
+| `/scroll-area` | Scroll Area | Vertical, horizontal scrollbars |
+| `/separator` | Separator | Horizontal and vertical dividers |
 | `/typography` | Typography | Headings, body, code |
 | `/tooltips` | Tooltips | Tooltip, popover, hover card |
 | `/accordion` | Accordion | Collapsible sections + Collapsible primitive |
@@ -135,7 +140,7 @@ import { Button } from "@/app/components/ui/button";
 | `/toasts` | Toasts | Sonner-only toast demos |
 | `/stepper` | Stepper | Horizontal, vertical, wizard |
 
-Additional shadcn primitives live under `src/app/components/ui/` (e.g. `calendar`, `menubar`, `navigation-menu`) and can be wired into new pages as needed. See [ROADMAP.md](ROADMAP.md) for planned improvements.
+See [ROADMAP.md](ROADMAP.md) for planned improvements (e.g. adopting shadcn sidebar in the app shell).
 
 ## Design system
 
@@ -150,7 +155,7 @@ See **[docs/component-pages.md](docs/component-pages.md)** for the full step-by-
 
 1. Create `src/app/pages/YourPage.tsx` using `PageHeader` and `ComponentSection`.
 2. Import primitives from `src/app/components/ui/`.
-3. Register the route in `src/app/routes.tsx`.
+3. Register a lazy route in `src/app/routes.tsx` via `lazyPage()`.
 4. Add an entry in `src/app/components/layout/nav-config.ts` and on `OverviewPage`.
 
 ## Roadmap

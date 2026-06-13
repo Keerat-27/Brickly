@@ -28,7 +28,8 @@ shadcn primitives in `ui/` also use `export const ComponentName = () => {}`.
 
 ### Imports
 
-- Use the `@/` alias for app code.
+- Use the `@/` alias for app code (e.g. `@/app/components/ui/button`).
+- In **displayed snippets**, use `@/components/ui/...` — shorter and matches the Code tab toggle.
 - Group imports: React → third-party → `@/app/components/...` → relative (avoid relative when `@/` works).
 - Icons from `lucide-react`.
 
@@ -81,7 +82,12 @@ export const ExamplePage = () => {
 | `description` | `string?` | Short explanation |
 | `code` | `string` | Shown in Code tab; must match Preview |
 | `source` | `"shadcn" \| "composition" \| "custom"?` | Badge for demo type |
+| `shadcnComponent` | `ShadcnComponentName?` | Derives install command from `shadcn-registry.ts` |
+| `installCommand` | `string?` | Override auto-generated shadcn CLI hint |
+| `accessibility` | `string?` | Optional a11y guidance shown below the section |
 | `children` | `ReactNode` | Live preview content |
+
+The Code tab includes an import-path toggle and a **Copy full example** button that exports imports, snippet, and install command together.
 
 ## Demo source types
 

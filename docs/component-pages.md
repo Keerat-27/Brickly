@@ -1,18 +1,18 @@
 # Adding a component documentation page
 
-Step-by-step guide for adding a new page to the Brickly catalog (e.g. Charts, Carousel, OTP).
+Step-by-step guide for adding a new page to the Brickly catalog.
 
 ## Checklist
 
 - [ ] Create `src/app/pages/YourPage.tsx`
-- [ ] Register route in `src/app/routes.tsx`
+- [ ] Register lazy route in `src/app/routes.tsx` via `lazyPage()`
 - [ ] Add nav entry in `src/app/components/layout/nav-config.ts`
 - [ ] Add overview card in `src/app/pages/OverviewPage.tsx`
 - [ ] Use `PageHeader` + one or more `ComponentSection` blocks
 - [ ] Set `source` on each section (`shadcn` / `composition` / `custom`)
 - [ ] Set `shadcnComponent` on shadcn sections for install hints (see `shadcn-registry.ts`)
-- [ ] Run `npm run typecheck && npm run build`
-- [ ] Update `README.md` component catalog table (optional but recommended)
+- [ ] Run `npm run typecheck && npm run lint && npm run test && npm run build`
+- [ ] Update `README.md` component catalog table
 
 ## Step 1 — Create the page file
 
@@ -42,6 +42,7 @@ export const ChartsPage = () => {
         title="Bar Chart"
         description="Basic bar chart themed with CSS chart tokens."
         source="shadcn"
+        shadcnComponent="chart"
         code={`import { ChartContainer } from "@/components/ui/chart";
 import { Bar, BarChart, XAxis } from "recharts";
 
@@ -69,16 +70,18 @@ import { Bar, BarChart, XAxis } from "recharts";
 
 ## Step 2 — Register the route
 
-In `src/app/routes.tsx`:
+In `src/app/routes.tsx`, add a lazy import and route entry:
 
 ```tsx
-import { ChartsPage } from "./pages/ChartsPage";
+const ChartsPage = lazyPage(() => import("./pages/ChartsPage"), "ChartsPage");
 
 // Inside Layout children:
 { path: "charts", Component: ChartsPage },
 ```
 
 Use **kebab-case** URL segments: `date-picker`, not `datePicker`.
+
+Do **not** add a static import — all page routes use `lazyPage()` for code splitting.
 
 ## Step 3 — Add navigation
 
@@ -95,6 +98,7 @@ This automatically updates:
 
 - Sidebar links
 - Header ⌘K command palette
+- Route smoke tests (via `route-expectations.ts` derived from nav)
 
 ## Step 4 — Add to Overview
 
@@ -104,12 +108,14 @@ In `src/app/pages/OverviewPage.tsx`, add to the `components` array:
 { to: "/charts", label: "Charts", icon: BarChart3, description: "Bar, line, area charts", count: 4 },
 ```
 
-Update the stats row if the total page count changed (e.g. `"Pages": "23"`).
+Update the stats row if the total page count changed (currently `"Pages": "33"` in the Overview stats).
 
 ## Step 5 — Verify
 
 ```bash
 npm run typecheck
+npm run lint
+npm run test
 npm run build
 ```
 
@@ -119,6 +125,7 @@ Manually check:
 - Sidebar link works
 - ⌘K finds the page
 - Preview / Code tabs match
+- "Copy full example" includes imports and install command
 - Dark mode looks correct
 
 ## Adding a section to an existing page
@@ -126,8 +133,8 @@ Manually check:
 1. Open the relevant `*Page.tsx`.
 2. Add a new `ComponentSection` at the bottom (keep related sections grouped).
 3. Import any new primitives at the top.
-4. Tag with `source`.
-5. Re-run typecheck + build.
+4. Tag with `source` and `shadcnComponent` when applicable.
+5. Re-run typecheck, lint, test, and build.
 
 ## Adding a shadcn primitive (no new page)
 

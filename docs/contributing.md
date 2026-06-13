@@ -30,6 +30,8 @@ Copy into your PR description:
 
 ## Test plan
 - [ ] `npm run typecheck` passes
+- [ ] `npm run lint` passes
+- [ ] `npm run test` passes
 - [ ] `npm run build` passes
 - [ ] Tested route(s) in browser
 - [ ] Dark mode checked
@@ -39,10 +41,12 @@ Copy into your PR description:
 
 ## What to run locally
 
-**Minimum before every PR:**
+**Minimum before every PR** (matches CI in `.github/workflows/ci.yml`):
 
 ```bash
 npm run typecheck
+npm run lint
+npm run test
 npm run build
 ```
 
@@ -58,8 +62,9 @@ npm run build
 |-------------|-------|
 | New doc page | `pages/`, `routes.tsx`, `nav-config.ts`, `OverviewPage.tsx` |
 | New shadcn primitive | `ui/`, page demo, `package.json` if new dep |
-| Theme tweak | `theme.css`, `TokensPage.tsx`, this doc |
+| Theme tweak | `theme.css`, `TokensPage.tsx`, `design-tokens.md` |
 | Branding / copy | `index.html`, `Sidebar.tsx`, `README.md` |
+| Routing / lazy load | `routes.tsx`, `lazy-page.ts`, `src/test/routes.test.tsx` |
 
 Keep PRs focused — one page or one concern per PR when possible.
 
@@ -93,6 +98,7 @@ Reviewers will check:
 - Arrow-function component style
 - shadcn imports for interactive demos
 - Honest `source` tags on sections
+- Lazy route registration via `lazyPage()`
 - No unrelated drive-by changes
 - No committed secrets or `dist/`
 

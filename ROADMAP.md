@@ -107,7 +107,7 @@ A page is **fully shadcn** when every interactive demo imports from `src/app/com
 
 ## 3. New component documentation pages
 
-Brickly currently covers 21 categories. These pages would fill the biggest gaps in the catalog.
+Brickly covers **33 pages** (Overview, Design Tokens, and 31 component categories). The pages below filled the biggest gaps in the catalog.
 
 ### Charts (`/charts`)
 
@@ -259,7 +259,7 @@ Brickly is currently a local-only Vite app. Publishing it makes the component re
 
 ## 7. Add automated tests
 
-There are no tests today. A lightweight suite would catch regressions as pages and primitives are added.
+Vitest + React Testing Library smoke tests catch regressions as pages and primitives are added.
 
 ### Recommended stack
 
@@ -279,7 +279,7 @@ There are no tests today. A lightweight suite would catch regressions as pages a
 ### Tasks
 
 - [x] Install Vitest + RTL and add `test` script to `package.json`
-- [x] Add `vitest.config.ts` with `@/` path alias matching Vite
+- [x] Configure Vitest in `vite.config.ts` with `@/` path alias matching Vite
 - [x] Write smoke tests for 3–5 critical pages
 - [x] Optionally add GitHub Actions workflow to run tests on PRs
 
@@ -395,7 +395,7 @@ Figma Make boilerplate removed from metadata, UI, and build config.
 
 ## 12. Expand route smoke tests
 
-`src/test/routes.test.tsx` covers 8 routes today; the catalog has 33 page routes in `routes.tsx`.
+`src/test/routes.test.tsx` derives expectations from `navItems` and covers every child route in `appRoutes`.
 
 ### Tasks
 

@@ -63,7 +63,7 @@ Heading/body scale is applied in `@layer base` in `theme.css` and demonstrated o
 
 ## Dark mode
 
-Toggle in `Layout.tsx` — adds `dark` class to `document.documentElement`.
+The header toggle calls `useTheme()` from `layout/useTheme.ts`. It adds the `dark` class to `document.documentElement` and persists the choice to `localStorage` under `brickly-theme`.
 
 ```css
 .dark {

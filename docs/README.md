@@ -8,6 +8,8 @@ Internal docs for contributors and maintainers. Brickly is a **documentation sit
 npm install
 npm run dev        # http://localhost:5173
 npm run typecheck  # before opening a PR
+npm run lint       # ESLint + jsx-a11y
+npm run test       # Vitest smoke tests
 npm run build      # production bundle → dist/
 ```
 
@@ -41,5 +43,5 @@ npm run build      # production bundle → dist/
 1. **Interactive demos** should import from `src/app/components/ui/` (or documented companions: Sonner, Vaul, Recharts).
 2. **Preview and Code tabs must match** — the string in `ComponentSection`'s `code` prop should reflect what renders in Preview.
 3. **Arrow-function components** — `export const Foo = () => {}`, not `function Foo()`.
-4. **Run `typecheck` + `build`** before opening a PR.
+4. **Run `typecheck`, `lint`, `test`, and `build`** before opening a PR.
 5. **Tag demos** with `source="shadcn" | "composition" | "custom"` on `ComponentSection` when adding or editing sections.

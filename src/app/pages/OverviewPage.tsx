@@ -71,7 +71,7 @@ const components = [
 ];
 
 const stats = [
-  { label: "Pages", value: "32" },
+  { label: "Pages", value: "33" },
   { label: "Variants",   value: "120+" },
   { label: "Dark Mode",  value: "✓" },
   { label: "TypeScript", value: "✓" },

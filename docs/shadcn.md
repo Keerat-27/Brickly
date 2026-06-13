@@ -16,22 +16,11 @@ src/app/components/ui/
 
 ## Current inventory
 
-### Documented on pages (21 component routes + tokens)
+Brickly has **~48 shadcn-style primitive files** under `ui/`, documented across **31 component routes** plus the Design Tokens reference page.
 
-Accordion, Alert, Avatar, Badge, Breadcrumb, Button, Calendar, Card, Checkbox, Collapsible, Command, Context Menu, Dialog, Drawer, Dropdown, Form, Hover Card, Input, Label, Pagination, Popover, Progress, Radio, Select, Separator, Sheet, Skeleton, Slider, Sonner, Switch, Table, Tabs, Textarea, Toggle, Tooltip, and more — spread across `src/app/pages/`.
+Primitives include: Accordion, Alert, Alert Dialog, Aspect Ratio, Avatar, Badge, Breadcrumb, Button, Calendar, Card, Carousel, Chart, Checkbox, Collapsible, Command, Context Menu, Dialog, Drawer, Dropdown Menu, Form, Hover Card, Input, Input OTP, Label, Menubar, Navigation Menu, Pagination, Popover, Progress, Radio Group, Resizable, Scroll Area, Select, Separator, Sheet, Sidebar, Skeleton, Slider, Sonner, Switch, Table, Tabs, Textarea, Toggle, Toggle Group, and Tooltip.
 
-### Restored, awaiting dedicated pages
-
-| File | Dependency | Planned route |
-|------|------------|---------------|
-| `carousel.tsx` | `embla-carousel-react` | `/carousel` |
-| `input-otp.tsx` | `input-otp` | `/otp` |
-| `menubar.tsx` | — | demo on Dropdowns or own page |
-| `navigation-menu.tsx` | — | `/command` or nav demo |
-| `resizable.tsx` | `react-resizable-panels` | `/resizable` |
-| `scroll-area.tsx` | — | sidebar / lists |
-| `sidebar.tsx` | — | `/sidebar` |
-| `chart.tsx` | `recharts` | `/charts` (also used on Progress) |
+Each maps to at least one demo on a documentation page. Registry names for install hints live in `shadcn-registry.ts`.
 
 ## Adding a component via shadcn CLI
 
@@ -116,6 +105,15 @@ When extending variants, follow existing `cva` patterns in `button.tsx` or `badg
 | Is it typography, spinners, or steppers? | Build from tokens + primitives, tag `composition` or `custom` |
 | Is it a token reference swatch? | Tag `custom` |
 
-## Install command hints
+## Snippet and install workflow
 
-`ComponentSection` accepts optional `shadcnComponent` and `installCommand` props. When set, the Code tab shows a copyable `npx shadcn@latest add …` row above the snippet. Registry names live in `shadcn-registry.ts`.
+`ComponentSection` powers the copy/install experience on every demo:
+
+| Feature | How it works |
+|---------|--------------|
+| **Install command** | Set `shadcnComponent="button"` or `installCommand="npx shadcn@latest add …"` — shown above the Code tab |
+| **Import path toggle** | Code tab switches `@/components/ui/…` vs relative paths; applies to copy actions |
+| **Copy full example** | Builds imports + snippet + install command via `buildFullExample.ts` |
+| **Accessibility notes** | Optional `accessibility` prop renders guidance below the section |
+
+Registry names and install commands are centralized in `shadcn-registry.ts`. See the Overview page for a user-facing summary of the copy workflow.

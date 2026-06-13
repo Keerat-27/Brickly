@@ -12,6 +12,7 @@ Scripts, build pipeline, and troubleshooting.
 | `lint` | `eslint src` | ESLint with `eslint-plugin-jsx-a11y` recommended rules |
 | `preview` | `vite preview` | Local production preview |
 | `test` | `vitest run` | Vitest smoke tests |
+| `test:watch` | `vitest` | Vitest in watch mode |
 
 Run before every PR:
 
@@ -39,6 +40,7 @@ Config: `vite.config.ts`
 - `@tailwindcss/vite` — Tailwind v4
 - Alias `@` → `src/`
 - `assetsInclude` — raw import support for `.svg`, `.csv`
+- `test` block — Vitest config (globals, jsdom, setup file); no separate `vitest.config.ts`
 
 ## Linting
 
@@ -80,9 +82,9 @@ dist/
 
 **Do not commit `dist/`.** It's listed in `.gitignore`.
 
-### Bundle size note
+### Bundle size
 
-Recharts (via `chart.tsx`) increases bundle size. Consider route-level code splitting in a future optimization pass if the main chunk exceeds comfortable limits.
+Heavy dependencies (Recharts, Embla, `cmdk`) load via **route-level code splitting** — pages are lazy-loaded in `routes.tsx` through `lazyPage()`. Run `npm run build` and inspect chunk output if adding a new heavy page.
 
 ## Troubleshooting
 
@@ -109,7 +111,7 @@ Confirm `tsconfig.json` paths and `vite.config.ts` alias both map `@` to `src`.
 
 ### Dark mode stuck
 
-Clear `localStorage` key used by Layout (inspect `Layout.tsx` for the exact key) or toggle from header.
+Clear `localStorage` key `brickly-theme` or toggle from the header.
 
 ### shadcn component looks wrong
 
