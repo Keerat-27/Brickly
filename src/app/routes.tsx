@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router";
 import { Layout } from "./components/layout/Layout";
+import { RouteErrorPage } from "./components/layout/RouteErrorPage";
 import { lazyPage } from "./lazy-page";
 
 const OverviewPage = lazyPage(() => import("./pages/OverviewPage"), "OverviewPage");
@@ -43,6 +44,7 @@ export const appRoutes = [
   {
     path: "/",
     Component: Layout,
+    errorElement: <RouteErrorPage />,
     children: [
       { index: true, Component: OverviewPage },
       { path: "buttons", Component: ButtonsPage },

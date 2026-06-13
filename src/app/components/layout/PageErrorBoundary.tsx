@@ -1,7 +1,5 @@
 import { Component, type ErrorInfo, type ReactNode } from "react";
-import { AlertTriangle } from "lucide-react";
-import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
-import { Button } from "../ui/button";
+import { ErrorFallback } from "./ErrorFallback";
 
 interface PageErrorBoundaryProps {
   children: ReactNode;
@@ -32,19 +30,13 @@ export class PageErrorBoundary extends Component<
   render() {
     if (this.state.error) {
       return (
-        <div className="flex flex-col items-start gap-4 py-8" role="alert">
-          <Alert variant="destructive" className="max-w-lg">
-            <AlertTriangle className="h-4 w-4" />
-            <AlertTitle>Page failed to load</AlertTitle>
-            <AlertDescription>
-              Something went wrong while rendering this page. You can try again
-              or navigate to another component from the sidebar.
-            </AlertDescription>
-          </Alert>
-          <Button type="button" variant="outline" size="sm" onClick={this.handleRetry}>
-            Try again
-          </Button>
-        </div>
+        <ErrorFallback
+          className="max-w-lg"
+          title="Page failed to load"
+          description="Something went wrong while rendering this page. You can try again or pick another component from the sidebar."
+          details={this.state.error.message}
+          onRetry={this.handleRetry}
+        />
       );
     }
 
