@@ -32,14 +32,14 @@ export const ButtonsPage = () => {
 <Button variant="outline">Outline</Button>
 <Button variant="ghost">Ghost</Button>
 <Button variant="destructive">Destructive</Button>
-<Button className="bg-green-600 text-white hover:bg-green-700">Success</Button>`}
+<Button className="bg-success text-white hover:bg-success/90">Success</Button>`}
       >
         <Button variant="default">Primary</Button>
         <Button variant="secondary">Secondary</Button>
         <Button variant="outline">Outline</Button>
         <Button variant="ghost">Ghost</Button>
         <Button variant="destructive">Destructive</Button>
-        <Button className="bg-green-600 text-white hover:bg-green-700">Success</Button>
+        <Button className="bg-success text-white hover:bg-success/90">Success</Button>
       </ComponentSection>
 
       <ComponentSection

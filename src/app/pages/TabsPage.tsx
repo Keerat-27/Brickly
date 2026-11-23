@@ -113,7 +113,7 @@ export const TabsPage = () => {
   <TabsList className="bg-transparent border-b rounded-none h-auto p-0 w-full justify-start gap-0">
     <TabsTrigger
       value="tab1"
-      className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary
+      className="rounded-none border-0 border-b-2 border-transparent data-[state=active]:border-primary
         data-[state=active]:bg-transparent data-[state=active]:shadow-none px-4 py-2.5"
     >
       Tab 1
@@ -128,7 +128,7 @@ export const TabsPage = () => {
                 <TabsTrigger
                   key={tab}
                   value={tab.toLowerCase()}
-                  className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:shadow-none data-[state=active]:text-foreground text-muted-foreground px-4 py-2.5 -mb-px"
+                  className="rounded-none border-0 border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:shadow-none data-[state=active]:text-foreground text-muted-foreground px-4 py-2.5 -mb-px"
                 >
                   {tab}
                 </TabsTrigger>

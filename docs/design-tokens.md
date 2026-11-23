@@ -24,9 +24,17 @@ Defined on `:root` (light) and `.dark` (dark mode):
 | `--muted` | `bg-muted`, `text-muted-foreground` |
 | `--accent` | `bg-accent`, `hover:bg-accent` |
 | `--destructive` | `bg-destructive`, `text-destructive` |
+| `--destructive-soft` | `bg-destructive-soft` (tinted alert/badge fill) |
+| `--success`, `--success-soft` | `text-success`, `bg-success-soft` |
+| `--warning`, `--warning-soft` | `text-warning`, `bg-warning-soft` |
+| `--info`, `--info-soft` | `text-info`, `bg-info-soft` |
 | `--border` | `border-border` |
 | `--ring` | `ring-ring` |
 | `--card` | `bg-card` |
+
+### Status colors
+
+`success`, `warning`, `info` and `destructive` each have a strong colour (icons, dots, borders) and a `-soft` fill. `Alert` and `Badge` expose them as variants (`variant="success"` etc.), so pages shouldn't hard-code `green-100` / `amber-50` classes. Body text on a soft fill stays `text-foreground` so it reads in both themes.
 
 ### Chart colors
 
